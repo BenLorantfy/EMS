@@ -120,4 +120,10 @@ class Users{
 	}
 }
 
+//
+// Handle ze ajax!!!
+//
+handleAJAX();
+
+
 ?>

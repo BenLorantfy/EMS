@@ -8,6 +8,9 @@ html,body{
 	font-weight:100;
 	padding:0;
 	margin:0;
+	
+	background-image: url(../images/background.png);
+	text-align: center;
 }
 
 *{
@@ -16,4 +19,62 @@ html,body{
 	-webkit-box-sizing: border-box;
 	-ms-box-sizing:border-box;
 	-o-box-sizing:border-box;
+}
+
+.box{
+	vertical-align: middle;
+	display: inline-block;
+	padding: 20px;
+	text-align: left;
+	
+	
+	background: #ffffff; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+}
+
+.loginCredential{
+	display: block;
+	padding:20px;
+	width: 100%;
+	border:1px solid #A9A9A9;
+	outline: none;
+	font-size: 16px;
+}
+
+#username{
+	border-bottom: none;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+#password{
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+#loginHeader{
+	width: 100%;
+	text-align: center;
+	margin-bottom: 20px;
+	font-size: 40px;
+	color: #A9A9A9;
+}
+
+
+#loginBox{
+	width: 500px;
+	padding: 50px;
+	border-radius: 10px;
+}
+
+.verticalCenter{
+	height: 100%;
+	display: inline-block;
+	vertical-align: middle;
 }
