@@ -31,15 +31,15 @@ class Users{
 	function login($username,$password){	
 		$success = false;
 
-		$query = $this->db->prepare("SELECT id,password FROM tbl_users WHERE username = ? LIMIT 1");
+		$query = $this->db->prepare("SELECT id,password FROM User WHERE username = ? LIMIT 1");
 		if(!$query) throw new Exception($this->db->error);
 		if(!$query->bind_param("s",$username)) throw new Exception($this->db->error);
 		if(!$query->execute()) throw new Exception($this->db->error);
 		if(!$query->store_result()) throw new Exception($this->db->error);
 		
+		
 		if($query->num_rows == 1){
 			if(!$query->bind_result($id,$hashedPassword)) throw new Exception($this->db->error);
-			
 			$query->fetch();
 			if(password_verify($password,$hashedPassword)){
 				$_SESSION["id"] 	  = $id;
@@ -55,7 +55,7 @@ class Users{
 	function userExists($username){
 		$exists = false;
 
-		$query = $this->db->prepare("SELECT id FROM tbl_users WHERE username = ? LIMIT 1");
+		$query = $this->db->prepare("SELECT id FROM User WHERE username = ? LIMIT 1");
 		if(!$query) throw new Exception($this->db->error);
 		if(!$query->bind_param("s",$username)) throw new Exception($this->db->error);
 		if(!$query->execute()) throw new Exception($this->db->error);
@@ -69,7 +69,7 @@ class Users{
 			
 		if(!$this->userExists($username)){
 			$hashedPassword = password_hash($password,PASSWORD_DEFAULT);
-			$insert = $this->db->prepare("INSERT INTO tbl_users (username,password) VALUES (?,?)");
+			$insert = $this->db->prepare("INSERT INTO User (username,password) VALUES (?,?)");
 	
 			if(!$insert) throw new Exception($this->db->error);	
 			if(!$insert->bind_param("ss",$username,$hashedPassword)) throw new Exception($this->db->error);
@@ -96,7 +96,7 @@ class Users{
 	function isLogged(){		
 		$logged = false;		
 		if(isset($_SESSION["id"])){
-			$query = $this->db->prepare("SELECT password FROM tbl_users WHERE id = ? LIMIT 1");
+			$query = $this->db->prepare("SELECT password FROM User WHERE id = ? LIMIT 1");
 			if(!$query) throw new Exception($this->db->error);
 			if(!$query->bind_param("i",$_SESSION["id"])) throw new Exception($this->db->error);
 			if(!$query->execute()) throw new Exception($this->db->error);
@@ -119,5 +119,11 @@ class Users{
 		session_destroy();
 	}
 }
+
+//
+// Handle ze ajax!!!
+//
+handleAJAX();
+
 
 ?>
