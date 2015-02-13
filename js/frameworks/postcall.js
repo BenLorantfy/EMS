@@ -42,15 +42,14 @@ var JSON = window.JSON||{};
         if(settings.json){
 	        postVars["json"] = "yes";
         }
-        
+
         $.post(path,postVars).done(function(data){
         	data = (settings.json) ? JSON.parse(data) : data;
-        	
         	if(settings.json){
 	        	if(typeof data === "object"){
 		        	if(!data.error){
 			        	if(typeof success === "function"){
-				        	success(data);
+				        	success(data.message);
 			        	}			        	
 		        	}else{
 		        		if(typeof error === "function"){
@@ -69,12 +68,12 @@ var JSON = window.JSON||{};
 		        	}
         		}else{
 	        		if(typeof error === "function"){
-		        		error(data.message);
+		        		error(data);
 	        		}	        		
         		}
         	}
 	        	
-        }).fail(function(){
+        }).fail(function(data){
 	        if(typeof error === "function"){
 		        error("Fatal error occurred in script or script does not exist");
 	        }
@@ -89,4 +88,3 @@ var JSON = window.JSON||{};
         postCall: postCall
     });
 })(jQuery);
-
