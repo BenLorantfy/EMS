@@ -1,14 +1,20 @@
 (function(){
 	var App = (function(){
+		var isLogged;
 		function run(){
+			isLogged = $("[name='isLogged']").attr("content") === "true";
+			
 			$.msgBox.init();
 					
 			var loginBox = new LoginBox();
 			var searchBox = new SearchBox();
 			
+			if(!isLogged){
+				setTimeout(loginBox.show,200);
+			}
+			
 			loginBox.onLogin(function(){
 				loginBox.hide();
-				
 				setTimeout(searchBox.show, 150);
 			});
 		}
@@ -19,8 +25,10 @@
 	})();
 	
 	var Section = function(selector){	
+		var section = $(selector);
+		var cover = $("#cover");
+		
 		function hide(){
-			var section = $(selector);
 			$({ progress:0 }).animate({ progress: 1},{
 				 duration:800
 				,easing:"easeOutQuart"
@@ -32,7 +40,6 @@
 		}
 		
 		function show(){
-			var section = $(selector);
 			section.css("opacity",0);
 			section.show();
 			$({ progress:0 }).animate({ progress: 1},{
@@ -45,14 +52,26 @@
 			})	
 		}
 		
+		function blur(){
+			cover.css("opacity",0);
+			cover.insertAfter(section);
+			cover.stop().animate({ opacity:1 },400,"easeOutQuart");
+		}
+		
+		function focus(){
+			cover.stop().animate({ opacity:0 },400,"easeOutQuart");			
+		}
+		
 		return{
 			 hide:hide
 			,show:show
+			,blur:blur
+			,focus:focus
 		}
 	}
 	
 	var LoginBox = function(){
-		var loggedIn = false;
+		var tryingLogin = false;
 		var section = new Section("#login");
 		
 		var onLoginCallbacks = [];
@@ -66,17 +85,20 @@
 			}
 		});
 		
+		$("#loginButton").click(tryLogin);
+		
 		function tryLogin(){
-			if(!loggedIn){
+			if(!tryingLogin){
+				tryingLogin = true;
 				var username = $("#username").val();
 				var password = $("#password").val();
 				$.postCall("Users.login",username,password,function(validCreds){
 					if(validCreds){
-						loggedIn = true;
 						for(var i = 0; i < onLoginCallbacks.length; i++){
 							onLoginCallbacks[i]();
 						}				
 					}else{
+						tryingLogin = false;
 						$.msgBox.error("Invalid Credentials");
 					}
 				},function(errorMessage){
@@ -85,18 +107,32 @@
 			}
 		}
 		
-		return $.extend(section,{
-			onLogin:onLogin
+		// Add functionality to section.show
+		function show(){
+			section.show();
+			
+			// When the login box is shown, focus on username box so user doesn't have to click it to focus on it
+			$("#username").focus();
+		}
+		
+		//
+		// Extend (inherit) section functionality (i.e. show, hide) with specific login box functionality
+		//
+		return $.extend({},section,{
+			onLogin:onLogin,
+			
+			// Override section.show with custom show function with more speicifc funtionality
+			show:show
 		});
 	}
 	
 	var SearchBox = function(){
 		var section = new Section("#search");
 		
-		return $.extend(section,{
+		return $.extend({},section,{
 
 		});		
 	}
 	
-	$(document).ready(App.run);
+	$(window).load(App.run);
 })();
