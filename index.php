@@ -9,15 +9,22 @@
 <head>
 	<?php 	
 		include("includes/head.php"); 
+		if($users->isLogged()){
 	?>
+		<meta name="isLogged" content="true"/>
+	<?php } ?>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body>
-	<section id = "login"<?php if($users->isLogged()){ ?> style="display:none;"<?php } ?>>
+	<div id = "cover"></div>
+	
+	<section id = "login" style="display:none;">
 		<div class = "verticalCenter"></div>
 		<div id = "loginBox" class = "box">
 			<div id = "loginHeader">Login</div>
 			<input id = "username" type = "text" class = "loginCredential" placeholder="Username"></input>
 			<input id = "password" type = "password" class = "loginCredential" placeholder="Password"></input>
+			<input id = "loginButton" type = "button" value="Log In"></input>
 		</div>
 	</section>
 	
@@ -27,5 +34,7 @@
 			hi
 		</div>
 	</section>
+	
+	
 </body>
 </html>
