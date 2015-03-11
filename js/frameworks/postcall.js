@@ -1,4 +1,38 @@
+/*
+ * Postcall Version 1.0.1
+ *
+ * PostCall is a jquery and php plugin/design pattern that makes 
+ * calling a php method from ajax similar to calling a php method from php
+ * See https://github.com/BenLorantfy/PostCall for details
+ *
+ *
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 Ben Lorantfy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+//
 // json2.js minified
+// If older browser and doesn't have JSON.parse, use json2.js
+//
 var JSON = window.JSON||{};
 (function(){function k(a){return a<10?"0"+a:a}function o(a){p.lastIndex=0;return p.test(a)?'"'+a.replace(p,function(a){var c=r[a];return typeof c==="string"?c:"\\u"+("0000"+a.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+a+'"'}function l(a,j){var c,d,h,m,g=e,f,b=j[a];b&&typeof b==="object"&&typeof b.toJSON==="function"&&(b=b.toJSON(a));typeof i==="function"&&(b=i.call(j,a,b));switch(typeof b){case "string":return o(b);case "number":return isFinite(b)?String(b):"null";case "boolean":case "null":return String(b);case "object":if(!b)return"null";
 	e+=n;f=[];if(Object.prototype.toString.apply(b)==="[object Array]"){m=b.length;for(c=0;c<m;c+=1)f[c]=l(c,b)||"null";h=f.length===0?"[]":e?"[\n"+e+f.join(",\n"+e)+"\n"+g+"]":"["+f.join(",")+"]";e=g;return h}if(i&&typeof i==="object"){m=i.length;for(c=0;c<m;c+=1)typeof i[c]==="string"&&(d=i[c],(h=l(d,b))&&f.push(o(d)+(e?": ":":")+h))}else for(d in b)Object.prototype.hasOwnProperty.call(b,d)&&(h=l(d,b))&&f.push(o(d)+(e?": ":":")+h);h=f.length===0?"{}":e?"{\n"+e+f.join(",\n"+e)+"\n"+g+"}":"{"+f.join(",")+
@@ -9,14 +43,24 @@ var JSON = window.JSON||{};
 
 (function ($) {
     var settings = {
-	     prefix: "php/"
-	    ,suffix: ".class.php"
-	    ,lowerFileName: true
-	    ,json: true
+		// What gets prepended to the class name (i.e. folder structure)
+		 prefix: ""
+		
+		// What gets appended to the class name (i.e. extension)
+		,suffix: ".php"
+		
+		// Wether or not to lower the class name for the path
+		,lowerFileName: true
+		
+		// Wether or not to use json
+		,json: true
+		
+		// Wether or not to start the session before calling the method
+		,startSession: true
     }
     
 	var postCall = function (classAndMethodName) {
-		if(typeof classAndMethodName !== "string") throw new SyntaxError("Class name (string) required for first parameter");
+		if(typeof classAndMethodName !== "string") throw new SyntaxError("Class/method string required for first parameter in the format <className>.<methodName>");
 		if(classAndMethodName.indexOf(".") === -1) throw new SyntaxError("First parameter must be in the format <className>.<methodName>");
 		var split = classAndMethodName.split(".");
 		var className = split[0];
@@ -39,13 +83,23 @@ var JSON = window.JSON||{};
         postVars["class"] = className;
         postVars["method"] = methodName;
         
+        if(settings.startSession){
+	    	postVars["session"] = "yes";
+        }
+        
         if(settings.json){
 	        postVars["json"] = "yes";
         }
 
         $.post(path,postVars).done(function(data){
-        	data = (settings.json) ? JSON.parse(data) : data;
         	if(settings.json){
+        		try{
+	        		data = JSON.parse(data);
+        		}catch(e){
+        			// JSON parsing error occurred
+        			// Do nothing here, error is handled later, just need to catch it so it doesn't bubble up
+        		}
+	        	
 	        	if(typeof data === "object"){
 		        	if(!data.error){
 			        	if(typeof success === "function"){
@@ -58,9 +112,9 @@ var JSON = window.JSON||{};
 		        	}
 	        	}else{
 	        		if(typeof error === "function"){
-		        		error(data.message);
+		        		error(data);
 	        		}		        	
-	        	}
+	        	}		        		
         	}else{
         		if(typeof data === "string"){
 		        	if(typeof success === "function"){
@@ -71,11 +125,10 @@ var JSON = window.JSON||{};
 		        		error(data);
 	        		}	        		
         		}
-        	}
-	        	
+        	}	        	
         }).fail(function(data){
 	        if(typeof error === "function"){
-		        error("Fatal error occurred in script or script does not exist");
+		        error(data);
 	        }
         });
     }

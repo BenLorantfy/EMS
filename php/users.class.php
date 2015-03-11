@@ -13,7 +13,7 @@ if(basename(getcwd()) == "php") chdir("../");
 // Utilities
 //
 require_once("php/connect.php");
-require_once("php/ajax.php");
+require_once("php/postcall.php");
 
 /*
  * NAME 	: User
@@ -120,10 +120,6 @@ class Users{
 	}
 }
 
-//
-// Handle ze ajax!!!
-//
-handleAJAX();
 
 
 ?>

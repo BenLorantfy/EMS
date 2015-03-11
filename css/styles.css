@@ -31,7 +31,7 @@ section{
 }
 
 #cover{
-	background-color:rgba(0,0,0,0.3);
+	background-color:rgba(0,0,0,0.7);
 	width: 100%;
 	height: 100%;
 	position: fixed;
@@ -43,7 +43,6 @@ section{
 .box{
 	vertical-align: middle;
 	display: inline-block;
-	padding: 20px;
 	text-align: left;
 	border-radius: 10px;
 	
@@ -92,6 +91,7 @@ section{
 	width: 100px;
 	margin-top:	30px;
 	
+	/* green */
 	background: #54d154; /* Old browsers */
 	background: -moz-linear-gradient(top,  #54d154 0%, #32ab44 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#54d154), color-stop(100%,#32ab44)); /* Chrome,Safari4+ */
@@ -102,11 +102,12 @@ section{
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#54d154', endColorstr='#32ab44',GradientType=0 ); /* IE6-9 */
 
 	cursor: pointer;
-	border: 1px solid #3b993f;
+	border: 1px solid #3b993f; /* green */
 	color:white;
 }
 
 #loginButton:active{
+	/* green */
 	background: #32ab44; /* Old browsers */
 	background: -moz-linear-gradient(top,  #32ab44 0%, #54d154 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#32ab44), color-stop(100%,#54d154)); /* Chrome,Safari4+ */
@@ -123,6 +124,7 @@ section{
 	margin-bottom: 25px;
 	font-size: 40px;
 	font-family: 'Droid Sans', sans-serif;
+	color:#122335;
 }
 
 
@@ -132,8 +134,28 @@ section{
 }
 
 #searchBox{
-	width: 50%;
-	height: 65%;
+	width: 65%;
+	height: 75%;
+	border-top-left-radius: 30px;
+	border-bottom-left-radius: 30px;
+}
+
+#searchToolsContainer{
+	width: 25%;
+	height: 100%;
+	background-color:red;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	background-color: red;
+	padding:20px;
+	float: left;
+}
+
+#searchResultsContainer{
+	width: 70%;
+	height:100%;
+	padding:20px;
+	float: left;
 }
 
 .verticalCenter{
