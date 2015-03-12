@@ -11,7 +11,7 @@
 	<?php include("includes/head.php"); ?>
 </head>
 <body>
-	<div id = "cover"></div>
+	<div id = "cover" style="opacity: 0;"></div>
 	
 	<?php include("includes/login.php"); ?>
 	<?php include("includes/search.php"); ?>

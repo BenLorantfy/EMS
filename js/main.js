@@ -22,8 +22,13 @@ var App = (function(){
 		});
 		
 		var focused = true;
-		$("#search").click(function(){
-			searchBox.blur();
+		$("#reports,#users,#cover").click(function(){
+			if(focused){
+				searchBox.blur();
+			}else{
+				searchBox.focus();
+			}
+			focused = !focused;
 		})
 	}
 	

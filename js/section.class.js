@@ -29,11 +29,28 @@ var Section = function(selector){
 	function blur(){
 		cover.css("opacity",0);
 		cover.insertAfter(section);
+		cover.show();
 		cover.stop().animate({ opacity:1 },400,"easeOutQuart");
+		$({ progress:0 }).animate({ progress: 1},{
+			 duration:800
+			,easing:"easeOutQuart"
+			,step:function(progress){
+				section.css("transform","scale(" + (1 - progress*0.05) + "," + (1 - progress*0.05) + ")");
+			}
+		})	
 	}
 	
 	function focus(){
-		cover.stop().animate({ opacity:0 },400,"easeOutQuart");			
+		cover.stop().animate({ opacity:0 },400,"easeOutQuart",function(){
+			cover.hide();
+		});	
+		$({ progress:0 }).animate({ progress: 1},{
+			 duration:800
+			,easing:"easeOutQuart"
+			,step:function(progress){
+				section.css("transform","scale(" + (0.95 + progress*0.05) + "," + (0.95 + progress*0.05) + ")");
+			}
+		})			
 	}
 	
 	return{

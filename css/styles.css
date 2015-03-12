@@ -5,7 +5,6 @@ html,body{
 	width: 100%;
 	height: 100%;
 	font-family: Helvetica,sans-serif;
-	font-weight:100;
 	padding:0;
 	margin:0;
 	
@@ -31,13 +30,36 @@ section{
 }
 
 #cover{
-	background-color:rgba(0,0,0,0.7);
+	background-color:rgba(0,0,0,0.5);
 	width: 100%;
 	height: 100%;
 	position: fixed;
 	top:0;
 	left:0;
-	opacity: 0;
+}
+
+.button{
+	display: block;
+	text-align: center;
+	padding:13px;
+	min-width: 130px;
+	border-radius: 3px;
+
+	background: #ececec; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ececec 0%, #c0c0c0 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ececec), color-stop(100%,#c0c0c0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ececec 0%,#c0c0c0 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ececec 0%,#c0c0c0 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ececec 0%,#c0c0c0 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #ececec 0%,#c0c0c0 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ececec', endColorstr='#c0c0c0',GradientType=0 ); /* IE6-9 */
+	
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	border: 1px solid #e9e9e9;
+	border: none;
+	color:#262930;	
 }
 
 .box{
@@ -55,9 +77,11 @@ section{
 	background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
 
-	-webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
-	-moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
-	box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+	background: white;
+
+	-webkit-box-shadow: 7px 7px 5px 0px rgba(0, 0, 0, 0.46);
+	-moz-box-shadow:    7px 7px 5px 0px rgba(0, 0, 0, 0.46);
+	box-shadow:         7px 7px 5px 0px rgba(0, 0, 0, 0.46);
 }
 
 .loginCredential{
@@ -80,17 +104,15 @@ section{
 	border-bottom-right-radius: 5px;
 }
 
-#loginButton{
-	padding:15px;
-	font-size: 14px;
-	background-color:red;
-	text-align: center;
-	border-radius: 5px;
+.confirmButton{
 	display: block;
-	margin:auto;
-	width: 100px;
-	margin-top:	30px;
-	
+	text-align: center;
+	padding:14px;
+	min-width: 130px;
+	text-shadow: 1px 1px 0px rgba(140,140,140,0.3) , -1px -1px 1px rgba(0,0,0,0.4);
+/* 	text-shadow: 0 -1px 0 #888; */
+	border-radius: 3px;
+
 	/* green */
 	background: #54d154; /* Old browsers */
 	background: -moz-linear-gradient(top,  #54d154 0%, #32ab44 100%); /* FF3.6+ */
@@ -103,19 +125,16 @@ section{
 
 	cursor: pointer;
 	border: 1px solid #3b993f; /* green */
-	color:white;
+	color:white;	
 }
 
-#loginButton:active{
-	/* green */
-	background: #32ab44; /* Old browsers */
-	background: -moz-linear-gradient(top,  #32ab44 0%, #54d154 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#32ab44), color-stop(100%,#54d154)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #32ab44 0%,#54d154 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #32ab44 0%,#54d154 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #32ab44 0%,#54d154 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #32ab44 0%,#54d154 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#32ab44', endColorstr='#54d154',GradientType=0 ); /* IE6-9 */
+#loginButton{
+	padding:14px;
+	font-size: 14px;
+	text-align: center;
+	display: block;
+	margin:auto;
+	margin-top:	30px;
 }
 
 #loginHeader{
@@ -134,32 +153,128 @@ section{
 }
 
 #searchBox{
-	width: 65%;
+	width: 70%;
 	height: 75%;
 	border-top-left-radius: 30px;
 	border-bottom-left-radius: 30px;
+	background: transparent;
+}
+
+#searchToolsHeader{
+	width: 100%;
+	color:#5A5D61;
+	text-align: center;
+	margin-bottom: 10px;
+	font-size: 14px;
 }
 
 #searchToolsContainer{
-	width: 25%;
+	width: 20%;
 	height: 100%;
 	background-color:red;
 	border-top-left-radius: 10px;
 	border-bottom-left-radius: 10px;
-	background-color: red;
-	padding:20px;
+	background-color: #262930;
+	padding:13px;
 	float: left;
 }
 
-#searchResultsContainer{
-	width: 70%;
+#searchToolsSubContainer{
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+#searchContainer{
+	width: 80%;
 	height:100%;
-	padding:20px;
 	float: left;
+	border-top-right-radius: 30px;
+	border-bottom-right-radius: 10px;
+	-webkit-box-shadow: -2px 0px 7px 0px rgba(0, 0, 0, 1);
+	-moz-box-shadow:    -2px 0px 7px 0px rgba(0, 0, 0, 1);
+	box-shadow:         -2px 0px 7px 0px rgba(0, 0, 0, 1);
+}
+
+#searchResults{
+	height:88%;
+	width: 100%;
+	background-color: white;
+	padding:20px;
+}
+
+#searchHead{
+	position: relative;
+	width: 100%;
+	height:12%;
+	background-color:red;
+	border-top-right-radius: 10px;
+	padding:10px;
+		
+	background: #2E3136; /* Old browsers */
+	background: -moz-linear-gradient(top,  #2E3136 0%, #1b2228 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2E3136), color-stop(100%,#1b2228)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #2E3136 0%,#1b2228 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #2E3136 0%,#1b2228 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #2E3136 0%,#1b2228 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #2E3136 0%,#1b2228 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2f3438', endColorstr='#1b2228',GradientType=0 ); /* IE6-9 */
+
+	-webkit-box-shadow: -2px 3px 5px 0px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow:    -2px 3px 5px 0px rgba(0, 0, 0, 0.75);
+	box-shadow:         -2px 3px 5px 0px rgba(0, 0, 0, 0.75);
+
+}
+
+#searchIcon{
+	width: 13px;
+	position: absolute;
+	top:18.2px;
+	left:17px;
+	opacity:0.5;
+}
+
+#searchText:focus + #searchIcon{
+	opacity:1;
+}
+
+#searchText{
+	width: 100%;
+	border:1px solid #0F1114;
+	border-radius: 4px;
+	background-color:#1B1E23;
+	padding:5px;
+	padding-left:25px;
+	font-size: 14px;
+	color:rgba(255,255,255,0.5);
 }
 
 .verticalCenter{
 	height: 100%;
 	display: inline-block;
 	vertical-align: middle;
+}
+
+.sideBarButton{
+	width: 100%;
+	margin-top:6px;	
+}
+
+#dialogButtons{
+	position: absolute;
+	bottom:0;
+	width: 100%;
+}
+
+#searchText::-webkit-input-placeholder { /* WebKit browsers */
+	color: rgba(255,255,255,0.2);
+}
+#searchText:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: rgba(255,255,255,0.2);
+}
+#searchText::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: rgba(255,255,255,0.2);
+}
+#searchText:-ms-input-placeholder { /* Internet Explorer 10+ */
+	color: rgba(255,255,255,0.2);
 }
