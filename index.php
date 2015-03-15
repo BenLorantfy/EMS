@@ -15,6 +15,7 @@
 	
 	<?php include("includes/login.php"); ?>
 	<?php include("includes/search.php"); ?>
+	<?php include("includes/reports.php"); ?>
 
 </body>
 </html>

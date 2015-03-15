@@ -26,4 +26,5 @@
 <script src = "js/section.class.js"></script>
 <script src = "js/loginbox.class.js"></script>
 <script src = "js/searchbox.class.js"></script>
+<script src = "js/reportsbox.class.js"></script>
 <script src = "js/main.js"></script>

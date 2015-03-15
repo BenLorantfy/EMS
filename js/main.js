@@ -11,6 +11,7 @@ var App = (function(){
 				
 		var loginBox = new LoginBox();
 		var searchBox = new SearchBox();
+		var reportsBox = new ReportsBox();
 		
 		if(!isLogged){
 			setTimeout(loginBox.show,200);
@@ -21,14 +22,14 @@ var App = (function(){
 			setTimeout(searchBox.show, 150);
 		});
 		
-		var focused = true;
-		$("#reports,#users,#cover").click(function(){
-			if(focused){
-				searchBox.blur();
-			}else{
-				searchBox.focus();
-			}
-			focused = !focused;
+		searchBox.onReports(function(){
+			searchBox.blur();
+			reportsBox.dialogyShow();
+		})
+		
+		reportsBox.onDone(function(){
+			reportsBox.dialogyHide();
+			searchBox.focus();
 		})
 	}
 	
