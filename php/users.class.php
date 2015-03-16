@@ -27,11 +27,19 @@ class Users{
 	function __construct(){
 		$this->db = connect();
 	}
+	
+	function userType(){
+		if(isset($_SESSION["type"])){
+			return $_SESSION["type"];
+		}else{
+			return "none";
+		}
+	}
 
 	function login($username,$password){	
-		$success = false;
-
-		$query = $this->db->prepare("SELECT id,password FROM User WHERE username = ? LIMIT 1");
+		$loginType = false;
+		
+		$query = $this->db->prepare("SELECT id,password,type FROM User WHERE username = ? LIMIT 1");
 		if(!$query) throw new Exception($this->db->error);
 		if(!$query->bind_param("s",$username)) throw new Exception($this->db->error);
 		if(!$query->execute()) throw new Exception($this->db->error);
@@ -39,17 +47,18 @@ class Users{
 		
 		
 		if($query->num_rows == 1){
-			if(!$query->bind_result($id,$hashedPassword)) throw new Exception($this->db->error);
+			if(!$query->bind_result($id,$hashedPassword,$type)) throw new Exception($this->db->error);
 			$query->fetch();
 			if(password_verify($password,$hashedPassword)){
 				$_SESSION["id"] 	  = $id;
 				$_SESSION["username"] = $username;
 				$_SESSION["password"] = $password;
-				$success = true;
+				$_SESSION["type"] 	  = $type;
+				$loginType = $type;
 			}
 		}	
 		
-		return $success;
+		return $loginType;
 	}
 	
 	function userExists($username){
@@ -64,7 +73,7 @@ class Users{
 		return $query->num_rows == 1;
 	}
 	
-	function register($username,$password){
+	private function register($username,$password){
 		$success = false;
 			
 		if(!$this->userExists($username)){

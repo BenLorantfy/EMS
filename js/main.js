@@ -1,8 +1,5 @@
 var App = (function(){
-	var isLogged;
-	function run(){
-		isLogged = $("[name='isLogged']").attr("content") === "true";
-		
+	function run(){		
 		$.msgBox.init();
 		$.postCall.config({
 			 prefix: "php/"
@@ -13,11 +10,27 @@ var App = (function(){
 		var searchBox = new SearchBox();
 		var reportsBox = new ReportsBox();
 		
-		if(!isLogged){
+		if(!isLogged()){
 			setTimeout(loginBox.show,200);
 		}
 		
-		loginBox.onLogin(function(){
+		loginBox.onLogin(function(e){
+			//
+			// Update login status
+			//
+			isLogged(true);
+			userType(e.type);
+			
+			//
+			// If admin logged in, show admin controls
+			//
+			if(e.type == "admin"){
+				$(".adminControl").show();
+			}
+
+			//
+			// Hide login box and show main search section
+			//
 			loginBox.hide();
 			setTimeout(searchBox.show, 150);
 		});
@@ -31,6 +44,16 @@ var App = (function(){
 			reportsBox.dialogyHide();
 			searchBox.focus();
 		})
+	}
+	
+	function isLogged(logged){
+		if(typeof logged === "undefined") return $("meta[name='isLogged']").attr("content") === "true";
+		$("meta[name='userType']").attr("content",logged?"true":"false");
+	}
+	
+	function userType(type){
+		if(typeof type === "undefined") return $("meta[name='userType']").attr("content");
+		$("meta[name='userType']").attr("content",type);
 	}
 	
 	return{

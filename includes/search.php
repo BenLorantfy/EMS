@@ -1,4 +1,4 @@
-<section id = "search"<?php if(isset($isLogged) && !$isLogged){ ?> style="display:none;"<?php } ?>>
+<section id = "search">
 	<div class = "verticalCenter"></div>
 	<div id = "searchBox" class = "box">
 		<div id = "searchToolsContainer">
@@ -40,8 +40,8 @@
 				</div>
 				<div id = "actionsHeader" class = "sideBarHeader">Actions</div>
 				<input id = "addEmployeeButton" class="sideBarButton confirmButton" type = "button" value="Add Employee"></input>
-				<input id = "auditButton" class="sideBarButton button" type = "button" value="Audit"></input>
-				<input id = "usersButton" class="sideBarButton button" type = "button" value="Users"></input>
+				<input id = "auditButton" class="sideBarButton button adminControl" type = "button" value="Audit"></input>
+				<input id = "usersButton" class="sideBarButton button adminControl" type = "button" value="Users"></input>
 				<input id = "reportsButton" class="sideBarButton button" type = "button" value="Reports"></input>
 			</div>
 		</div>

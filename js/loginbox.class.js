@@ -14,11 +14,18 @@ var LoginBox = function(){
 	function tryLogin(){
 		if(!tryingLogin){
 			tryingLogin = true;
+			
+			//
+			// Send a request to server to login with user given credentials
+			//
 			var username = $("#username").val();
 			var password = $("#password").val();
-			$.postCall("Users.login",username,password,function(validCreds){
-				if(validCreds){
-					onLogin.trigger();
+			$.postCall("Users.login",username,password,function(type){
+				//
+				// If correct credentials, trigger login event and pass to event type of user that logged in
+				//
+				if(type !== false){
+					onLogin.trigger({ type:type });
 				}else{
 					tryingLogin = false;
 					$.msgBox.error("Invalid Credentials");

@@ -1,5 +1,5 @@
 /*
- * CustomEvent Version 1.0.0
+ * CustomEvent Version 1.1.0
  *
  * Custom Event is a jquery plugin used to encapsulates the code required
  * to make custom events in javascript.  Custom event handling between modules is
@@ -72,10 +72,10 @@
 			callbacks.push(fn);
 		}
 		
-		event.trigger = function(){
+		event.trigger = function(eventObject){
 			if(enabled){
 				for(var i = 0; i < callbacks.length; i++){
-					callbacks[i]();
+					callbacks[i](eventObject);
 				}				
 			}
 		}
