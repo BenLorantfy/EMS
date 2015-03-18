@@ -38,6 +38,7 @@
 	<script src = "js/loginbox.class.js"></script>
 	<script src = "js/searchbox.class.js"></script>
 	<script src = "js/reportsbox.class.js"></script>
+	<script src = "js/usersbox.class.js"></script>
 	
 	<!-- JS Entry Point -->
 	<script src = "js/main.js"></script>
@@ -74,6 +75,7 @@
 	<?php include("includes/login.php"); ?>
 	<?php include("includes/search.php"); ?>
 	<?php include("includes/reports.php"); ?>
+	<?php include("includes/users.php"); ?>
 
 </body>
 </html>

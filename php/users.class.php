@@ -73,23 +73,23 @@ class Users{
 		return $query->num_rows == 1;
 	}
 	
-	private function register($username,$password){
+	function create($username,$password,$type){
 		$success = false;
-			
-		if(!$this->userExists($username)){
-			$hashedPassword = password_hash($password,PASSWORD_DEFAULT);
-			$insert = $this->db->prepare("INSERT INTO User (username,password) VALUES (?,?)");
-	
-			if(!$insert) throw new Exception($this->db->error);	
-			if(!$insert->bind_param("ss",$username,$hashedPassword)) throw new Exception($this->db->error);
-			if(!$insert->execute()) throw new Exception($this->db->error);
-			
-			$_SESSION["id"] = $insert->insert_id;
-			$_SESSION["username"] = $username;
-			$_SESSION["password"] = $password;
-			$success = true;
+		if($this->isLogged() && $_SESSION["type"] == "admin"){
+			if(!$this->userExists($username)){
+				$hashedPassword = password_hash($password,PASSWORD_DEFAULT);
+				$insert = $this->db->prepare("INSERT INTO User (username,password,type) VALUES (?,?,?)");
+		
+				if(!$insert) throw new Exception($this->db->error);	
+				if(!$insert->bind_param("sss",$username,$hashedPassword,$type)) throw new Exception($this->db->error);
+				if(!$insert->execute()) throw new Exception($this->db->error);
+				
+				$_SESSION["id"] = $insert->insert_id;
+				$_SESSION["username"] = $username;
+				$_SESSION["password"] = $password;
+				$success = true;
+			}			
 		}
-
 		return $success;
 	}
 	

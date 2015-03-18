@@ -6,9 +6,10 @@ var App = (function(){
 			,suffix: ".class.php"
 		})
 				
-		var loginBox = new LoginBox();
-		var searchBox = new SearchBox();
-		var reportsBox = new ReportsBox();
+		var loginBox 	= new LoginBox();
+		var searchBox 	= new SearchBox();
+		var reportsBox 	= new ReportsBox();
+		var usersBox 	= new UsersBox();
 		
 		if(!isLogged()){
 			setTimeout(loginBox.show,200);
@@ -42,6 +43,16 @@ var App = (function(){
 		
 		reportsBox.onDone(function(){
 			reportsBox.dialogyHide();
+			searchBox.focus();
+		})
+		
+		searchBox.onUsers(function(){
+			searchBox.blur();
+			usersBox.dialogyShow();
+		})
+		
+		usersBox.onDone(function(){
+			usersBox.dialogyHide();
 			searchBox.focus();
 		})
 	}
