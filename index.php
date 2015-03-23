@@ -39,6 +39,7 @@
 	<script src = "js/searchbox.class.js"></script>
 	<script src = "js/reportsbox.class.js"></script>
 	<script src = "js/usersbox.class.js"></script>
+	<script src = "js/addEmployeeBox.class.js"></script>
 	
 	<!-- JS Entry Point -->
 	<script src = "js/main.js"></script>
@@ -61,7 +62,7 @@
 		<!--
 			If user is not admin, hide admin controls
 		-->
-		<style>
+		<style id = "adminControl">
 			.adminControl{
 				display: none;
 			}
@@ -76,6 +77,7 @@
 	<?php include("includes/search.php"); ?>
 	<?php include("includes/reports.php"); ?>
 	<?php include("includes/users.php"); ?>
+	<?php include("includes/addEmployee.php"); ?>
 
 </body>
 </html>
