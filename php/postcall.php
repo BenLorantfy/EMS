@@ -75,7 +75,6 @@ if(isset($_POST["class"]) && isset($_POST["method"])){
 	}	
 	
 	if(isset($_POST["json"])){
-		header("Content-Type: application/json");
 		echo json_encode($returnData, JSON_HEX_QUOT | JSON_HEX_TAG);
 	}else{
 		echo print_r($returnData,true);
