@@ -14,8 +14,9 @@ abstract class Employee{
 	private $lastName;
 	private $dateOfBirth;
 	private $sin;
+	protected $errors = array();
 	
-	public SetFirstName($firstName){
+	public function SetFirstName($firstName){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
@@ -23,7 +24,7 @@ abstract class Employee{
 		return true;
 	}
 	
-	public SetLastName($lastName){
+	public function SetLastName($lastName){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
@@ -31,7 +32,7 @@ abstract class Employee{
 		return true;
 	}
 	
-	public SetDateOfBirth($dateOfBirth){
+	public function SetDateOfBirth($dateOfBirth){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
@@ -39,12 +40,16 @@ abstract class Employee{
 		return true;		
 	}
 	
-	public SetSIN($sin){
+	public function SetSIN($sin){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
 		$this->sin = $sin;
 		return true;		
+	}
+	
+	public function GetErrors(){
+		return $this->errors;
 	}
 }
 

@@ -15,7 +15,7 @@ abstract class HourlyEmployee extends Employee{
 	private $dateOfHire;
 	private $dateOfTermination;
 	
-	public SetDateOfHire($dateOfHire){
+	public function SetDateOfHire($dateOfHire){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
@@ -23,7 +23,7 @@ abstract class HourlyEmployee extends Employee{
 		return true;
 	}
 	
-	public SetDateOfTermination($dateOfTermination){
+	public function SetDateOfTermination($dateOfTermination){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid

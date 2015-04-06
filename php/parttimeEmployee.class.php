@@ -10,11 +10,10 @@
 if(basename(getcwd()) == "php") chdir("../");
 require_once("php/hourlyEmployee.class.php");
 
-
 class PartTimeEmployee extends HourlyEmployee{
 	private $hourlyRate;
 	
-	public SetHourlyRate($hourlyRate){
+	public function SetHourlyRate($hourlyRate){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
@@ -23,5 +22,6 @@ class PartTimeEmployee extends HourlyEmployee{
 	}
 	
 }
+
 
 ?>

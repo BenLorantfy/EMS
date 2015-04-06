@@ -7,8 +7,9 @@ class ContractEmployee{
 	private $startDate;
 	private $endDate;
 	private $fixedAmount;
+	private $errors = array();
 	
-	public SetDateOfIncorporation($dateOfIncorporation){
+	public function SetDateOfIncorporation($dateOfIncorporation){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
@@ -16,7 +17,7 @@ class ContractEmployee{
 		return true;
 	}
 	
-	public SetCompanyName($companyName){
+	public function SetCompanyName($companyName){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
@@ -24,7 +25,7 @@ class ContractEmployee{
 		return true;
 	}
 	
-	public SetBusinessNumber($businessNumber){
+	public function SetBusinessNumber($businessNumber){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
@@ -32,7 +33,7 @@ class ContractEmployee{
 		return true;		
 	}
 	
-	public SetStartDate($startDate){
+	public function SetStartDate($startDate){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
@@ -40,7 +41,7 @@ class ContractEmployee{
 		return true;		
 	}
 	
-	public SetEndDate($endDate){
+	public function SetEndDate($endDate){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
@@ -48,12 +49,16 @@ class ContractEmployee{
 		return true;		
 	}
 	
-	public SetFixedAmount($fixedAmount){
+	public function SetFixedAmount($fixedAmount){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
 		$this->fixedAmount = $fixedAmount;
 		return true;		
+	}
+	
+	public function GetErrors(){
+		return $this->errors;
 	}
 }
 
