@@ -16,7 +16,7 @@ class SeasonalEmployee extends Employee{
 	private $season;
 	private $seasonYear;
 
-	public SetPiecePay($piecePay){
+	public function SetPiecePay($piecePay){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
@@ -24,7 +24,7 @@ class SeasonalEmployee extends Employee{
 		return true;
 	}
 		
-	public SetSeason($season){
+	public function SetSeason($season){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
@@ -32,7 +32,7 @@ class SeasonalEmployee extends Employee{
 		return true;
 	}
 	
-	public SetSeasonYear($seasonYear){
+	public function SetSeasonYear($seasonYear){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
