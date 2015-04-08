@@ -39,7 +39,7 @@ class Users{
 	function login($username,$password){	
 		$loginType = false;
 		
-		$query = $this->db->prepare("SELECT id,password,type FROM User WHERE username = ? LIMIT 1");
+		$query = $this->db->prepare("SELECT id,password,securityLevel FROM User WHERE username = ? LIMIT 1");
 		if(!$query) throw new Exception($this->db->error);
 		if(!$query->bind_param("s",$username)) throw new Exception($this->db->error);
 		if(!$query->execute()) throw new Exception($this->db->error);
@@ -47,14 +47,14 @@ class Users{
 		
 		
 		if($query->num_rows == 1){
-			if(!$query->bind_result($id,$hashedPassword,$type)) throw new Exception($this->db->error);
+			if(!$query->bind_result($id,$hashedPassword,$securityLevel)) throw new Exception($this->db->error);
 			$query->fetch();
 			if(password_verify($password,$hashedPassword)){
+				$loginType = $securityLevel == 0 ? "general" : "admin";
 				$_SESSION["id"] 	  = $id;
 				$_SESSION["username"] = $username;
 				$_SESSION["password"] = $password;
-				$_SESSION["type"] 	  = $type;
-				$loginType = $type;
+				$_SESSION["type"] 	  = $loginType;
 			}
 		}	
 		
@@ -77,8 +77,9 @@ class Users{
 		$success = false;
 		if($this->isLogged() && $_SESSION["type"] == "admin"){
 			if(!$this->userExists($username)){
+				$securityLevel = $type == "general" ? 0 : 1;  
 				$hashedPassword = password_hash($password,PASSWORD_DEFAULT);
-				$insert = $this->db->prepare("INSERT INTO User (username,password,type) VALUES (?,?,?)");
+				$insert = $this->db->prepare("INSERT INTO User (username,password,securityLevel) VALUES (?,?,?)");
 		
 				if(!$insert) throw new Exception($this->db->error);	
 				if(!$insert->bind_param("sss",$username,$hashedPassword,$type)) throw new Exception($this->db->error);
@@ -87,6 +88,7 @@ class Users{
 				$_SESSION["id"] = $insert->insert_id;
 				$_SESSION["username"] = $username;
 				$_SESSION["password"] = $password;
+				$_SESSION["type"] 	  = $type;
 				$success = true;
 			}			
 		}

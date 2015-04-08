@@ -83,8 +83,19 @@ class Employees{
 	}
 	
 	function AddFullTimeEmployee($firstName,$lastName,$dateOfBirth,$sin,$dateOfHire,$dateOfTermination,$salary){
-		// todo
-		return true; // return false if not added
+		$employee = new FullTimeEmployee();
+		$employee->SetFirstName($firstName);
+		$employee->SetLastName($lastName);
+		$employee->SetDateOfBirth($dateOfBirth);
+		$employee->SetSIN($sin);
+		$employee->SetDateOfHire($dateOfHire);
+		$employee->SetDateOfTermination($dateOfTermination);
+		$employee->SetSalary($salary);
+		if($employee->Validate()){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	function AddPartTimeEmployee($firstName,$lastName,$dateOfBirth,$sin,$dateOfHire,$dateOfTermination,$hourlyRate){
