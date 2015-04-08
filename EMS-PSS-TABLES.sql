@@ -6,8 +6,8 @@ USE EMS;
 CREATE TABLE User
 (
 id					int NOT NULL AUTO_INCREMENT,
-firstName			varchar(31),
-lastName			varchar(31),
+username			varchar(255),
+password			varchar(255),
 securityLevel		int,
 PRIMARY KEY (id)
 );

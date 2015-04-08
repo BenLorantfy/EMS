@@ -32,6 +32,7 @@ var LoginBox = function(){
 				}
 			},function(errorMessage){
 				tryingLogin = false;
+				console.log(errorMessage);
 				$.msgBox.error("An error occurred while trying to log in.");
 			})
 		}

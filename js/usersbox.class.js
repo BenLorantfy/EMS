@@ -16,7 +16,7 @@ var UsersBox = function(){
 			$("#newUsername").val("");
 			$("#newPassword").val("");
 			$.msgBox.success("Created user");
-		},function(){
+		},function(data){
 			$.msgBox.error("An error occurred while trying to create user");
 		})
 	})
