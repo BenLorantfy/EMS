@@ -16,8 +16,9 @@ CREATE TABLE Audit
 (
 id					int NOT NULL AUTO_INCREMENT,
 user_id				int,
-changeTime			Time,
+changeTime			DateTime,
 changedTable		varchar(255),
+recordId			int,
 changedField		varchar(31),
 oldValue			varchar(255),
 newValue			varchar(255),
