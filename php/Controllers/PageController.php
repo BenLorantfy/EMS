@@ -2,7 +2,7 @@
 namespace Controllers;
 use Views\View;
 class PageController{
-	public function get_home($request){
+	public function get_home(){
 		View::StartPageRender();
 		View::StartHeadRender();
 		
