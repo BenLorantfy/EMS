@@ -119,6 +119,85 @@ FOR EACH ROW
 			(mydata, (SELECT NOW()), 'Company', new.id, 'dateOfIncorporation', OLD.dateOfIncorporation, new.dateOfIncorporation, 'Update');
 		END IF;
 	END$$
+    
+/* Contractor Triggers */
+
+DROP TRIGGER IF EXISTS newContractor$$
+CREATE TRIGGER newContractor
+BEFORE INSERT ON Contractor
+FOR EACH ROW
+    BEGIN
+		DECLARE mydata INT;
+		DECLARE numOfUsers INT;
+		SET mydata := new.id;
+
+		IF ( (SELECT MAX(id) FROM Contractor) IS NULL) THEN
+			SET new.id := 1;
+		ELSE
+			SET new.id := (SELECT MAX(id) FROM Contractor) + 1;
+		END IF;
+
+		IF ( (SELECT COUNT(id) FROM USER WHERE (user.id = mydata)) = 0) THEN
+			SET mydata := null;
+		END IF;
+
+		INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
+		(mydata, (SELECT NOW()), 'Contractor', new.id, 'company_id', null, new.company_id, 'Insert');
+
+		INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
+		(mydata, (SELECT NOW()), 'Contractor', new.id, 'buisnessNumber', null, new.buisnessNumber, 'Insert');
+
+		INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
+		(mydata, (SELECT NOW()), 'Contractor', new.id, 'contractStartDate', null, new.contractStartDate, 'Insert');
+
+		INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
+		(mydata, (SELECT NOW()), 'Contractor', new.id, 'contractStopDate', null, new.contractStopDate, 'Insert');
+        
+		INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
+		(mydata, (SELECT NOW()), 'Contractor', new.id, 'fixedContractAmount', null, new.fixedContractAmount, 'Insert');
+    END$$
+
+DROP TRIGGER IF EXISTS updateContractor$$
+CREATE TRIGGER updateContractor
+BEFORE UPDATE ON Contractor
+FOR EACH ROW
+	BEGIN
+		DECLARE mydata INT;
+		SET mydata := new.id;
+
+		SET new.id := old.id;
+
+		IF (mydata > (SELECT COUNT(id) FROM User)) THEN
+			SET mydata := null;
+		END IF;
+		
+		/* Start conditional Audit insert */
+
+		IF (new.company_id != OLD.company_id) THEN
+			INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
+			(mydata, (SELECT NOW()), 'Contractor', new.id, 'company_id', OLD.company_id, new.company_id, 'Update');
+		END IF;
+
+		IF (new.buisnessNumber != OLD.buisnessNumber) THEN
+			INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
+			(mydata, (SELECT NOW()), 'Contractor', new.id, 'buisnessNumber', OLD.buisnessNumber, new.buisnessNumber, 'Update');
+		END IF;
+
+		IF (new.contractStartDate != OLD.contractStartDate) THEN
+			INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
+			(mydata, (SELECT NOW()), 'Contractor', new.id, 'contractStartDate', OLD.contractStartDate, new.contractStartDate, 'Update');
+		END IF;
+
+		IF (new.contractStopDate != OLD.contractStopDate) THEN
+			INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
+			(mydata, (SELECT NOW()), 'Contractor', new.id, 'contractStopDate', OLD.contractStopDate, new.contractStopDate, 'Update');
+		END IF;
+        
+		IF (new.fixedContractAmount != OLD.fixedContractAmount) THEN
+			INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
+			(mydata, (SELECT NOW()), 'Contractor', new.id, 'fixedContractAmount', OLD.fixedContractAmount, new.fixedContractAmount, 'Update');
+		END IF;
+	END$$
 
 /* Person Triggers */
 
