@@ -23,8 +23,9 @@ html,body{
 }
 
 /*
- * General
- *
+ * ================================================
+ * 						Common
+ * ================================================
  */
 .verticalCenter{
 	height: 100%;
@@ -123,8 +124,9 @@ section{
 }
 
 /*
- * Login
- *
+ * ================================================
+ * 						Login
+ * ================================================
  */
 #login .box{
 	width: 350px;
@@ -167,4 +169,166 @@ section{
 #login .password{
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
+}
+
+
+/*
+ * ================================================
+ * 						Search
+ * ================================================
+ */
+#search .box{
+	width: 70%;
+	height: 75%;
+	border-top-left-radius: 30px;
+	border-bottom-left-radius: 30px;
+	background: transparent;
+}
+
+#search .optionsHeader{
+	width: 100%;
+	color:#5A5D61;
+	text-align: center;
+	font-size: 14px;
+	font-weight: 500;
+	margin-top:10px;
+	margin-bottom: 15px;
+}
+
+#actionsHeader{
+	margin-top:15px;
+	margin-bottom: 15px;
+}
+
+#search .optionsContainer{
+	width: 20%;
+	height: 100%;
+	background-color:red;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	background-color: #262930;
+	padding:13px;
+	float: left;
+}
+
+#search .optionsSubcontainer{
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+#search .sideBarButton{
+	width: 100%;
+	margin-top:6px;	
+}
+
+#search .resultsContainer{
+	width: 80%;
+	height:100%;
+	float: left;
+	border-top-right-radius: 30px;
+	border-bottom-right-radius: 10px;
+	-webkit-box-shadow: -2px 0px 7px 0px rgba(0, 0, 0, 1);
+	-moz-box-shadow:    -2px 0px 7px 0px rgba(0, 0, 0, 1);
+	box-shadow:         -2px 0px 7px 0px rgba(0, 0, 0, 1);
+}
+
+#search .results{
+	height:88%;
+	width: 100%;
+	background-color: white;
+	overflow: scroll;
+}
+
+#search .resultTable{
+	width: 100%;
+}
+
+#search .resultTable td{
+	padding:15px;
+	margin:0;
+	border:none;
+}
+
+#search .resultTable tr:nth-child(2n){
+	background-color:#F6F6F6;
+}
+
+#search .searchInputContainer{
+	position: relative;
+	width: 100%;
+	height:12%;
+	background-color:red;
+	border-top-right-radius: 10px;
+	padding:10px;
+		
+	background: #2E3136; /* Old browsers */
+	background: -moz-linear-gradient(top,  #2E3136 0%, #1b2228 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#2E3136), color-stop(100%,#1b2228)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #2E3136 0%,#1b2228 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #2E3136 0%,#1b2228 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #2E3136 0%,#1b2228 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #2E3136 0%,#1b2228 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2f3438', endColorstr='#1b2228',GradientType=0 ); /* IE6-9 */
+
+	-webkit-box-shadow: -2px 3px 5px 0px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow:    -2px 3px 5px 0px rgba(0, 0, 0, 0.75);
+	box-shadow:         -2px 3px 5px 0px rgba(0, 0, 0, 0.75);
+
+}
+
+#search .searchIcon{
+	width: 13px;
+	position: absolute;
+	top:18.2px;
+	left:17px;
+}
+
+#search .searchInput{
+	width: 100%;
+	border:1px solid #0F1114;
+	border-radius: 4px;
+	background-color:#1B1E23;
+	padding:5px;
+	padding-left:25px;
+	font-size: 14px;
+	color:rgba(255,255,255,0.5);
+}
+
+#search .optionContainer{
+	position: relative;
+	width: 100%;
+	border:1px solid #0F1114;
+	border-radius: 4px;
+	background-color:#1B1E23;
+	padding:7px;
+	color:rgba(255,255,255,0.5);
+	vertical-align: middle;
+	margin-bottom: 6px;
+}
+
+#search .option{
+	vertical-align: middle;
+	max-width: 100%;
+}
+
+#search .optionLabel{
+	font-size: 12px;
+	vertical-align: middle;;
+	width:40%;
+	display: inline-block;
+}
+
+#search .optionSubcontainer{
+	width: 56%;
+	display: inline-block;
+	text-align: right;
+	position: relative;
+}
+
+#search .rowIcon{
+	height: 1em;
+	float: right;
+	margin-right:5px;
+	cursor: pointer;
 }

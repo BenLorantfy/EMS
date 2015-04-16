@@ -14,6 +14,9 @@ class PageController{
 		View::EndHeadRender();
 		View::StartBodyRender();
 		
+		$common = new View("common");
+		$common->render();
+		
 		$login = new View("login");
 		$login->render();
 		

@@ -1,5 +1,4 @@
 App.Views.SectionView = Backbone.View.extend({
-	cover: $("#cover"),
 	animate: function(show,back,howMuch,time,fade){
 		var $el = $(this.$el);
 		var animation = { progress:0 };
@@ -46,7 +45,6 @@ App.Views.SectionView = Backbone.View.extend({
 			}
 		})			 	
 	},
-	
 	show: function(){
 		this.animate(true,true,0.3,800,true);
 	},
@@ -60,16 +58,18 @@ App.Views.SectionView = Backbone.View.extend({
 		this.animate(true,false,0.05,600,true);
 	},
 	blur:function(){
-		this.cover.css("opacity",0);
-		this.cover.insertAfter(this.$el);
-		this.cover.show();
-		this.cover.stop().animate({ opacity:1 },600,"easeOutQuart");
+		var cover = $("#cover");
+		cover.css("opacity",0);
+		cover.insertAfter(this.$el);
+		cover.show();
+		cover.stop().animate({ opacity:1 },600,"easeOutQuart");
 		
 		this.animate(false,true,0.05,600,false);
 	},
 	focus:function(){
-		this.cover.stop().animate({ opacity:0 },600,"easeOutQuart",function(){
-			this.cover.hide();
+		var cover = $("#cover");
+		cover.stop().animate({ opacity:0 },600,"easeOutQuart",function(){
+			cover.hide();
 		});	
 		
 		this.animate(true,false,0.05,600,false);
