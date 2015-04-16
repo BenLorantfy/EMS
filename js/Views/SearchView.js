@@ -1,5 +1,4 @@
 App.Views.SearchView = App.Views.SectionView.extend({
-	el: "#search",
 	
 	events: {
 		"click .addEmployeeButton":"openAddEmployee"
@@ -14,6 +13,7 @@ App.Views.SearchView = App.Views.SectionView.extend({
 	initialize: function(){
 		var view = this;
 		Backbone.Events.on("login",function(){
+			window.history.pushState("search", "search", "/search");
 			view.show();
 		});
 	}

@@ -50,9 +50,14 @@ class FrontController{
 		// PUT    = UPDATE
 		// DELETE = DELETE
 		//
-		Route::get("/employees/{type}/{id}",array(new EmployeeController(),"get_employee"));
+		Route::get("/employees/{id}",array(new EmployeeController(),"getEmployee"));
+		Route::post("/employees/{id}",array(new EmployeeController(),"createEmployee"));
+		
 		Route::post("/session",array(new SessionController(),"login"));
 		Route::delete("/session",array(new SessionController(),"logout"));
-		Route::get("/",array(new PageController(),"get_home"));
+		
+		Route::get("/",array(new PageController(),"navigateToLogin"));
+		Route::get("/login",array(new PageController(),"navigateToLogin"));
+		Route::get("/search",array(new PageController(),"navigateToSearch"));
 	}
 }

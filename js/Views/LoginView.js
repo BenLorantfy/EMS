@@ -1,5 +1,4 @@
 App.Views.LoginView = App.Views.SectionView.extend({
-	el: "#login",
 	
 	events: {
 		"click .button" : "login",

@@ -7,16 +7,26 @@
 <meta name="userType" content="<?=$this->userType?>"/>	
 	
 <!-- JS -->
+<!-- lib -->
 <script src = "js/lib/jquery.js"></script>
 <script src = "js/lib/jqease.js"></script>
 <script src = "js/lib/underscore.js"></script>
 <script src = "js/lib/backbone.js"></script>
-<script src = "js/app.js"></script>					<!-- Creates app -->
+<script src = "js/lib/backbone-validation.js"></script>
+<!-- app bootstrap -->
+<script src = "js/app.js"></script>					
+<!-- models -->
+<script src = "js/Models/EmployeeModel.js"></script>	
+<script src = "js/Models/CompanyModel.js"></script>	
+<script src = "js/Models/UserModel.js"></script>	
+<!-- views -->
 <script src = "js/Views/SectionView.js"></script>		
 <script src = "js/Views/LoginView.js"></script>		
 <script src = "js/Views/SearchView.js"></script>		
+<script src = "js/Views/AddEmployeeView.js"></script>		
 <script src = "js/Views/CoverView.js"></script>		
-<script src = "js/main.js"></script>				<!-- Runs app -->
+<!-- app entry point -->
+<script src = "js/main.js"></script>
 
 <!-- CSS -->
 <link rel="stylesheet" href="css/custom.css" title="Custom CSS" type="text/css" media="screen" charset="utf-8">

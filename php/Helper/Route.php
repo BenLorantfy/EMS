@@ -87,11 +87,7 @@ class Route{
 					}
 				}
 				if(Route::$echoReturn && $content != null){
-					if(is_string($content)){
-						echo $content;
-					}else{
-						echo json_encode($content);
-					}
+					echo json_encode($content);
 				}
 			}			
 		}
