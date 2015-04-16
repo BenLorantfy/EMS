@@ -17,6 +17,10 @@ class PageController{
 		$login = new View("login");
 		$login->render();
 		
+		$search = new View("search");
+		$search->show = false;
+		$search->render();
+		
 		View::EndBodyRender();
 		View::EndPageRender();
 	}

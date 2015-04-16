@@ -1,8 +1,8 @@
 App.Views.SectionView = Backbone.View.extend({
 	cover: $("#cover"),
-	animation: { progress:0 },
 	animate: function(show,back,howMuch,time,fade){
-		var $el = this.$el;
+		var $el = $(this.$el);
+		var animation = { progress:0 };
 		var sign = back ? -1 : 1;
 		
 		if(show){
@@ -23,8 +23,8 @@ App.Views.SectionView = Backbone.View.extend({
 		}
 		
 		$el.css("transform","scale(" + scale + "," + scale + ")");
-		this.animation.progress = 0;
-		$(this.animation).stop().animate({ progress: 1 },{
+		animation.progress = 0;
+		$(animation).stop().animate({ progress: 1 },{
 			 duration:time
 			,easing:"easeOutQuart"
 			,step:function(progress){
