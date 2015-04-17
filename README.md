@@ -9,3 +9,4 @@ Semester long project for Software Quality 2
 * Instant search (search as user is typing)
 * errors show up as user is entering information (not when user presses save)
 * no page reloading (i.e. no white flicker, no additional server request, not loading html that has already been loaded)
+* meta information (SEO, good practice)
