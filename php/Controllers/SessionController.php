@@ -52,6 +52,14 @@ class SessionController{
 		return $success;
 	}
 	
+	public function userType(){
+		if(isset($_SESSION["securityLevel"])){
+			return $_SESSION["securityLevel"] == 1 ? "admin" : "general";
+		}else{
+			return "none";
+		}
+	}
+	
 	public function isLogged(){
 		return isset($_SESSION["id"]) && isset($_SESSION["username"]) && isset($_SESSION["password"]) && isset($_SESSION["securityLevel"]);
 	}

@@ -1,12 +1,15 @@
 <?php
 namespace Controllers;
 use Controllers\EmployeeController;
+use Controllers\SessionController;
 use Views\View;
 
 class PageController{
 	
 	public function navigateToLogin(){
-		$this->renderStart(true,"admin");
+		// Contains information about session
+		$session = new SessionController();
+		$this->renderStart(true,$session->userType());
 		$this->renderCover(false);
 		$this->renderLogin();
 		$this->renderSearch(false);
@@ -15,7 +18,10 @@ class PageController{
 	}
 	
 	public function navigateToSearch(){
-		$this->renderStart(true,"admin");
+		// Contains information about session
+		$session = new SessionController();
+		
+		$this->renderStart(true,$session->userType());
 		$this->renderCover(false);
 		$this->renderLogin();
 		$this->renderSearch();
@@ -24,7 +30,10 @@ class PageController{
 	}
 	
 	public function navigateToAddEmployee(){
-		$this->renderStart(true,"admin");
+		// Contains information about session
+		$session = new SessionController();
+		
+		$this->renderStart(true,$session->userType());
 		$this->renderLogin();
 		$this->renderSearch(true,true);
 		$this->renderCover(true);

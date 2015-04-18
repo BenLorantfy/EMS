@@ -6,6 +6,7 @@ use Models\PartTimeEmployeeModel;
 use Models\SeasonalEmployeeModel;
 use Models\ContractEmployeeModel;
 use Views\View;
+use Helper\Connection;
 
 class EmployeeController{
 	public function getEmployee($request){
@@ -17,6 +18,6 @@ class EmployeeController{
 	}
 	
 	public function createEmployee($request){
-		return 12;
+		return $request->type;
 	}
 }
