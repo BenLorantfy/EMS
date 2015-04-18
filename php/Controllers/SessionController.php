@@ -49,7 +49,15 @@ class SessionController{
 			}
 		}	
 		
-		return $success;
+		return array("valid" => $success, "type" => $this->userType());
+	}
+	
+	public function userType(){
+		if(isset($_SESSION["securityLevel"])){
+			return $_SESSION["securityLevel"] == 1 ? "admin" : "general";
+		}else{
+			return "none";
+		}
 	}
 	
 	public function isLogged(){

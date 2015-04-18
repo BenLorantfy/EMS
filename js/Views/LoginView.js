@@ -37,10 +37,10 @@ App.Views.LoginView = App.Views.SectionView.extend({
 			    ,password:password
 		    }),
 		    dataType:"json",
-		    success: function(loggedIn){
-		        if(loggedIn){
+		    success: function(session){
+		        if(session.valid){
 		        	// Trigger login event
-			        view.trigger("login");
+			        view.trigger("login",session);
 		        }else{
 			        $.msgBox.error("Invalid Credentials")
 		        }

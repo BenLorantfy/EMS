@@ -55,7 +55,19 @@ var App = {
 		//
 		// Create navigation events
 		//
-		loginView.on("login",function(){
+		loginView.on("login",function(session){
+			//
+			// Update controls based on security levels
+			//
+			if(session.type == "admin"){
+				$("#admin").remove();
+			}else{
+				if($("#admin").length == 0){
+					$("head").append("<style id = 'admin'>.adminControl{ display:none; }</style>");
+				}
+			}
+			
+			// Navigates to search page
 			App.Router.navigate("search", { trigger: true });
 		});
 		
