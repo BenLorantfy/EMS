@@ -1,5 +1,6 @@
 <?php
 namespace Controllers;
+use Helper\Connection;
 
 //
 // SessionController
@@ -9,12 +10,50 @@ namespace Controllers;
 // logout the user, etc.
 //
 class SessionController{
+	private $db;
+	public function __construct(){
+		$this->db = Connection::connect();
+	}
+	
 	public function login($request){
-		return true;
+		$success = false;
+		
+		//
+		// Get credentials from request
+		//
+		$username = $request->username;
+		$password = $request->password;
+		
+		//
+		// Check database for user
+		//
+		$query = $this->db->prepare("SELECT id,password,securityLevel FROM User WHERE username = ? LIMIT 1");
+		if(!$query) throw new Exception($this->db->error);
+		if(!$query->bind_param("s",$username)) throw new Exception($this->db->error);
+		if(!$query->execute()) throw new Exception($this->db->error);
+		if(!$query->store_result()) throw new Exception($this->db->error);
+		
+		if($query->num_rows == 1){
+			if(!$query->bind_result($id,$hashedPassword,$securityLevel)) throw new Exception($this->db->error);
+			
+			//
+			// Check if the provided password matches the db password
+			//
+			$query->fetch();
+			if(password_verify($password,$hashedPassword)){
+				$_SESSION["id"] 	  = $id;
+				$_SESSION["username"] = $username;
+				$_SESSION["password"] = $password;
+				$_SESSION["securityLevel"] = $securityLevel;
+				$success = true;
+			}
+		}	
+		
+		return $success;
 	}
 	
 	public function isLogged(){
-		return true;
+		return isset($_SESSION["id"]) && isset($_SESSION["username"]) && isset($_SESSION["password"]) && isset($_SESSION["securityLevel"]);
 	}
 	
 	public function logout(){

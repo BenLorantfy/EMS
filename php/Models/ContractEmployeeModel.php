@@ -56,8 +56,8 @@ class ContractEmployeeModel{
 		return true;		
 	}
 	
-	public function GetAttributes(){
-		return get_object_vars($this);
+	public function __get($key){
+		return $this->$key;
 	}
 	
 }

@@ -32,17 +32,17 @@ App.Views.LoginView = App.Views.SectionView.extend({
 		$.ajax({
 		    url: '/session',
 		    type: 'POST',
-		    data:{
+		    data:JSON.stringify({
 			     username:username
 			    ,password:password
-		    },
+		    }),
 		    dataType:"json",
 		    success: function(loggedIn){
 		        if(loggedIn){
 		        	// Trigger login event
 			        view.trigger("login");
 		        }else{
-			        console.log("bad info");
+			        $.msgBox.error("Invalid Credentials")
 		        }
 		    }
 		});

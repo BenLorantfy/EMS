@@ -37,4 +37,5 @@ abstract class EmployeeModel{
 		$this->sin = $sin;
 		return true;		
 	}
+	
 }
