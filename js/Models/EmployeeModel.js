@@ -50,7 +50,20 @@
 		firstName:{
 			 min:0 // testing only
 			,required:false
+		}, 
+		lastName:{
+			 min:0 // testing only
+			,required:false
+		},
+		SIN:{
+			 min:0 // testing only
+			,required:false
+		},
+		dateOfBirth:{
+			 min:0 // testing only
+			,required:false
 		}
+		
     }
     
     //
