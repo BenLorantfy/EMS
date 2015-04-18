@@ -1,6 +1,8 @@
 <?php
 namespace Controllers;
+use Controllers\EmployeeController;
 use Views\View;
+
 class PageController{
 	
 	public function navigateToLogin(){
@@ -54,9 +56,13 @@ class PageController{
 	}
 	
 	private function renderSearch($show = true,$blurred = false){
+		$employeeController = new EmployeeController();
+		$employees = array();
+		
 		$search = new View("search");
 		$search->show = $show;
 		$search->blurred = $blurred;
+		$search->employees = $employees;
 		$search->render();		
 	}
 	

@@ -53,56 +53,16 @@
 			</div>
 			<div class = "results">
 				<table class = "resultTable" cellspacing="0" cellpadding="0">
-					<tr><td>John</td><td>Doe</td><td>1982 11 23</td><td>
-					<img class = "rowIcon" src = "assets/images/trash.png"/>
-					<img class = "rowIcon" src = "assets/images/clock.png"/>
-					<img class = "rowIcon" src = "assets/images/pen.png"/>
-					</td></tr>
-					<tr><td>Jane</td><td>Smith</td><td>1990 11 10</td><td>
-					<img class = "rowIcon" src = "assets/images/trash.png"/>
-					<img class = "rowIcon" src = "assets/images/clock.png"/>
-					<img class = "rowIcon" src = "assets/images/pen.png"/>
-					</td></tr>
-					<tr><td>John</td><td>Doe</td><td>1982 11 23</td><td>
-					<img class = "rowIcon" src = "assets/images/trash.png"/>
-					<img class = "rowIcon" src = "assets/images/clock.png"/>
-					<img class = "rowIcon" src = "assets/images/pen.png"/>
-					</td></tr>
-					<tr><td>Jane</td><td>Smith</td><td>1990 11 10</td><td>
-					<img class = "rowIcon" src = "assets/images/trash.png"/>
-					<img class = "rowIcon" src = "assets/images/clock.png"/>
-					<img class = "rowIcon" src = "assets/images/pen.png"/>
-					</td></tr>
-					<tr><td>John</td><td>Doe</td><td>1982 11 23</td><td>
-					<img class = "rowIcon" src = "assets/images/trash.png"/>
-					<img class = "rowIcon" src = "assets/images/clock.png"/>
-					<img class = "rowIcon" src = "assets/images/pen.png"/>
-					</td></tr>
-					<tr><td>Jane</td><td>Smith</td><td>1990 11 10</td><td>
-					<img class = "rowIcon" src = "assets/images/trash.png"/>
-					<img class = "rowIcon" src = "assets/images/clock.png"/>
-					<img class = "rowIcon" src = "assets/images/pen.png"/>
-					</td></tr>
-					<tr><td>John</td><td>Doe</td><td>1982 11 23</td><td>
-					<img class = "rowIcon" src = "assets/images/trash.png"/>
-					<img class = "rowIcon" src = "assets/images/clock.png"/>
-					<img class = "rowIcon" src = "assets/images/pen.png"/>
-					</td></tr>
-					<tr><td>Jane</td><td>Smith</td><td>1990 11 10</td><td>
-					<img class = "rowIcon" src = "assets/assets/images/trash.png"/>
-					<img class = "rowIcon" src = "assets/images/clock.png"/>
-					<img class = "rowIcon" src = "assets/images/pen.png"/>
-					</td></tr>
-					<tr><td>John</td><td>Doe</td><td>1982 11 23</td><td>
-					<img class = "rowIcon" src = "assets/images/trash.png"/>
-					<img class = "rowIcon" src = "assets/images/clock.png"/>
-					<img class = "rowIcon" src = "assets/images/pen.png"/>
-					</td></tr>
-					<tr><td>Jane</td><td>Smith</td><td>1990 11 10</td><td>
-					<img class = "rowIcon" src = "assets/images/trash.png"/>
-					<img class = "rowIcon" src = "assets/images/clock.png"/>
-					<img class = "rowIcon" src = "assets/images/pen.png"/>
-					</td></tr>
+					<?php foreach ($this->employees as $employee): ?>
+						<tr>
+							<td><?= $employee["firstName"]; ?></td><td><?= $employee["lastName"]; ?></td><td><?= $employee["dateOfBirth"]; ?></td>
+							<td>
+								<img class = "rowIcon" src = "assets/images/trash.png"/>
+								<img class = "rowIcon" src = "assets/images/clock.png"/>
+								<img class = "rowIcon" src = "assets/images/pen.png"/>
+							</td>
+						</tr>						
+					<?php endforeach ?>
 				</table>
 			</div>
 		</div>

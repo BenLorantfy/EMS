@@ -9,7 +9,11 @@ namespace Controllers;
 // logout the user, etc.
 //
 class SessionController{
-	public function login($username,$password){
+	public function login($request){
+		return true;
+	}
+	
+	public function isLogged(){
 		return true;
 	}
 	

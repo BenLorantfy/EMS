@@ -1,9 +1,19 @@
 <?php
 namespace Controllers;
+use Controllers\SessionController;
+use Models\FullTimeEmployeeModel;
+use Models\PartTimeEmployeeModel;
+use Models\SeasonalEmployeeModel;
+use Models\ContractEmployeeModel;
+use Views\View;
 
 class EmployeeController{
 	public function getEmployee($request){
-		return array(); // return the employee data
+	
+	}
+	
+	public function searchEmployees($options){
+		
 	}
 	
 	public function createEmployee($request){
