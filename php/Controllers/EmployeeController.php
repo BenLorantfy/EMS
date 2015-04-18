@@ -2,11 +2,11 @@
 namespace Controllers;
 
 class EmployeeController{
-	public function getEmployee($type,$id){
+	public function getEmployee($request){
 		return array(); // return the employee data
 	}
 	
-	public function createEmployee($type,$id,$checkErrors){
-		return 12; // return employee id
+	public function createEmployee($request){
+		return 12;
 	}
 }

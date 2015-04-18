@@ -332,3 +332,7 @@ section{
 	margin-right:5px;
 	cursor: pointer;
 }
+
+.unselectedField{
+	display: none;
+}

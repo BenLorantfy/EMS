@@ -3,14 +3,7 @@ namespace Helper;
 use \stdClass;
 
 class Route{
-	static private $paramStyle = "regular";
-	static private $echoReturn = true;
-	static public function config($options){
-		if(isset($options["paramStyle"])) Route::$paramStyle = $options["paramStyle"];
-		if(isset($options["echoReturn"])) Route::$echoReturn = $options["echoReturn"];
-	}
-	
-	static private function route($type="",$matchURI = "*",$middleware = null,$callback = null){
+	static private function route($type="",$matchURI = "*",$callback = null){
 		if($type == "ANY" || $type == $_SERVER['REQUEST_METHOD']){
 			if($matchURI != "*"){
 				$actualURI = $_SERVER["REQUEST_URI"];
@@ -20,7 +13,7 @@ class Route{
 				$matchURIParts = explode("/",$matchURI);
 				$numActualURIParts = count($actualURIParts);
 				$numMatchURIParts = count($matchURIParts);
-				$request = (Route::$paramStyle == "object") ? new stdClass() : array();
+				$request = new stdClass();
 				
 				$match = true;
 				if($numActualURIParts == $numMatchURIParts){
@@ -33,12 +26,7 @@ class Route{
 							}
 						}else{
 							$placeholderName = str_replace(array("{","}"), "", $matchURIParts[$i]);
-							if(Route::$paramStyle == "object"){
-								$request->$placeholderName = $actualURIParts[$i];
-							}else{
-								array_push($request, $actualURIParts[$i]);
-							}
-							
+							$request->$placeholderName = $actualURIParts[$i];
 						}
 					}
 				}else{
@@ -46,70 +34,50 @@ class Route{
 				}		
 			}
 
-			
 			if($match){
-				// Add payload to parameters
-				$payload = array();
-				parse_str(file_get_contents('php://input'), $payload);
-				foreach($payload as $key => $value){
-					if(Route::$paramStyle == "object"){
-						$request->$key = $value;
-					}else{
-						$request[$key] = $value;
-					}
-				}
-			
-				$content = null;
-				if($middleware != null && $callback != null){
-					if(is_callable($middleware)){
-						if($middleware()){
-							if(Route::$paramStyle == "object"){
-								$content = call_user_func($callback,$request);
-							}else{
-								$content = call_user_func_array($callback, $request);
-							}
-						}
-					}else{
-						if($middleware){
-							if(Route::$paramStyle == "object"){
-								$content = call_user_func($callback,$request);
-							}else{
-								$content = call_user_func_array($callback, $request);
-							}
-						}
-					}
-				}else if($middleware != null){
-					$callback = $middleware;
-					if(Route::$paramStyle == "object"){
-						$content = call_user_func($callback,$request);
-					}else{
-						$content = call_user_func_array($callback, $request);
-					}
-				}
-				if(Route::$echoReturn && $content != null){
+				
+				//
+				// Gets json request payload from php://input
+				//
+				$payload = json_decode(file_get_contents("php://input"));
+				
+				//
+				// Merges URL request information and payload request information
+				//
+				$request = (object)array_merge((array)$request, (array)$payload);
+				
+				//
+				// Calls provided callback with request object
+				//
+				$content = $callback($request);
+				
+				//
+				// If callback returned something, echo it back in json form
+				//
+				if(isset($content)){
 					echo json_encode($content);
 				}
 			}			
 		}
 	}
 	
-	static public function get($matchURI = "*",$middleware = null,$callback = null){
-		Route::route("GET",$matchURI,$middleware,$callback);
+	static public function get($matchURI = "*",$callback = null){
+		Route::route("GET",$matchURI,$callback);
 	}
 	
-	static public function post($matchURI = "*",$middleware = null,$callback = null){
-		Route::route("POST",$matchURI,$middleware,$callback);
+	static public function post($matchURI = "*",$callback = null){
+		Route::route("POST",$matchURI,$callback);
 	}
 	
-	static public function put($matchURI = "*",$middleware = null,$callback = null){
-		Route::route("PUT",$matchURI,$middleware,$callback);
+	static public function put($matchURI = "*",$callback = null){
+		Route::route("PUT",$matchURI,$callback);
 	}
 	
-	static public function delete($matchURI = "*",$middleware = null,$callback = null){
-		Route::route("DELETE",$matchURI,$middleware,$callback);
+	static public function delete($matchURI = "*",$callback = null){
+		Route::route("DELETE",$matchURI,$callback);
 	}
 	
-	static public function any($matchURI = "*",$middleware = null,$callback = null){
-		Route::route("ANY",$matchURI,$middleware,$callback);
+	static public function any($matchURI = "*",$callback = null){
+		Route::route("ANY",$matchURI,$callback);
 	}
 }

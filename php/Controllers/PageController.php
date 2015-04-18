@@ -3,46 +3,44 @@ namespace Controllers;
 use Views\View;
 class PageController{
 	
-	
 	public function navigateToLogin(){
-		$this->renderStart();
-		$this->renderLogin(true);
+		$this->renderStart(true,"admin");
+		$this->renderCover(false);
+		$this->renderLogin();
 		$this->renderSearch(false);
 		$this->renderAddEmployee(false);
 		$this->renderEnd();
 	}
 	
 	public function navigateToSearch(){
-		$this->renderStart();
-		$this->renderLogin(false);
-		$this->renderSearch(true);
+		$this->renderStart(true,"admin");
+		$this->renderCover(false);
+		$this->renderLogin();
+		$this->renderSearch();
 		$this->renderAddEmployee(false);		
 		$this->renderEnd();		
 	}
 	
 	public function navigateToAddEmployee(){
-		$this->renderStart();
-		$this->renderLogin(false);
-		$this->renderSearch(false);
+		$this->renderStart(true,"admin");
+		$this->renderLogin();
+		$this->renderSearch(true,true);
+		$this->renderCover(true);
 		$this->renderAddEmployee(true);		
 		$this->renderEnd();		
 	}
 	
-	
-	private function renderStart(){
+	private function renderStart($isLogged,$userType){
 		View::StartPageRender();
 		View::StartHeadRender();
 		
 		$head = new View("head");
-		$head->isLogged = "true";
-		$head->userType = "admin";
+		$head->isLogged = $isLogged ? "true" : "false";
+		$head->userType = $userType;
 		$head->render();
 		
 		View::EndHeadRender();
 		View::StartBodyRender();		
-		
-		$common = new View("common");
-		$common->render();
 	}
 	
 	private function renderEnd(){
@@ -50,21 +48,27 @@ class PageController{
 		View::EndPageRender();
 	}
 	
-	private function renderLogin($display){
+	private function renderLogin(){
 		$login = new View("login");
-		$login->show = $display;
 		$login->render();		
 	}
 	
-	private function renderSearch($display){
+	private function renderSearch($show = true,$blurred = false){
 		$search = new View("search");
-		$search->show = $display;
+		$search->show = $show;
+		$search->blurred = $blurred;
 		$search->render();		
 	}
 	
-	private function renderAddEmployee($display){
+	private function renderAddEmployee($show = true){
 		$search = new View("addEmployee");
-		$search->show = $display;
+		$search->show = $show;
 		$search->render();			
+	}
+	
+	private function renderCover($show = false){
+		$cover = new View("cover");
+		$cover->show = $show;
+		$cover->render();
 	}
 }

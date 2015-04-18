@@ -1,8 +1,8 @@
 App.Views.SectionView = Backbone.View.extend({
 	animate: function(show,back,howMuch,time,fade){
 		var $el = $(this.$el);
-		var animation = { progress:0 };
 		var sign = back ? -1 : 1;
+		var animation = { progress: 0 };
 		
 		if(show){
 			if(back){
@@ -22,7 +22,6 @@ App.Views.SectionView = Backbone.View.extend({
 		}
 		
 		$el.css("transform","scale(" + scale + "," + scale + ")");
-		animation.progress = 0;
 		$(animation).stop().animate({ progress: 1 },{
 			 duration:time
 			,easing:"easeOutQuart"
@@ -50,6 +49,12 @@ App.Views.SectionView = Backbone.View.extend({
 	},
 	hide: function(){
 		this.animate(false,true,0.3,800,true);
+	},
+	reverseHide:function(){
+		this.animate(false,false,0.3,800,true);
+	},
+	reverseShow:function(){
+		this.animate(true,false,0.3,800,true);
 	},
 	dialogyHide: function(){
 		this.animate(false,true,0.05,600,true);

@@ -39,8 +39,8 @@ App.Views.LoginView = App.Views.SectionView.extend({
 		    dataType:"json",
 		    success: function(loggedIn){
 		        if(loggedIn){
-			        Backbone.Events.trigger("login");
-			        view.hide();
+		        	// Trigger login event
+			        view.trigger("login");
 		        }else{
 			        console.log("bad info");
 		        }
@@ -50,7 +50,8 @@ App.Views.LoginView = App.Views.SectionView.extend({
 	
 	
 	initialize: function(){
-		this.show();
+		var view = this;
+		view.animation = { progress: 0 };
 	},
 	
 	render: function(){

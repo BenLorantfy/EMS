@@ -5,16 +5,11 @@ App.Views.SearchView = App.Views.SectionView.extend({
 	},
 	
 	openAddEmployee:function(){
-		var view = this;
-		view.blur();
-		Backbone.Events.trigger("openAddEmployee");
+		this.trigger("open.addEmployee");
 	},
 	
 	initialize: function(){
 		var view = this;
-		Backbone.Events.on("login",function(){
-			window.history.pushState("search", "search", "/search");
-			view.show();
-		});
+		view.animation = { progress: 0 };
 	}
 });
