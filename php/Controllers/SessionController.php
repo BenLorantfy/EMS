@@ -49,7 +49,7 @@ class SessionController{
 			}
 		}	
 		
-		return $success;
+		return array("valid" => $success, "type" => $this->userType());
 	}
 	
 	public function userType(){
