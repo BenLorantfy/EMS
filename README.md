@@ -4,6 +4,7 @@ Semester long project for Software Quality 2
 ## Features to show Demo Day
 ### User Experience / User Interface
 * search-engine-friendly (and people friendly) urls
+* routing through one php script so php isn't exposed if php fails
 * fancy navigation
 * urls change as user navigates without refreshing/changing page
 * Instant search (search as user is typing)
