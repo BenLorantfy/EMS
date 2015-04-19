@@ -18,7 +18,7 @@ require_once("php/postcall.php");
 /*
  * NAME 	: Reports
  *
- * PURPOSE 	: 
+ * PURPOSE 	: Reports class
  *
  */
 class Reports{
