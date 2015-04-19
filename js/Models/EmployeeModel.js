@@ -243,7 +243,10 @@
 				}
 			}
 		},
-		companyName:alphabetical
+		companyName:{
+			required:false
+			,fn:alphabetical
+		}
     }
     
     //
@@ -458,7 +461,7 @@
             min: 0
 		    , required: false
         }
-		,companyName:{
+		,contractCompanyName:{
 			required: false
 			,fn:alphabetical
 		}
