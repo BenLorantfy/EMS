@@ -1,4 +1,4 @@
-App.Views.AddEmployeeView = App.Views.SectionView.extend({
+App.Views.EmployeeView = App.Views.SectionView.extend({
 	events: {
 		 "change .field":"checkErrors"
 		,"click .addButton":"add"
