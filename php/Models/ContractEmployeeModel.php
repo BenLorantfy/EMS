@@ -1,7 +1,7 @@
 <?php
 namespace Models;
 class ContractEmployeeModel{
-	private $companyName;
+	private $contractCompanyName;
 	private $corporationName;
 	private $dateOfIncorporation;
 	private $businessNumber;

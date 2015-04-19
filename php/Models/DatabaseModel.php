@@ -256,7 +256,7 @@ class DatabaseModel{
 	}
 	
 	public function AddContract($input, $status, $user_id){
-		$companyName = $input->companyName;
+		$companyName = $input->contractCompanyName;
 		$dateOfIncorporation = $input->dateOfIncorporation;
 		$corporationName = $input->corporationName;
 		$businessNumber = $input->businessNumber;
