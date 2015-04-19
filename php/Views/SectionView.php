@@ -1,6 +1,6 @@
 <?php
 namespace Views;
-class View{
+class SectionView{
 	private $template = "";
 	private $members = array();
 	
@@ -29,7 +29,7 @@ class View{
 	}
 	
 	public function render(){
-		require "php/Views/" . $this->template . ".phtml";
+		require "Views/pages/" . $this->template . ".phtml";
 	}
 	
 	static public function StartPageRender(){

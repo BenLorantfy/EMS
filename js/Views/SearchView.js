@@ -4,11 +4,16 @@ App.Views.SearchView = App.Views.SectionView.extend({
 		 "click .addEmployeeButton":"openAddEmployee"
 		,"click .auditButton":"openAudit"
 		,"click .addEmployeeButton":"openAddEmployee"
+		,"click .reportsButton":"openReports"
 		,"click tr":"openViewEmployee"
 	},
 	
 	openAddEmployee:function(){
 		this.trigger("open.addEmployee");
+	},
+	
+	openReports:function(){
+		this.trigger("open.reports");
 	},
 	
 	openAudit:function(){
