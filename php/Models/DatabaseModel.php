@@ -1,14 +1,11 @@
 <?php
 namespace Models;
+use Helper\Connection;
+
 class Database{
 	private $db;
-	
-	public function __construct()
-	{
-		//Connect will be here
-		if($this->db->connect_errno > 0){
-			throw new Exception("Connect failed: " . $db->connect_error);
-		}
+	public function __construct(){
+		$this->db = Connection::connect();
 	}
 	
 	public function AddFullTime($input){

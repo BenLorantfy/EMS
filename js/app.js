@@ -41,6 +41,9 @@ var App = {
 			}else if(addEmployeeView.visible()){
 				searchView.focus();
 				addEmployeeView.dialogyHide();
+			}else if(auditView.visible()){
+				searchView.focus();
+				auditView.dialogyHide();
 			}else{
 				// more sections
 			}
