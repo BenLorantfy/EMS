@@ -117,3 +117,5 @@ sunday				int,
 PRIMARY KEY (id),
 FOREIGN KEY (employee_id) REFERENCES Employee(id)
 );
+
+insert into user (username, password, securityLevel) VALUES ("user", "$2y$10$DU3uoyhM9VsekGRL9HB0zOwVNQbMHrjD9IL0n/BzwTElQBROY7NBi", 1);
