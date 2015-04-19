@@ -1,10 +1,10 @@
 <?php
 namespace Models;
 abstract class EmployeeModel{
-	protected $firstName;
-	protected $lastName;
-	protected $dateOfBirth;
-	protected $sin;
+	protected $firstName = "";
+	protected $lastName = "";
+	protected $dateOfBirth = "";
+	protected $sin = "";
 	
 	public function SetFirstName($firstName){
 		// todo: validation logic

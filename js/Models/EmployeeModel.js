@@ -2,44 +2,6 @@
 // Use a self-executing function to protect the global scope
 //
 (function(){
-	/*
-		List of field names
-		===================
-		
-		Common
-		======
-		firstName
-		lastName
-		dateOfBirth
-		sin
-		
-		Full Time
-		=========
-		dateOfHire
-		dateOfTermination
-		salary
-		
-		Part Time
-		=========
-		dateOfHire
-		dateOfTermination
-		hourlyRate
-		
-		Seasonal
-		========
-		season
-		seasonYear
-		piecePay
-		
-		Contract
-		========
-		companyName
-		dateOfIncorporation
-		businessNumber
-		startDate
-		endDate
-		fixedAmount
-	*/
 	
 	//
 	//check for invalid character for name
@@ -129,6 +91,24 @@
 		}	  
 	}
 	
+	//
+    //check for required field (salary...)
+    //
+	//function checkRequiredField(value) {
+	//	if(typeof value !== "undefined")
+	//	{
+	//		value.trim();
+	//		var number = /^[0-9 ]+/;
+	//		if (!value.match(number)) {
+	//			return 'Contains illegal characters, only allow number greater than or equal to 0';
+	//		}
+	//		if(value == "")
+	//		{
+	//			return 'Contains illegal characters, only allow number greater than or equal to 0';
+	//		}
+	//	}
+	//}
+	
     //
     //check for numerical (bn)
     //
@@ -152,20 +132,11 @@
     //
 	function checkDateFormat(value) {
 		if(typeof value !== "undefined")
-		{
-			value.trim(); 
+		{	 
+			value.trim();
 			var pattern = /^0$|^((19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01]))$/;
 			if (!value.match(pattern)) {
 				return 'Incorrect format. e.g. yyyy-mm-dd';
-			}
-
-			//cross field check
-			var date = new Date(value);
-			var birthday = this.get("dateOfBirth");
-			if(typeof birthday !== "undefined"){
-				if (date > birthday) {
-					return 'This date cannot be greater than birthday';
-				}
 			}
 		}
 	}
@@ -253,16 +224,66 @@
 	var fullTimeRules = _.extend({
 	    // full time validation rules go here
 	    salary:{
-	        min:0
-		    ,required:true
+			required: false
+			,min:0
 	    }
 	    ,dateOfHire:{
 	        required: false
-			,fn:checkHDateFormat
+			, fn: function (value) {
+				if(typeof value !== "undefined")
+				{
+					value.trim();
+					var result = checkDateFormat(value);
+					if(typeof result !== "undefined")
+					{
+						return result;
+					}
+					
+					//cross field check
+					var date = new Date(value);
+					var birthday = new Date(this.get("dateOfBirth"));
+					if(typeof birthday !== "undefined"){
+						if (date < birthday) {
+							return 'This date cannot be set before birthday';
+						}
+					}
+					var dateOfTermination = new Date(this.get("dateOfTermination"));
+					if(typeof dateOfTermination !== "undefined"){
+						if (date > dateOfTermination) {
+							return 'This date cannot be set after the date of termination';
+						}
+					}
+				}
+			}
 	    }
         , dateOfTermination: {
             required: false
-            ,fn:checkTDateFormat
+            , fn: function (value) {
+				if(typeof value !== "undefined")
+				{
+					value.trim();
+					var result = checkDateFormat(value);
+					if(typeof result !== "undefined")
+					{
+						return result;
+					}
+					
+					//cross field check
+					var date = new Date(value);
+					var birthday = new Date(this.get("dateOfBirth"));
+					if(typeof birthday !== "undefined"){
+						if (date < birthday) {
+							return 'This date cannot be set before birthday';
+						}
+					}
+					var dateOfHire = new Date(this.get("dateOfHire"));
+					if(typeof dateOfHire !== "undefined"){
+						if (date < dateOfHire) {
+							return 'This date cannot be set before the date of hired';
+						}
+					}
+				}
+			}
         }
     },baseRules);
     
@@ -273,13 +294,65 @@
 	    // part time validation rules go here 
 	    hourlyRate:{
 		     min:0
-		    , required: true
+		    , required: false
 	    }
         , dateOfHire: {
             required: false
+			, fn: function (value) {
+				if(typeof value !== "undefined")
+				{
+					value.trim();
+					var result = checkDateFormat(value);
+					if(typeof result !== "undefined")
+					{
+						return result;
+					}
+					
+					//cross field check
+					var date = new Date(value);
+					var birthday = new Date(this.get("dateOfBirth"));
+					if(typeof birthday !== "undefined"){
+						if (date < birthday) {
+							return 'This date cannot be set before birthday';
+						}
+					}
+					var dateOfTermination = new Date(this.get("dateOfTermination"));
+					if(typeof dateOfTermination !== "undefined"){
+						if (date > dateOfTermination) {
+							return 'This date cannot be set after the date of termination';
+						}
+					}
+				}
+			}
         }
         , dateOfTermination: {
-            required: false         
+            required: false 
+			, fn: function (value) {
+				if(typeof value !== "undefined")
+				{
+					value.trim();
+					var result = checkDateFormat(value);
+					if(typeof result !== "undefined")
+					{
+						return result;
+					}
+					
+					//cross field check
+					var date = new Date(value);
+					var birthday = new Date(this.get("dateOfBirth"));
+					if(typeof birthday !== "undefined"){
+						if (date < birthday) {
+							return 'This year cannot be set before birthday';
+						}
+					}
+					var dateOfHire = new Date(this.get("dateOfHire"));
+					if(typeof dateOfHire !== "undefined"){
+						if (date < dateOfHire) {
+							return 'This date cannot be set before the date of hired';
+						}
+					}
+				}
+			}			
         }
     },baseRules);
     
@@ -291,32 +364,46 @@
         season: {
             required: false
             , fn: function (value) {
-                if ((value !== 'WINTER') && (value !== 'SPRING')
-                    && (value !== 'SUMMER') && (value !== 'FALL')) {
-                    return 'false';
-                }
+				if(typeof value !== "undefined")
+				{
+					value.trim();
+					if ((value !== 'WINTER') && (value !== 'SPRING')
+						&& (value !== 'SUMMER') && (value !== 'FALL')) {
+						return 'false';
+					}
+				}	
             }
         }
         , piecePay: {
             min: 0
-            , required: true
+            , required: false
 
         }
         , seasonYear: {
             min: 0
             , required: false
             , fn: function (value) {
-                var pattern = /^((19|20)\d\d)$/;
-                if (!value.match(pattern)) {
-                    return 'Incorrect format. e.g. yyyy';
-                }
+				if(typeof value !== "undefined")
+				{
+					value.trim();
+					var number = /^[0-9 ]+/;
+					var pattern = /^((19|20)\d\d)$/;
+					if (!value.match(number)) {
+						return 'Contains illegal characters';
+					}
+					if (!value.match(pattern)) {
+						return 'Incorrect format. e.g. yyyy';
+					}
 
-                //cross field check
-                var date = new Date(value);
-                var birthday = new Date(this.get("dateOfBirth"));
-                if (date.getFullYear() > birthday.getFullYear()) {
-                    return 'This year cannot be greater than birthday';
-                }
+					//cross field check
+					var date = new Date(value);
+					var birthday = new Date(this.get("dateOfBirth"));
+					if(typeof birthday !== "undefined"){	
+						if (date.getFullYear() < birthday.getFullYear()) {
+							return 'This year cannot be set before birthday';
+						}
+					}
+				}
             }
         }
             
@@ -329,24 +416,105 @@
         // contract employee validation rules go here
         fixedContractAmount: {
             min: 0
-		    , required: true
+		    , required: false
         }
 		,companyName:{
 			fn:alphabetical
+			, required: false
 		}
 		,dateOfIncorporation:{
-			fn:checkDateFormat
+				fn: function (value) {
+				if(typeof value !== "undefined")
+				{
+					value.trim();
+					var result = checkDateFormat(value);
+					if(typeof result !== "undefined")
+					{
+						return result;
+					}
+
+					//cross field check
+					var date = new Date(value);
+					var startDate = new Date(this.get("startDate"));
+					if(typeof startDate !== "undefined"){	
+						if (date > startDate) {
+							return 'This date cannot be set after the date contract started';
+						}
+					}
+					var endDate = new Date(this.get("endDate"));
+					if(typeof endDate !== "undefined"){	
+						if (date > endDate) {
+							return 'This date cannot be set after the date of contract stopped';
+						}
+					}
+				}
+            }
+			, required: false
 		}
 		,businessNumber:{
 			fn:checkBn
+			, required: false
 		}
 		,startDate:{
 			fn: function(value)
 			{
-				return checkDateFormat(value);
+				if(typeof value !== "undefined")
+				{
+					value.trim();
+					var result = checkDateFormat(value);
+					if(typeof result !== "undefined")
+					{
+						return result;
+					}
+
+					//cross field check
+					var date = new Date(value);
+					var dateOfIncorporation = new Date(this.get("dateOfIncorporation"));
+					if(typeof dateOfIncorporation !== "undefined"){	
+						if (date < dateOfIncorporation) {
+							return 'This date cannot be set before the date of incorporation';
+						}
+					}
+					var endDate = new Date(this.get("endDate"));
+					if(typeof endDate !== "undefined"){	
+						if (date > endDate) {
+							return 'This date cannot be set after the date of contract stopped';
+						}
+					}
+				}
 			}
+			, required: false
 		}
-		
+		,endDate:{
+			fn: function(value)
+			{
+				if(typeof value !== "undefined")
+				{
+					value.trim();
+					var result = checkDateFormat(value);
+					if(typeof result !== "undefined")
+					{
+						return result;
+					}
+
+					//cross field check
+					var date = new Date(value);
+					var dateOfIncorporation = new Date(this.get("dateOfIncorporation"));
+					if(typeof dateOfIncorporation !== "undefined"){	
+						if (date < dateOfIncorporation) {
+							return 'This date cannot be set before the date of incorporation';
+						}
+					}
+					var startDate = new Date(this.get("startDate"));
+					if(typeof startDate !== "undefined"){	
+						if (date < startDate) {
+							return 'This date cannot be set before the date of contract started';
+						}
+					}
+				}
+			}
+			, required: false
+		}
     }
 	   
 
