@@ -60,5 +60,6 @@ class FrontController{
 		Route::get("/login",array(new PageController(),"navigateToLogin"));
 		Route::get("/search",array(new PageController(),"navigateToSearch"));
 		Route::get("/addEmployee",array(new PageController(),"navigateToAddEmployee"));
+		Route::get("/audit",array(new PageController(),"navigateToAudit"));
 	}
 }

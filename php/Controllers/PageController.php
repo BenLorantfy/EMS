@@ -14,6 +14,7 @@ class PageController{
 		$this->renderLogin();
 		$this->renderSearch(false);
 		$this->renderAddEmployee(false);
+		$this->renderAudit(false);	
 		$this->renderEnd();
 	}
 	
@@ -25,7 +26,8 @@ class PageController{
 		$this->renderCover(false);
 		$this->renderLogin();
 		$this->renderSearch();
-		$this->renderAddEmployee(false);		
+		$this->renderAddEmployee(false);	
+		$this->renderAudit(false);			
 		$this->renderEnd();		
 	}
 	
@@ -37,7 +39,20 @@ class PageController{
 		$this->renderLogin();
 		$this->renderSearch(true,true);
 		$this->renderCover(true);
-		$this->renderAddEmployee(true);		
+		$this->renderAddEmployee(true);
+		$this->renderAudit(false);
+		$this->renderEnd();		
+	}
+	
+	public function navigateToAudit(){
+		$session = new SessionController();
+	
+		$this->renderStart(true,"admin");
+		$this->renderLogin();
+		$this->renderSearch(true,true);
+		$this->renderCover(true);
+		$this->renderAddEmployee(false);
+		$this->renderAudit(true);		
 		$this->renderEnd();		
 	}
 	
@@ -77,6 +92,12 @@ class PageController{
 	
 	private function renderAddEmployee($show = true){
 		$search = new View("addEmployee");
+		$search->show = $show;
+		$search->render();			
+	}
+	
+	private function renderAudit($show = true){
+		$search = new View("audit");
 		$search->show = $show;
 		$search->render();			
 	}
