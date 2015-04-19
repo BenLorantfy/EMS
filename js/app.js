@@ -20,6 +20,7 @@ var App = {
 		var loginView = new App.Views.LoginView({ el:"#login" });
 		var searchView = new App.Views.SearchView({ el:"#search" });
 		var addEmployeeView = new App.Views.AddEmployeeView({ el:"#addEmployee", model:new App.Models.FullTimeEmployeeModel() });
+		var auditView = new App.Views.AuditView({ el:"#audit" });
 		
 		//
 		// Create view routes
@@ -52,6 +53,13 @@ var App = {
 			}
 		});
 		
+		App.Router.on("route:audit",function(){
+			if(!auditView.visible()){
+				searchView.blur();
+				auditView.dialogyShow();				
+			}
+		});
+		
 		//
 		// Create navigation events
 		//
@@ -75,8 +83,16 @@ var App = {
 			App.Router.navigate("addEmployee",{ trigger: true });
 		});
 		
+		searchView.on("open.audit",function(){
+			App.Router.navigate("audit",{ trigger: true });
+		});
+		
 		addEmployeeView.on("done",function(){
 			App.Router.navigate("search",{ trigger: true });
+		});
+		
+		auditView.on("done", function(){
+			App.Router.navigate("search", {trigger: true});
 		});
 		
 		//
