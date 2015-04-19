@@ -1,3 +1,4 @@
 <?php
-require "php/Controllers/FrontController.php";
+chdir("php");
+require "Controllers/FrontController.php";
 new Controllers\FrontController();

@@ -2,7 +2,7 @@
 namespace Controllers;
 use Controllers\EmployeeController;
 use Controllers\SessionController;
-use Views\View;
+use Views\SectionView;
 
 class PageController{
 	
@@ -16,6 +16,7 @@ class PageController{
 		$this->renderAddEmployee(false);
 		$this->renderAudit(false);	
 		$this->renderViewEmployee(false);
+		$this->renderReports(false);
 		$this->renderEnd();
 	}
 	
@@ -29,7 +30,8 @@ class PageController{
 		$this->renderSearch();
 		$this->renderAddEmployee(false);		
 		$this->renderViewEmployee(false);		
-		$this->renderAudit(false);			
+		$this->renderAudit(false);
+		$this->renderReports(false);	
 		$this->renderEnd();		
 	}
 	
@@ -44,6 +46,7 @@ class PageController{
 		$this->renderAddEmployee(true);
 		$this->renderViewEmployee(true);
 		$this->renderAudit(false);
+		$this->renderReports(false);
 		$this->renderEnd();		
 	}
 	
@@ -57,6 +60,7 @@ class PageController{
 		$this->renderAddEmployee(false);
 		$this->renderViewEmployee(false);		
 		$this->renderAudit(true);		
+		$this->renderReports(false);
 		$this->renderEnd();		
 	}
 	
@@ -70,7 +74,8 @@ class PageController{
 		$this->renderCover(true);
 		$this->renderAddEmployee(false);		
 		$this->renderViewEmployee(true);	
-		$this->renderAudit(false);	
+		$this->renderAudit(false);
+		$this->renderReports(false);	
 		$this->renderEnd();		
 	}
 	
@@ -85,34 +90,50 @@ class PageController{
 		$this->renderAddEmployee(false);		
 		$this->renderEditEmployee(true);
 		$this->renderAudit(false);	
+		$this->renderReports(false);
+		$this->renderEnd();		
+	}
+	
+	public function navigateToReports(){
+		// Contains information about session
+		$session = new SessionController();
+		
+		$this->renderStart(true,$session->userType());
+		$this->renderLogin();
+		$this->renderSearch(true,true);
+		$this->renderCover(true);
+		$this->renderAddEmployee(false);		
+		$this->renderEditEmployee(false);
+		$this->renderAudit(false);	
+		$this->renderReports(true);
 		$this->renderEnd();		
 	}
 	
 	private function renderStart($isLogged,$userType){
-		View::StartPageRender();
-		View::StartHeadRender();
+		SectionView::StartPageRender();
+		SectionView::StartHeadRender();
 		
-		$head = new View("head");
+		$head = new SectionView("head");
 		$head->isLogged = $isLogged ? "true" : "false";
 		$head->userType = $userType;
 		$head->render();
 		
-		View::EndHeadRender();
-		View::StartBodyRender();		
+		SectionView::EndHeadRender();
+		SectionView::StartBodyRender();		
 	}
 	
 	private function renderEnd(){
-		View::EndBodyRender();
-		View::EndPageRender();
+		SectionView::EndBodyRender();
+		SectionView::EndPageRender();
 	}
 	
 	private function renderLogin(){
-		$login = new View("login");
+		$login = new SectionView("login");
 		$login->render();		
 	}
 	
 	private function renderSearch($show = true,$blurred = false){
-		$search = new View("search");
+		$search = new SectionView("search");
 		$search->show = $show;
 		$search->blurred = $blurred;
 		$search->employees = array(array("firstName" => "Ben", "lastName" => "Lorantfy", "dateOfBirth" => "1995/11/10"),array("firstName" => "Ben", "lastName" => "Lorantfy", "dateOfBirth" => "1995/11/10"));
@@ -120,34 +141,40 @@ class PageController{
 	}
 	
 	private function renderAddEmployee($show = true){
-		$employeeView = new View("employee");
+		$employeeView = new SectionView("employee");
 		$employeeView->show = $show;
 		$employeeView->add = true;
 		$employeeView->render();			
 	}
 	
 	private function renderViewEmployee($show = true){
-		$employeeView = new View("employee");
+		$employeeView = new SectionView("employee");
 		$employeeView->show = $show;
 		$employeeView->view = true;
 		$employeeView->render();			
 	}
 	
 	private function renderEditEmployee($show = true){
-		$employeeView = new View("employee");
+		$employeeView = new SectionView("employee");
 		$employeeView->show = $show;
 		$employeeView->edit = true;
 		$employeeView->render();			
 	}
 	
 	private function renderAudit($show = true){
-		$search = new View("audit");
+		$search = new SectionView("audit");
+		$search->show = $show;
+		$search->render();			
+	}
+
+	private function renderReports($show = true){
+		$search = new SectionView("reports");
 		$search->show = $show;
 		$search->render();			
 	}
 	
 	private function renderCover($show = false){
-		$cover = new View("cover");
+		$cover = new SectionView("cover");
 		$cover->show = $show;
 		$cover->render();
 	}

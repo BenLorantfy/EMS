@@ -35,7 +35,7 @@ class FrontController{
 		// Directory path to class file should follow class's namespace tree
 		//
 		spl_autoload_register(function($class){
-			require_once "php/" . str_replace("\\", "/", $class) . ".php";
+			require_once str_replace("\\", "/", $class) . ".php";
 		});
 		
 		//
@@ -63,5 +63,8 @@ class FrontController{
 		Route::get("/audit",array(new PageController(),"navigateToAudit"));
 		Route::get("/viewEmployee/{id}",array(new PageController(),"navigateToViewEmployee"));
 		Route::get("/editEmployee/{id}",array(new PageController(),"navigateToEditEmployee"));
+
+		Route::get("/reports/{type}",array(new ReportsController(),"generateReport"));
+		
 	}
 }
