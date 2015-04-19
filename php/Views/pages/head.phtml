@@ -1,0 +1,45 @@
+<!-- META -->
+<meta charset="UTF-8">
+<meta name="description" content="Employee Management System">
+<meta name="keywords" content="EMS,Employee,Management,System">
+<meta name="author" content="Ben Lorantfy, Grigoriy Kozyrev, Michael Dasilva, Kevin Li">
+<meta name="isLogged" content="<?=$this->isLogged?>"/>	
+<meta name="userType" content="<?=$this->userType?>"/>	
+	
+<!-- JS -->
+<!-- lib -->
+<script src = "js/lib/jquery.js"></script>
+<script src = "js/lib/jqease.js"></script>
+<script src = "js/lib/msgbox.js"></script>
+<script src = "js/lib/underscore.js"></script>
+<script src = "js/lib/backbone.js"></script>
+<script src = "js/lib/backbone-validation.js"></script>
+<!-- app container -->
+<script src = "js/app.js"></script>					
+<!-- models -->
+<script src = "js/Models/EmployeeModel.js"></script>	
+<script src = "js/Models/CompanyModel.js"></script>	
+<script src = "js/Models/UserModel.js"></script>	
+<!-- views -->
+<script src = "js/Views/SectionView.js"></script>		
+<script src = "js/Views/LoginView.js"></script>		
+<script src = "js/Views/SearchView.js"></script>		
+<script src = "js/Views/AuditView.js"></script>			
+<script src = "js/Views/ReportsView.js"></script>			
+<script src = "js/Views/EmployeeView.js"></script>		
+<script src = "js/Views/CoverView.js"></script>		
+<!-- Router -->
+<script src = "js/Helper/Router.js"></script>
+<!-- app entry point -->
+<script src = "js/main.js"></script>
+
+<!-- CSS -->
+<link rel="stylesheet" href="css/custom.css" title="Custom CSS" type="text/css" media="screen" charset="utf-8">
+
+<?php if ($this->userType != "admin"): ?>
+	<style id = "admin">
+		.adminControl{
+			display:none;
+		}
+	</style>
+<?php endif; ?>
