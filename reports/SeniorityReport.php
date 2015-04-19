@@ -85,8 +85,7 @@ while($row = mysqli_fetch_array($result))
     $date1 = $dateOfHire;
     $date2 = date("Y-m-d");
     
-    $date1 = "2008-06-24";
-    $date2 = "2009-06-26";
+    
 
 
     $diff = abs(strtotime($date2) - strtotime($date1));
@@ -126,7 +125,243 @@ while($row = mysqli_fetch_array($result))
     $i = $i + 1;
 
 }
+/**************************************************************
+***                                                         ***
+***                      Part Time                         
+***                                                         ***
+**************************************************************/
 
+
+ $result = mysqli_query( $db, "SELECT person.lastName, person.firstName, person.SIN, partimeemployee.dateOfHire
+                                FROM person
+                                LEFT JOIN partimeemployee
+                                ON person.id=partimeemployee.id
+                                ORDER BY person.lastName;"); 
+
+while($row = mysqli_fetch_array($result))
+{
+    
+    
+    if ($i == $max)
+    {
+        $pdf->AddPage(); 
+        $pdf->Ln($lineBreak);
+        $pdf->SetX(15);
+        $pdf->Cell(38, 4, ' Employee Name', 1, 0, 'L', 0);
+        $pdf->Cell(35, 4, ' SIN', 1, 0, 'L', 0);
+        $pdf->Cell(26, 4, ' Type', 1, 0, 'L', 0);
+        $pdf->Cell(35, 4, ' Date of Hire', 1, 0, 'L', 0);
+        $pdf->Cell(55, 4, ' Years of Service', 1, 0, 'L', 0);
+        
+        $i = 0;
+    }
+    
+    $name = $row['lastName'] .", ".  $row['firstName'];
+    $SIN = $row['SIN'];
+    $dateOfHire = $row['dateOfHire'];
+    
+
+    $date1 = $dateOfHire;
+    $date2 = date("Y-m-d");
+    
+    
+
+
+    $diff = abs(strtotime($date2) - strtotime($date1));
+
+    $years = floor($diff / (365*60*60*24));
+    $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+    $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+
+    if ($years == 0)
+    {
+        if ($months == 0)
+        {
+            $YOS = $days." days";
+        }
+        
+        else 
+        {
+            $YOS = $months." month," .$days." days";
+        }
+    }
+    
+    else
+    {
+        $YOS = $years." years," .$months." month," .$days." days";
+    }
+    
+    
+    $pdf->Ln($lineBreak);                
+    $pdf->SetX(15);
+    $pdf->Cell(38, 4, ' '.$name, 1, 0, 'L', 0);
+    $pdf->Cell(35, 4, ' '.$SIN, 1, 0, 'L', 0);
+    $pdf->Cell(26, 4, ' PartTime', 1, 0, 'L', 0);
+    $pdf->Cell(35, 4, ' '.$dateOfHire, 1, 0, 'L', 0);
+    $pdf->Cell(55, 4, ' '.$YOS, 1, 0, 'L', 0);
+    $pdf->SetX(15);
+    $y_axis = $y_axis + $row_height;
+    $i = $i + 1;
+
+}
+/**************************************************************
+***                                                         ***
+***                      Seasonal                         
+***                                                         ***
+**************************************************************/
+
+
+ $result = mysqli_query( $db, "SELECT person.lastName, person.firstName, person.SIN, seasonalemployee.seasonYear
+                                FROM person
+                                LEFT JOIN seasonaleemployee
+                                ON person.id=seasonaleemployee.id
+                                ORDER BY person.lastName;"); 
+
+while($row = mysqli_fetch_array($result))
+{
+    
+    
+    if ($i == $max)
+    {
+        $pdf->AddPage(); 
+        $pdf->Ln($lineBreak);
+        $pdf->SetX(15);
+        $pdf->Cell(38, 4, ' Employee Name', 1, 0, 'L', 0);
+        $pdf->Cell(35, 4, ' SIN', 1, 0, 'L', 0);
+        $pdf->Cell(26, 4, ' Type', 1, 0, 'L', 0);
+        $pdf->Cell(35, 4, ' Date of Hire', 1, 0, 'L', 0);
+        $pdf->Cell(55, 4, ' Years of Service', 1, 0, 'L', 0);
+        
+        $i = 0;
+    }
+    
+    $name = $row['lastName'] .", ".  $row['firstName'];
+    $SIN = $row['SIN'];
+    $dateOfHire = $row['seasonYear'];
+    
+
+    $date1 = $dateOfHire;
+    $date2 = date("Y-m-d");
+    
+    
+
+
+    $diff = abs(strtotime($date2) - strtotime($date1));
+
+    $years = floor($diff / (365*60*60*24));
+    $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+    $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+
+    if ($years == 0)
+    {
+        if ($months == 0)
+        {
+            $YOS = $days." days";
+        }
+        
+        else 
+        {
+            $YOS = $months." month," .$days." days";
+        }
+    }
+    
+    else
+    {
+        $YOS = $years." years," .$months." month," .$days." days";
+    }
+    
+    
+    $pdf->Ln($lineBreak);                
+    $pdf->SetX(15);
+    $pdf->Cell(38, 4, ' '.$name, 1, 0, 'L', 0);
+    $pdf->Cell(35, 4, ' '.$SIN, 1, 0, 'L', 0);
+    $pdf->Cell(26, 4, ' Seasonal', 1, 0, 'L', 0);
+    $pdf->Cell(35, 4, ' '.$dateOfHire, 1, 0, 'L', 0);
+    $pdf->Cell(55, 4, ' '.$YOS, 1, 0, 'L', 0);
+    $pdf->SetX(15);
+    $y_axis = $y_axis + $row_height;
+    $i = $i + 1;
+
+}
+/**************************************************************
+***                                                         ***
+***                      Contractor                         
+***                                                         ***
+**************************************************************/
+
+
+ $result = mysqli_query( $db, "SELECT person.lastName, person.firstName, person.SIN, Contractor.ContractStartDate
+                                FROM person
+                                LEFT JOIN Contractor
+                                ON person.id=Contractor.id
+                                ORDER BY person.lastName;"); 
+
+while($row = mysqli_fetch_array($result))
+{
+    
+    
+    if ($i == $max)
+    {
+        $pdf->AddPage(); 
+        $pdf->Ln($lineBreak);
+        $pdf->SetX(15);
+        $pdf->Cell(38, 4, ' Employee Name', 1, 0, 'L', 0);
+        $pdf->Cell(35, 4, ' SIN', 1, 0, 'L', 0);
+        $pdf->Cell(26, 4, ' Type', 1, 0, 'L', 0);
+        $pdf->Cell(35, 4, ' Date of Hire', 1, 0, 'L', 0);
+        $pdf->Cell(55, 4, ' Years of Service', 1, 0, 'L', 0);
+        
+        $i = 0;
+    }
+    
+    $name = $row['lastName'] .", ".  $row['firstName'];
+    $SIN = $row['SIN'];
+    $dateOfHire = $row['ContractStartDate'];
+    
+
+    $date1 = $dateOfHire;
+    $date2 = date("Y-m-d");
+    
+    
+
+
+    $diff = abs(strtotime($date2) - strtotime($date1));
+
+    $years = floor($diff / (365*60*60*24));
+    $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+    $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+
+    if ($years == 0)
+    {
+        if ($months == 0)
+        {
+            $YOS = $days." days";
+        }
+        
+        else 
+        {
+            $YOS = $months." month," .$days." days";
+        }
+    }
+    
+    else
+    {
+        $YOS = $years." years," .$months." month," .$days." days";
+    }
+    
+    
+    $pdf->Ln($lineBreak);                
+    $pdf->SetX(15);
+    $pdf->Cell(38, 4, ' '.$name, 1, 0, 'L', 0);
+    $pdf->Cell(35, 4, ' '.$SIN, 1, 0, 'L', 0);
+    $pdf->Cell(26, 4, ' Contract', 1, 0, 'L', 0);
+    $pdf->Cell(35, 4, ' '.$dateOfHire, 1, 0, 'L', 0);
+    $pdf->Cell(55, 4, ' '.$YOS, 1, 0, 'L', 0);
+    $pdf->SetX(15);
+    $y_axis = $y_axis + $row_height;
+    $i = $i + 1;
+
+}
 /**************************************************************
 ***                                                         ***
 ***                      End                          
