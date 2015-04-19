@@ -1,7 +1,7 @@
 <?php
 namespace Models;
 class ContractEmployeeModel{
-	private $companyName;
+	private $contractCompanyName;
 	private $corporationName;
 	private $dateOfIncorporation;
 	private $businessNumber;
@@ -9,11 +9,11 @@ class ContractEmployeeModel{
 	private $endDate;
 	private $fixedAmount;
 	
-	public function SetCompanyName($companyName){
+	public function SetCompanyName($contractCompanyName){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
-		$this->companyName = $companyName;
+		$this->contractCompanyName = $contractCompanyName;
 		return true;
 	}
 	
