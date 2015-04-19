@@ -1,9 +1,9 @@
 App.Views.SearchView = App.Views.SectionView.extend({
 	
 	events: {
-		"click .addEmployeeButton":"openAddEmployee",
-		"click .auditButton":"openAudit"
 		 "click .addEmployeeButton":"openAddEmployee"
+		,"click .auditButton":"openAudit"
+		,"click .addEmployeeButton":"openAddEmployee"
 		,"click tr":"openViewEmployee"
 	},
 	
