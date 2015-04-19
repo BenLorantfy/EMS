@@ -9,7 +9,19 @@ class View{
 	}
 	
 	public function __get($key){
-		return $this->members[$key];
+		if(isset($this->members[$key])){
+			return $this->members[$key];
+		}
+		
+		return "";
+	}
+	
+	public function __call($key,$args){
+		if(isset($this->members[$key]) && is_callable($this->members[$key])){
+			return call_user_func_array($this->members[$key], $args);
+		}
+		
+		return "";
 	}
 	
 	public function __set($key,$value){

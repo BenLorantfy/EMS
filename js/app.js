@@ -19,8 +19,9 @@ var App = {
 		//
 		var loginView = new App.Views.LoginView({ el:"#login" });
 		var searchView = new App.Views.SearchView({ el:"#search" });
-		var addEmployeeView = new App.Views.AddEmployeeView({ el:"#addEmployee", model:new App.Models.FullTimeEmployeeModel() });
 		var auditView = new App.Views.AuditView({ el:"#audit" });
+		var addEmployeeView = new App.Views.EmployeeView({ el:"#addEmployee", model:new App.Models.FullTimeEmployeeModel() });
+		var viewEmployeeView = new App.Views.EmployeeView({ el:"#employee", model:new App.Models.FullTimeEmployeeModel() });
 		
 		//
 		// Create view routes
@@ -41,8 +42,20 @@ var App = {
 			}else if(addEmployeeView.visible()){
 				searchView.focus();
 				addEmployeeView.dialogyHide();
+			}else if(viewEmployeeView.visible()){
+				searchView.focus();
+				viewEmployeeView.dialogyHide();
 			}else{
 				// more sections
+			}
+		});
+
+		App.Router.on("route:viewEmployee",function(){
+			console.log("yo2");
+			if(!viewEmployeeView.visible()){
+				console.log("yo3");
+				searchView.blur();
+				viewEmployeeView.dialogyShow();				
 			}
 		});
 		
@@ -59,7 +72,7 @@ var App = {
 				auditView.dialogyShow();				
 			}
 		});
-		
+
 		//
 		// Create navigation events
 		//
@@ -82,12 +95,20 @@ var App = {
 		searchView.on("open.addEmployee",function(){
 			App.Router.navigate("addEmployee",{ trigger: true });
 		});
-		
+
 		searchView.on("open.audit",function(){
 			App.Router.navigate("audit",{ trigger: true });
 		});
 		
+		searchView.on("open.viewEmployee",function(employee){
+			App.Router.navigate("viewEmployee/" + employee.id,{ trigger: true });
+		});
+				
 		addEmployeeView.on("done",function(){
+			App.Router.navigate("search",{ trigger: true });
+		});
+
+		viewEmployeeView.on("done",function(){
 			App.Router.navigate("search",{ trigger: true });
 		});
 		

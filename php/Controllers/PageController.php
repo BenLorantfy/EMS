@@ -15,6 +15,7 @@ class PageController{
 		$this->renderSearch(false);
 		$this->renderAddEmployee(false);
 		$this->renderAudit(false);	
+		$this->renderViewEmployee(false);
 		$this->renderEnd();
 	}
 	
@@ -26,7 +27,8 @@ class PageController{
 		$this->renderCover(false);
 		$this->renderLogin();
 		$this->renderSearch();
-		$this->renderAddEmployee(false);	
+		$this->renderAddEmployee(false);		
+		$this->renderViewEmployee(false);		
 		$this->renderAudit(false);			
 		$this->renderEnd();		
 	}
@@ -40,6 +42,7 @@ class PageController{
 		$this->renderSearch(true,true);
 		$this->renderCover(true);
 		$this->renderAddEmployee(true);
+		$this->renderViewEmployee(true);
 		$this->renderAudit(false);
 		$this->renderEnd();		
 	}
@@ -52,7 +55,36 @@ class PageController{
 		$this->renderSearch(true,true);
 		$this->renderCover(true);
 		$this->renderAddEmployee(false);
+		$this->renderViewEmployee(false);		
 		$this->renderAudit(true);		
+		$this->renderEnd();		
+	}
+	
+	public function navigateToViewEmployee(){
+		// Contains information about session
+		$session = new SessionController();
+		
+		$this->renderStart(true,$session->userType());
+		$this->renderLogin();
+		$this->renderSearch(true,true);
+		$this->renderCover(true);
+		$this->renderAddEmployee(false);		
+		$this->renderViewEmployee(true);	
+		$this->renderAudit(false);	
+		$this->renderEnd();		
+	}
+	
+	public function navigateToEditEmployee(){
+		// Contains information about session
+		$session = new SessionController();
+		
+		$this->renderStart(true,$session->userType());
+		$this->renderLogin();
+		$this->renderSearch(true,true);
+		$this->renderCover(true);
+		$this->renderAddEmployee(false);		
+		$this->renderEditEmployee(true);
+		$this->renderAudit(false);	
 		$this->renderEnd();		
 	}
 	
@@ -80,20 +112,32 @@ class PageController{
 	}
 	
 	private function renderSearch($show = true,$blurred = false){
-		$employeeController = new EmployeeController();
-		$employees = array();
-		
 		$search = new View("search");
 		$search->show = $show;
 		$search->blurred = $blurred;
-		$search->employees = $employees;
+		$search->employees = array(array("firstName" => "Ben", "lastName" => "Lorantfy", "dateOfBirth" => "1995/11/10"),array("firstName" => "Ben", "lastName" => "Lorantfy", "dateOfBirth" => "1995/11/10"));
 		$search->render();		
 	}
 	
 	private function renderAddEmployee($show = true){
-		$search = new View("addEmployee");
-		$search->show = $show;
-		$search->render();			
+		$employeeView = new View("employee");
+		$employeeView->show = $show;
+		$employeeView->add = true;
+		$employeeView->render();			
+	}
+	
+	private function renderViewEmployee($show = true){
+		$employeeView = new View("employee");
+		$employeeView->show = $show;
+		$employeeView->view = true;
+		$employeeView->render();			
+	}
+	
+	private function renderEditEmployee($show = true){
+		$employeeView = new View("employee");
+		$employeeView->show = $show;
+		$employeeView->edit = true;
+		$employeeView->render();			
 	}
 	
 	private function renderAudit($show = true){

@@ -3,6 +3,8 @@ App.Views.SearchView = App.Views.SectionView.extend({
 	events: {
 		"click .addEmployeeButton":"openAddEmployee",
 		"click .auditButton":"openAudit"
+		 "click .addEmployeeButton":"openAddEmployee"
+		,"click tr":"openViewEmployee"
 	},
 	
 	openAddEmployee:function(){
@@ -11,6 +13,10 @@ App.Views.SearchView = App.Views.SectionView.extend({
 	
 	openAudit:function(){
 		this.trigger("open.audit");
+	},
+	
+	openViewEmployee:function(){
+		this.trigger("open.viewEmployee", { id:42 });
 	},
 	
 	initialize: function(){
