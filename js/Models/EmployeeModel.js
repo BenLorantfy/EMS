@@ -91,24 +91,6 @@
 		}	  
 	}
 	
-	//
-    //check for required field (salary...)
-    //
-	//function checkRequiredField(value) {
-	//	if(typeof value !== "undefined")
-	//	{
-	//		value.trim();
-	//		var number = /^[0-9 ]+/;
-	//		if (!value.match(number)) {
-	//			return 'Contains illegal characters, only allow number greater than or equal to 0';
-	//		}
-	//		if(value == "")
-	//		{
-	//			return 'Contains illegal characters, only allow number greater than or equal to 0';
-	//		}
-	//	}
-	//}
-	
     //
     //check for numerical (bn)
     //
@@ -141,6 +123,22 @@
 		}
 	}
 
+	//
+    //check for date in the future (birthday, dateOfHire)
+    //
+	function checkFutureDate(value) {
+		if(typeof value !== "undefined")
+		{	 
+			value.trim();
+			var date = new Date(value);
+			var today = new Date();
+			if(date > today)
+			{
+				return 'This date cannot be set to the day in the future';
+			}
+		}
+	}
+	
     //
     //check for date format (DateOftermination)
     //
@@ -194,6 +192,20 @@
 		}    
 	}
 	
+	//
+	//change the visibility of the leaving reason 
+	//
+	function visibilityOfLeavingReason(value) {
+		if(/\S/.test(value))
+		{
+			$("#reasonOfLeavingTr").show();
+		}
+		else
+		{
+			$("#reasonOfLeavingTr").hide();
+		}
+	}
+	
 	// 
 	// Base employee validation rules
 	// Should contain required:false for all fields, beacuse employees can be inserted into the db incomplete
@@ -214,7 +226,19 @@
 		},
 		dateOfBirth:{
 			required:false
-			,fn:checkDateFormat
+			, fn: function (value) {
+				value.trim();
+				var result = checkDateFormat(value);
+				if(typeof result !== "undefined")
+				{
+					return result;
+				}
+				var futureDay = checkFutureDate(value);
+				if(typeof futureDay !== "undefined")
+				{
+					return futureDay;
+				}
+			}
 		}	
     }
     
@@ -231,10 +255,15 @@
 	        required: false
 			, fn: function (value) {
 				if(typeof value !== "undefined")
-				{
+				{		
 					value.trim();
 					var result = checkDateFormat(value);
 					if(typeof result !== "undefined")
+					{
+						return result;
+					}
+					var futureDay = checkFutureDate(value);
+					if(typeof futureDay !== "undefined")
 					{
 						return result;
 					}
@@ -262,6 +291,7 @@
 				if(typeof value !== "undefined")
 				{
 					value.trim();
+					visibilityOfLeavingReason(value);
 					var result = checkDateFormat(value);
 					if(typeof result !== "undefined")
 					{
@@ -307,6 +337,11 @@
 					{
 						return result;
 					}
+					var futureDay = checkFutureDate(value);
+					if(typeof futureDay !== "undefined")
+					{
+						return result;
+					}
 					
 					//cross field check
 					var date = new Date(value);
@@ -331,6 +366,7 @@
 				if(typeof value !== "undefined")
 				{
 					value.trim();
+					visibilityOfLeavingReason(value);
 					var result = checkDateFormat(value);
 					if(typeof result !== "undefined")
 					{
@@ -432,7 +468,12 @@
 					{
 						return result;
 					}
-
+					var futureDay = checkFutureDate(value);
+					if(typeof futureDay !== "undefined")
+					{
+						return result;
+					}
+					
 					//cross field check
 					var date = new Date(value);
 					var startDate = new Date(this.get("startDate"));
@@ -466,7 +507,12 @@
 					{
 						return result;
 					}
-
+					var futureDay = checkFutureDate(value);
+					if(typeof futureDay !== "undefined")
+					{
+						return result;
+					}
+					
 					//cross field check
 					var date = new Date(value);
 					var dateOfIncorporation = new Date(this.get("dateOfIncorporation"));
@@ -491,6 +537,7 @@
 				if(typeof value !== "undefined")
 				{
 					value.trim();
+					visibilityOfLeavingReason(value);
 					var result = checkDateFormat(value);
 					if(typeof result !== "undefined")
 					{
