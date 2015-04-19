@@ -42,45 +42,228 @@
 	*/
 	
 	//
+	//check for invalid character for name
+	//
+	function alphabetical(value){
+		if(typeof value !== "undefined")
+		{
+			var letters = /^[A-Za-z '-]+$/;
+			if(!value.match(letters))
+			{
+				return 'Contains illegal characters';
+			}
+		}
+	}
+	
+	//
+	//check for numerical (sin)
+	//
+	function checkSin(value) {   
+		if(typeof value !== "undefined")
+		{
+			value.trim(); 
+			var number = /^[0-9 ]+/;
+			var pattern = /^\d{3} \d{3} \d{3}$/;
+			inStr = value;
+			sin = value;
+			inLen = inStr.length;
+			var ch_sum = "";
+			var esum = 0;
+			
+			if (!value.match(number)) {
+				return 'Contains illegal characters';
+			}
+			if(!value.match(pattern))
+			{
+				return 'Incorrect format. e.g. 123 123 123';
+			}
+
+			lastdigit = value.substring(10, 10 + 1);
+			// add numbers in odd positions; IE 1, 3, 6, 8		
+			var odd = ((value.substring(0,0 + 1)) * (1.0)  + (value.substring(2,2 + 1)) * (1.0) 
+			+(value.substring(5, 5+1)) * (1.0) + (value.substring(8,8 + 1)) * (1.0));
+										
+			// form valueing of numbers in even positions IE 2, 4, 6, 8
+			var enumbers =  (value.substring(1,1 + 1)) + (value.substring(4,4 + 1))+
+			(value.substring(6,6 + 1)) + (value.substring(9,9 + 1));
+							
+			// add together numbers in new value string
+			// take numbers in even positions; IE 2, 4, 6, 8
+			// and double them to form a new value string
+			// EG if numbers are 2,5,1,9 new value string is 410218
+			for (var i = 0; i < enumbers.length; i++) {
+					var ch = (enumbers.substring(i, i + 1) * 2);
+					ch_sum = ch_sum + ch;
+					}
+			
+			for (var i = 0; i < ch_sum.length; i++) {
+					var ch = (ch_sum.substring(i, i + 1));
+					esum = ((esum * 1.0) + (ch * 1.0));
+					}
+			checknum = (odd + esum);
+				
+			// subvalueact checknum from next highest multiple of 10
+			// to give check digit which is last digit in valid SIN
+			if (checknum <= 10) {
+				(checdigit = (10 - checknum));
+			}
+			if (checknum > 10 && checknum <= 20) {
+				(checkdigit = (20 - checknum));
+			}
+			if (checknum > 20 && checknum <= 30) {
+				(checkdigit = (30 - checknum));
+			}
+			if (checknum > 30 && checknum <= 40) {
+				(checkdigit = (40 - checknum));
+			}
+			if (checknum > 40 && checknum <= 50) {
+				(checkdigit = (50 - checknum));
+			}
+			if (checknum > 50 && checknum <= 60) {
+				(checkdigit = (60 - checknum));
+			}
+							
+			if (checkdigit != lastdigit) {
+				return "This is an invalid SIN";
+			}					  			
+		}	  
+	}
+	
+    //
+    //check for numerical (bn)
+    //
+	function checkBn(value) {
+		if(typeof value !== "undefined")
+		{
+			value.trim(); 
+			var number = /^[0-9 ]+/;
+			var pattern = /^(0|\d{5} \d{4})$/;
+			if (!value.match(number)) {
+				return 'Contains illegal characters';
+			}
+			if (!value.match(pattern)) {
+				return 'Incorrect format. e.g. 12345 1234';
+			}
+		}
+	}
+
+    //
+    //check for date format (birthday, dateOfHire)
+    //
+	function checkDateFormat(value) {
+		if(typeof value !== "undefined")
+		{
+			value.trim(); 
+			var pattern = /^0$|^((19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01]))$/;
+			if (!value.match(pattern)) {
+				return 'Incorrect format. e.g. yyyy-mm-dd';
+			}
+
+			//cross field check
+			var date = new Date(value);
+			var birthday = this.get("dateOfBirth");
+			if(typeof birthday !== "undefined"){
+				if (date > birthday) {
+					return 'This date cannot be greater than birthday';
+				}
+			}
+		}
+	}
+
+    //
+    //check for date format (DateOftermination)
+    //
+	function checkTDateFormat(value) {
+		if(typeof value !== "undefined")
+		{
+			value.trim(); 
+			var result = checkDateFormat(value);
+			
+			
+			//cross field check
+			var date = new Date(value);
+			var birthday = new Date(this.get("dateOfBirth"));
+			if(typeof birthday !== "undefined")
+			{
+				if (date > birthday) {
+					return 'This date cannot be greater than birthday';
+				}
+			}
+		}    
+	}
+
+	//
+    //check for date format (DateOfHire)
+    //
+	function checkHDateFormat(value) {
+		if(typeof value !== "undefined")
+		{
+			value.trim(); 
+			var pattern = /^0$|^(N[/]A)$|^((19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01]))$/;
+			if (!value.match(pattern)) {
+				return 'Incorrect format. e.g. yyyy-mm-dd';
+			}
+
+			//cross field check
+			var date = new Date(value);
+			var birthday = new Date(this.get("dateOfBirth"));
+			var dateOfTermination = new Date(this.get("dateOfTermination"));
+			if(typeof birthday !== "undefined")
+			{
+				if (date > birthday) {
+					return 'This date cannot be greater than birthday';
+				}
+			}
+			if(typeof dateOfTermination !== "undefined")
+			{
+				if (date > dateOfTermination) {
+					return 'This date cannot be greater than date of terminated';
+				}
+			}
+		}    
+	}
+	
+	// 
 	// Base employee validation rules
 	// Should contain required:false for all fields, beacuse employees can be inserted into the db incomplete
 	//
 	var baseRules = {
 		// base employee validation rules go here (i.e. names, date of birth)
 		firstName:{
-			 min:0 // testing only
-			,required:false
+			 required:false
+			 ,fn:alphabetical
 		}, 
 		lastName:{
-			 min:0 // testing only
-			,required:false
+			required:false
+			,fn:alphabetical
 		},
-		SIN:{
-			 min:0 // testing only
-			,required:false
+		sin:{
+			required:false
+			,fn:checkSin
 		},
 		dateOfBirth:{
-			 min:0 // testing only
-			,required:false
-		}
-		
+			required:false
+			,fn:checkDateFormat
+		}	
     }
     
     //
     // Extend base employee validation rules with full time employee validation rules
     //
-    var fullTimeRules = _.extend({
-    	// full time validation rules go here
+	var fullTimeRules = _.extend({
+	    // full time validation rules go here
 	    salary:{
-		     min:0
-		    ,required:false
-		    ,fn:function(value){
-		    	// return error message if invalid, otherwise return nothing
-		    	// list of validators (e.g. min:0): https://github.com/thedersen/backbone.validation/wiki
-		    	// full documentation: https://github.com/thedersen/backbone.validation/blob/master/README.md
-			    // use this.get("dateOfBirth"); to get another field's value
-		    }
-	    }	    
+	        min:0
+		    ,required:true
+	    }
+	    ,dateOfHire:{
+	        required: false
+			,fn:checkHDateFormat
+	    }
+        , dateOfTermination: {
+            required: false
+            ,fn:checkTDateFormat
+        }
     },baseRules);
     
     //
@@ -90,24 +273,85 @@
 	    // part time validation rules go here 
 	    hourlyRate:{
 		     min:0
-		    ,required:false
-	    }	   
+		    , required: true
+	    }
+        , dateOfHire: {
+            required: false
+        }
+        , dateOfTermination: {
+            required: false         
+        }
     },baseRules);
     
     //
     // Extend base employee validation rules with seasonal employee validation rules
     //
     var seasonalRules = _.extend({
-	    // seasonal employee validation rules go here    
+        // seasonal employee validation rules go here 
+        season: {
+            required: false
+            , fn: function (value) {
+                if ((value !== 'WINTER') && (value !== 'SPRING')
+                    && (value !== 'SUMMER') && (value !== 'FALL')) {
+                    return 'false';
+                }
+            }
+        }
+        , piecePay: {
+            min: 0
+            , required: true
+
+        }
+        , seasonYear: {
+            min: 0
+            , required: false
+            , fn: function (value) {
+                var pattern = /^((19|20)\d\d)$/;
+                if (!value.match(pattern)) {
+                    return 'Incorrect format. e.g. yyyy';
+                }
+
+                //cross field check
+                var date = new Date(value);
+                var birthday = new Date(this.get("dateOfBirth"));
+                if (date.getFullYear() > birthday.getFullYear()) {
+                    return 'This year cannot be greater than birthday';
+                }
+            }
+        }
+            
     },baseRules);
     
     //
     // Contract employee validation rules
     //
     var contractRules = {
-	    // contract employee validation rules go here
+        // contract employee validation rules go here
+        fixedContractAmount: {
+            min: 0
+		    , required: true
+        }
+		,companyName:{
+			fn:alphabetical
+		}
+		,dateOfIncorporation:{
+			fn:checkDateFormat
+		}
+		,businessNumber:{
+			fn:checkBn
+		}
+		,startDate:{
+			fn: function(value)
+			{
+				return checkDateFormat(value);
+			}
+		}
+		
     }
-	    
+	   
+
+
+	   
 	//
 	// Full Time Employee model
 	//
@@ -141,3 +385,5 @@
 	});		
 	
 })();
+
+
