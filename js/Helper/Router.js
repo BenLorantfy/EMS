@@ -4,5 +4,6 @@ App.Router = new (Backbone.Router.extend({
 		,"login":"login"
 		,"search":"search"
 		,"addEmployee":"addEmployee"
+		,"viewEmployee/:id":"viewEmployee"
 	}
 }));

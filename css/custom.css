@@ -41,6 +41,14 @@ section{
 	left:0;
 }
 
+.sectionTitle{
+	font-size:26px;
+	width: 100%;
+	text-align: center;
+	margin-top:10px;
+	margin-bottom:20px;
+}
+
 #cover{
 	background-color:rgba(0,0,0,0.5);
 	width: 100%;
@@ -121,6 +129,67 @@ section{
 	cursor: pointer;
 	border: 1px solid #3b993f; /* green */
 	color:white;	
+}
+
+table{
+	width: 100%;
+}
+
+td{
+	padding:15px;
+	margin:0;
+	border:none;
+}
+
+tr:nth-child(2n){
+	background-color:#F6F6F6;
+}
+
+.selectContainer {
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    width: 140px;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: #fff;
+
+    background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 90% 50%;
+}
+
+.selectContainer select {
+    padding: 6px 8px;
+    width: 130%;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+}
+
+.selectContainer select:focus {
+    outline: none;
+}
+
+.buttonContainer{
+	text-align: center;
+	margin-top: 20px;
+}
+
+.bottomButton{
+	display: inline-block;
+	margin-left: 10px;
+	padding:11px;
+	min-width: 100px;
+}
+
+.dialogBox{
+	width:45%;
+	max-height:85%;
+	padding:20px;
+	position: relative;	
 }
 
 /*
@@ -238,20 +307,6 @@ section{
 	width: 100%;
 	background-color: white;
 	overflow: scroll;
-}
-
-#search .resultTable{
-	width: 100%;
-}
-
-#search .resultTable td{
-	padding:15px;
-	margin:0;
-	border:none;
-}
-
-#search .resultTable tr:nth-child(2n){
-	background-color:#F6F6F6;
 }
 
 #search .searchInputContainer{
