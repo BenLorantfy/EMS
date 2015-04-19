@@ -203,7 +203,7 @@ while($row = mysqli_fetch_array($result))
     }
     
     $name = $row['lastName'] .", ".  $row['firstName'];
-    $dateOfHire = $row['dateOfHire'];
+    $dateOfHire = $row['seasonYear'];
     $hours = $row['(timecard.monday + timecard.tuesday 
                     + timecard.wednesday + timecard.thursday 
                     + timecard.friday + timecard.saturday 
@@ -262,7 +262,7 @@ while($row = mysqli_fetch_array($result))
     }
     
     $name = $row['lastName'] .", ".  $row['firstName'];
-    $dateOfHire = $row['dateOfHire'];
+    $dateOfHire = $row['ContractStartDate'];
     
     // draw table
     $pdf->Ln($lineBreak);                
