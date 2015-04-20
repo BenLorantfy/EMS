@@ -498,19 +498,23 @@ class Database{
 		}
 	}
 
-	public function SearchEmployee($name){
-		$sql = "SELECT firstName, lastName, dateOfBirth FROM (SELECT firstName, lastName, dateOfBirth FROM fulltimeemployee, person WHERE
+	public function SearchEmployee($options){
+		$keywords = $options->keywords;
+		$type = $options->type;
+		
+		$sql = "SELECT firstName, lastName, dateOfBirth FROM (SELECT 'FullTime' AS type, fulltimeemployee.id, firstName, lastName, dateOfBirth FROM fulltimeemployee, person WHERE
 				(person.id = (SELECT employee.person_id FROM employee WHERE(employee.id = fulltimeemployee.employee_id)))
 				UNION ALL
-				SELECT firstName, lastName, dateOfBirth FROM parttimeemployee, person WHERE
+				SELECT 'PartTime' AS type, parttimeemployee.id, firstName, lastName, dateOfBirth FROM parttimeemployee, person WHERE
 				(person.id = (SELECT employee.person_id FROM employee WHERE(employee.id = parttimeemployee.employee_id)))
 				UNION ALL
-				SELECT firstName, lastName, dateOfBirth FROM seasonalemployee, person WHERE
+				SELECT 'Seasonal' AS type, seasonalemployee.id, firstName, lastName, dateOfBirth FROM seasonalemployee, person WHERE
 				(person.id = (SELECT employee.person_id FROM employee WHERE(employee.id = seasonalemployee.employee_id)))
 				UNION ALL
-				SELECT companyName, corporationName, dateOfIncorporation FROM contractor, company WHERE
+				SELECT 'Contract' AS type, contractor.id, companyName AS firstName, corporationName, dateOfIncorporation FROM contractor, company WHERE
 				(company.id = contractor.company_id)) AS A
-				WHERE (firstName LIKE CONCAT('%','" . $name . "','%') OR lastName LIKE CONCAT('%','" . $name . "','%'))"
+				WHERE (firstName LIKE CONCAT('%','" . $keywords . "','%') OR lastName LIKE CONCAT('%','" . $keywords . "','%')) order by dateOfBirth";
+
 		
 		$query = $this->db->prepare($sql);
 		if(!$query) throw new Exception($this->db->error);
@@ -532,6 +536,43 @@ class Database{
 		}
 
 		return $employeeInfo;
+	}
+
+	public function GetFullTime($id){
+		$sql = "SELECT firstName, lastName, dateOfBirth, sin, companyName, workStatus, reasonForLeaving, dateOfHire, dateOfTermination, salary FROM fulltimeemployee, employee, person, company WHERE
+				(
+				person.id = (SELECT employee.person_id FROM employee WHERE(employee.id = fulltimeemployee.employee_id)) AND
+				company.id = (SELECT employee.company_id FROM employee WHERE(employee.id = fulltimeemployee.employee_id)) AND
+				employee.id = fulltimeemployee.employee_id AND
+				fulltimeemployee.id = " . $id . "
+				)";
+		
+		$query = $this->db->prepare($sql);
+		if(!$query) throw new Exception($this->db->error);
+		if(!$query->execute()) throw new Exception($this->db->error);
+		if(!$query->store_result()) throw new Exception($this->db->error);
+
+		$employeeData = array();
+		if($query->num_rows > 0){
+			if($query->bind_result($firstName, $lastName, $dateOfBirth, $sin, $companyName, $workStatus, $reasonForLeaving, $dateOfHire, $dateOfTermination, $salary)){
+				while($query->fetch()){
+					array_push($employeeData, array(
+						"firstName" => $firstName
+						,"lastName" => $lastName
+						,"dateOfBirth" => $dateOfBirth
+						,"sin" => $sin
+						,"companyName" => $companyName
+						,"workStatus" => $workStatus
+						,"reasonForLeaving" => $reasonForLeaving
+						,"dateOfHire" => $dateOfHire
+						,"dateOfTermination" => $dateOfTermination
+						,"salary" => $salary
+					));
+				}								
+			}
+		}
+
+		return $employeeData;
 	}
 }
 
@@ -767,7 +808,8 @@ class ContractEmployeeModel{
 $obj = new SeasonalEmployeeModel;
 $db = new Database;
 
-$obj->SetId(2);
+/*$obj->SetId(2);
 $obj->SetFirstName("greg");
-$db->UpdateSeasonalEmployee($obj, 2);
+$db->UpdateSeasonalEmployee($obj, 2);*/
+print_r($db->GetFullTime(1))
 ?>

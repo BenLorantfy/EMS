@@ -533,4 +533,41 @@ class DatabaseModel{
 
 		return $employeeInfo;
 	}
+	
+	public function GetFullTime($id){
+		$sql = "SELECT firstName, lastName, dateOfBirth, sin, companyName, workStatus, reasonForLeaving, dateOfHire, dateOfTermination, salary FROM fulltimeemployee, employee, person, company WHERE
+				(
+				person.id = (SELECT employee.person_id FROM employee WHERE(employee.id = fulltimeemployee.employee_id)) AND
+				company.id = (SELECT employee.company_id FROM employee WHERE(employee.id = fulltimeemployee.employee_id)) AND
+				employee.id = fulltimeemployee.employee_id AND
+				fulltimeemployee.id = " . $id . "
+				)";
+		
+		$query = $this->db->prepare($sql);
+		if(!$query) throw new Exception($this->db->error);
+		if(!$query->execute()) throw new Exception($this->db->error);
+		if(!$query->store_result()) throw new Exception($this->db->error);
+
+		$employeeData = array();
+		if($query->num_rows > 0){
+			if($query->bind_result($firstName, $lastName, $dateOfBirth, $sin, $companyName, $workStatus, $reasonForLeaving, $dateOfHire, $dateOfTermination, $salary)){
+				while($query->fetch()){
+					array_push($employeeData, array(
+						"firstName" => $firstName
+						,"lastName" => $lastName
+						,"dateOfBirth" => $dateOfBirth
+						,"sin" => $sin
+						,"companyName" => $companyName
+						,"workStatus" => $workStatus
+						,"reasonForLeaving" => $reasonForLeaving
+						,"dateOfHire" => $dateOfHire
+						,"dateOfTermination" => $dateOfTermination
+						,"salary" => $salary
+					));
+				}								
+			}
+		}
+
+		return $employeeData;
+	}
 }
