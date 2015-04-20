@@ -10,13 +10,9 @@
 		
 			return "<td>$label:</td><td><input class = '$field' type='text'/></td><td class = 'fieldError'></td>";
 		
-		}else if($this->edit){
-		
-			return "<td>$label:</td><td><input class = '$field' value = '" . $this->employee->$field . "' type='text'/></td><td class = 'fieldError'></td>";
-		
 		}else if($this->view){
 		
-			return "<td>" . $this->employee->$field . "</td><td>whoa</td><td class = 'fieldError'></td>";
+			return "<td>" . $label . "</td><td><div>" . /* $this->employee->$field */"hi" . "</div><input type = 'text' style = 'display:none' value = '" . /* $this->employee->$field */"hi" . "'></input></td><td class = 'fieldError'></td>";
 		
 		}
 		
@@ -29,14 +25,11 @@
 		// If user is adding employee, set appropiate UI text
 		$this->buttonText = "Add";
 		$this->title = "Add Employee";
-	}else if($this->edit){
-		// If user is editing employee, set appropiate UI text
-		$this->buttonText = "Done Editing";
-		$this->title = $this->employee->firstName . " " . $this->employee->lastName;
-	}else if($this->view){
-		// If user is viewing employee, set appropiate UI text
+		$this->buttonClass = "addButton";
+	}else{
 		$this->buttonText = "Edit";
 		$this->title = $this->employee->firstName . " " . $this->employee->lastName;
+		$this->buttonClass = "editButton";
 	}		
 ?>
 <section id = "<?=($this->add)?"addEmployee":"employee"?>" style="<?=($this->show)?"":"display:none;"?>">
@@ -81,7 +74,7 @@
 		</table>
 		<div class = "buttonContainer">
 			<input type="button" class = "confirmButton bottomButton doneButton" value = "Done"/>
-			<input type="button" class = "confirmButton bottomButton addButton" value = "<?=$this->buttonText?>"/>
+			<input type="button" class = "confirmButton bottomButton <?=$this->buttonClass?>" value = "<?=$this->buttonText?>"/>
 		</div>
 	</div>
 </section>

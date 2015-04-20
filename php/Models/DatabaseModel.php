@@ -498,7 +498,7 @@ class DatabaseModel{
 		$keywords = $options->keywords;
 		$type = $options->type;
 		
-		$sql = "SELECT firstName, lastName, dateOfBirth FROM (SELECT 'FullTime' AS type, fulltimeemployee.id, firstName, lastName, dateOfBirth FROM fulltimeemployee, person WHERE
+		$sql = "SELECT id, type, firstName, lastName, dateOfBirth FROM (SELECT 'FullTime' AS type, fulltimeemployee.id, firstName, lastName, dateOfBirth FROM fulltimeemployee, person WHERE
 				(person.id = (SELECT employee.person_id FROM employee WHERE(employee.id = fulltimeemployee.employee_id)))
 				UNION ALL
 				SELECT 'PartTime' AS type, parttimeemployee.id, firstName, lastName, dateOfBirth FROM parttimeemployee, person WHERE
@@ -519,10 +519,11 @@ class DatabaseModel{
 
 		$employeeInfo = array();
 		if($query->num_rows > 0){
-			if($query->bind_result($id, $firstName, $lastName, $dateOfBirth)){
+			if($query->bind_result($id, $type, $firstName, $lastName, $dateOfBirth)){
 				while($query->fetch()){
 					array_push($employeeInfo, array(
 						 "id" => $id
+						 ,"type" => $type
 						,"firstName" => $firstName
 						,"lastName" => $lastName
 						,"dateOfBirth" => $dateOfBirth

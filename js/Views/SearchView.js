@@ -28,7 +28,7 @@ App.Views.SearchView = App.Views.SectionView.extend({
 		    	for(var i = 0; i < employees.length; i++){
 			    	var employee = employees[i];
 			    	if(type != "contract"){
-			    		resultsTable.append('<tr id = "employee' + employee.id + '"><td>' + employee.firstName + '</td><td>' + employee.lastName + '</td><td>' + employee.dateOfBirth + '</td><td><img class = "timecardIcon rowIcon" src = "/assets/images/clock.png"/><img class = "rowIcon" src = "/assets/images/pen.png"/></td></tr>');				    	
+			    		resultsTable.append('<tr id = "employee' + employee.id + '" class = "' + employee.type + '"><td>' + employee.firstName + '</td><td>' + employee.lastName + '</td><td>' + employee.dateOfBirth + '</td><td><img class = "timecardIcon rowIcon" src = "/assets/images/clock.png"/></td></tr>');				    	
 			    	}else{
 				    	
 			    	}
@@ -51,7 +51,10 @@ App.Views.SearchView = App.Views.SectionView.extend({
 	
 	openViewEmployee:function(e){
 		if(!$(e.target).hasClass("timecardIcon")){
-			this.trigger("open.viewEmployee", { id:42 });
+			var row = $(e.target).closest("tr");
+			var id = row.attr("id").replace("employee","");
+			var type = row.attr("class");
+			this.trigger("open.viewEmployee", { id:id, type:type });
 		}
 	},
 	

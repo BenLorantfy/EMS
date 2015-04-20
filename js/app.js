@@ -122,7 +122,7 @@ var App = {
 		});
 		
 		searchView.on("open.viewEmployee",function(employee){
-			App.Router.navigate("viewEmployee/" + employee.id,{ trigger: true });
+			App.Router.navigate("viewEmployee/" + employee.type + "/" + employee.id,{ trigger: true });
 		});
 		
 		searchView.on("open.reports",function(){

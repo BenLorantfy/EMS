@@ -4,12 +4,31 @@ App.Views.EmployeeView = App.Views.SectionView.extend({
 		,"click .addButton":"add"
 		,"change .employeeType":"switchType"
 		,"click .doneButton":"done"
+		,"click .editButton":"edit"
+		,"click .stopEditButton":"stopEdit"
 	},
 	
 	checkErrors: function(e){
 		this.model.set(e.target.className,e.target.value);
 		this.model.validate();
 	},
+	
+	edit:function(){
+		this.$el.find(".field").each(function(){
+			var input = $(this).find("input");
+			var div = $(this).find("div");
+			input.show();
+			div.hide();
+		});
+		var button = $(".editButton");
+		button.removeClass(".editButton");
+		button.addClass(".stopEditButton");
+		
+	},
+	
+	stopEdit:function(){
+		
+	}
 	
 	add: function(){
 		var request = this.model.save();

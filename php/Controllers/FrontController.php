@@ -66,8 +66,7 @@ class FrontController{
 		Route::get("/search",array(new PageController(),"navigateToSearch"));
 		Route::get("/addEmployee",array(new PageController(),"navigateToAddEmployee"));
 		Route::get("/audit",array(new PageController(),"navigateToAudit"));
-		Route::get("/viewEmployee/{id}",array(new PageController(),"navigateToViewEmployee"));
-		Route::get("/editEmployee/{id}",array(new PageController(),"navigateToEditEmployee"));
+		Route::get("/viewEmployee/{type}/{id}",array(new PageController(),"navigateToViewEmployee"));
 		Route::get("/reports",array(new PageController(),"navigateToReports"));
 		Route::get("/timecard/{id}",array(new PageController(),"navigateToTimecard"));
 

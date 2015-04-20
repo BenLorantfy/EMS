@@ -54,11 +54,10 @@
 			<div class = "results">
 				<table class = "resultTable" cellspacing="0" cellpadding="0">
 					<?php foreach ($this->employees as $employee): ?>
-						<tr id = "employee<?= $employee["id"]; ?>">
+						<tr id = "employee<?= $employee["id"]; ?>" class = "<?=$employee["type"];?>">
 							<td><?= $employee["firstName"]; ?></td><td><?= $employee["lastName"]; ?></td><td><?= $employee["dateOfBirth"]; ?></td>
 							<td>
 								<img class = "timecardIcon rowIcon" src = "/assets/images/clock.png"/>
-								<img class = "rowIcon" src = "/assets/images/pen.png"/>
 							</td>
 						</tr>						
 					<?php endforeach ?>
