@@ -75,7 +75,7 @@ var $PDFVersion;         // PDF version number
 *                               Public methods                                 *
 *                                                                              *
 *******************************************************************************/
-function FPDF($orientation='P', $unit='mm', $size='A4')
+function __construct($orientation='P', $unit='mm', $size='A4')
 {
 	// Some checks
 	$this->_dochecks();
@@ -103,6 +103,7 @@ function FPDF($orientation='P', $unit='mm', $size='A4')
 	$this->TextColor = '0 g';
 	$this->ColorFlag = false;
 	$this->ws = 0;
+    
 	// Font path
 	if(defined('FPDF_FONTPATH'))
 	{
@@ -116,6 +117,7 @@ function FPDF($orientation='P', $unit='mm', $size='A4')
 		$this->fontpath = '';
 	// Core fonts
 	$this->CoreFonts = array('courier', 'helvetica', 'times', 'symbol', 'zapfdingbats');
+
 	// Scale factor
 	if($unit=='pt')
 		$this->k = 1;
@@ -473,6 +475,10 @@ function AddFont($family, $style='', $file='')
 	if(isset($this->fonts[$fontkey]))
 		return;
 	$info = $this->_loadfont($file);
+    
+    
+    
+    
 	$info['i'] = count($this->fonts)+1;
 	if(!empty($info['diff']))
 	{
@@ -1143,12 +1149,14 @@ function _endpage()
 
 function _loadfont($font)
 {
-	// Load a font definition file from the font directory
-	include($this->fontpath.$font);
-	$a = get_defined_vars();
-	if(!isset($a['name']))
-		$this->Error('Could not include font definition file');
-	return $a;
+    $info = array("type" => "Core","name" => "Courier","up" => -100,"ut" => 50,"cw" => array());
+    $type = 'Core';
+    $name = 'Courier';
+    $up = -100;
+    $ut = 50;
+    for($i=0;$i<=255;$i++)
+        $info["cw"][chr($i)] = 600;
+	return $info;
 }
 
 function _escape($s)

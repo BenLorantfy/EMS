@@ -5,12 +5,11 @@
 //FIRST VERSION	: 4/04/2015
 //DESCRIPTION	: inactive Employment Report. generates a report in pdf format using FPDF library 
 //                and Mysql Query calls
-
 namespace Reports;
 use Helper\FPDF\FPDF;
 
 // MySql setup
-$db = mysqli_connect("localhost","root","root", "EMS");
+$db = mysqli_connect("localhost","root","Conestoga1", "EMS");
 if (!$db)
   {
   die('Could not connect: ' . mysqli_error($db));
@@ -19,6 +18,7 @@ if (!$db)
 mysqli_query($db,"Use EMS" );
 
 // fpdf Setup
+$lineBreak = 5;
 $y_axis_initial = 10;
 $pdf = new FPDF();
 $pdf->Open();
@@ -49,15 +49,13 @@ $pdf->Cell(30, 5, 'Hired', 1, 0, 'C', 0);
 $pdf->Cell(30, 5, 'Terminated', 1, 0, 'C', 0);
 $pdf->Cell(25, 5, 'Type', 1, 0, 'C', 0);
 $pdf->Cell(52, 5, 'Reason for leaving', 1, 0, 'C', 0);
-$y_axis = $y_axis + $row_height;
 
-$row_height = 6;
 
  $result = mysqli_query( $db, "SELECT person.lastName, person.firstName, fulltimeemployee.dateOfHire,
                                 fulltimeemployee.dateOfTermination
                                 FROM person
                                 LEFT JOIN fulltimeemployee
-                                ON person.id=fulltimeemployee.id
+                                ON person.id=fulltimeemployee.employee_id
                                 ORDER BY person.lastName;"); 
 
 while($row = mysqli_fetch_array($result))
@@ -88,7 +86,7 @@ while($row = mysqli_fetch_array($result))
     $pdf->Cell(25, 5, 'FullTime', 1, 0, 'R', 0);
     $pdf->Cell(52, 5, '', 1, 0, 'R', 0);
     $pdf->SetX(30);
-    $y_axis = $y_axis + $row_height;
+
     $i = $i + 1;
 
 }
@@ -97,7 +95,7 @@ while($row = mysqli_fetch_array($result))
 ***                      End                          
 ***                                                         ***
 **************************************************************/
-mysql_close($db);
+mysqli_close($db);
 
 $pdf->Ln($lineBreak);
 $pdf->SetX(25);

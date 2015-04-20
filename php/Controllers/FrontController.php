@@ -1,6 +1,7 @@
 <?php
 namespace Controllers;
 use Controllers\EmployeeController;
+use Controllers\ReportsController;
 use Controllers\PageController;
 use Controllers\ReportsController;
 use Helper\Route;
