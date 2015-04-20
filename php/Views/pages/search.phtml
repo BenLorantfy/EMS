@@ -19,7 +19,7 @@
 					<span class = "verticalAlign"></span>
 					<span class = "optionLabel">Type:</span>
 					<div class = "optionSubcontainer">
-						<select class = "option">
+						<select class = "employeeType option">
 							<option>Fulltime</option>
 							<option>Parttime</option>
 							<option>Seasonal</option>
@@ -54,7 +54,7 @@
 			<div class = "results">
 				<table class = "resultTable" cellspacing="0" cellpadding="0">
 					<?php foreach ($this->employees as $employee): ?>
-						<tr>
+						<tr id = "employee<?= $employee["id"]; ?>">
 							<td><?= $employee["firstName"]; ?></td><td><?= $employee["lastName"]; ?></td><td><?= $employee["dateOfBirth"]; ?></td>
 							<td>
 								<img class = "timecardIcon rowIcon" src = "/assets/images/clock.png"/>

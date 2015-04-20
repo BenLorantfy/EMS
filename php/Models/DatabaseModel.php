@@ -364,9 +364,12 @@ class DatabaseModel{
 		return $auditInfo;
 	}
 
-	public function SearchEmployee($name){
-		$sql = "select id, firstName, lastName, dateOfBirth from person where (person.firstName LIKE CONCAT('%','" . $name . "','%')
-		OR person.lastName LIKE CONCAT('%','" . $name . "','%')) order by dateOfBirth";
+	public function SearchEmployee($options){
+		$keywords = $options->keywords;
+		$type = $options->type;
+		
+		$sql = "select id, firstName, lastName, dateOfBirth from person where (person.firstName LIKE CONCAT('%','" . $keywords . "','%')
+		OR person.lastName LIKE CONCAT('%','" . $keywords . "','%')) order by dateOfBirth";
 		
 		$query = $this->db->prepare($sql);
 		if(!$query) throw new Exception($this->db->error);

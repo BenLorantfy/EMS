@@ -52,6 +52,7 @@ class FrontController{
 		// PUT    = UPDATE
 		// DELETE = DELETE
 		//
+		Route::post("/employeelist",array(new EmployeeController(),"searchEmployees"));
 		Route::get("/employees/{type}/{id}",array(new EmployeeController(),"getEmployee"));
 		Route::post("/employees/{type}",array(new EmployeeController(),"createEmployee"));
         Route::get("/timecards/{id}",array(new TimecardController(),"getTunecard"));
