@@ -3,6 +3,7 @@ namespace Controllers;
 use Controllers\EmployeeController;
 use Controllers\ReportsController;
 use Controllers\PageController;
+use Controllers\TimecardController;
 use Helper\Route;
 
 //
@@ -53,7 +54,10 @@ class FrontController{
 		//
 		Route::get("/employees/{type}/{id}",array(new EmployeeController(),"getEmployee"));
 		Route::post("/employees/{type}",array(new EmployeeController(),"createEmployee"));
-		
+        
+        Route::get("/timecard/{id}",array(new TimecardController(),"getTunecard"));
+		Route::post("/timecard/{id}",array(new TimecardController(),"saveTimecard"));
+        
 		Route::post("/session",array(new SessionController(),"login"));
 		Route::delete("/session",array(new SessionController(),"logout"));
 		
