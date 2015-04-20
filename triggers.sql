@@ -91,10 +91,7 @@ FOR EACH ROW
 		END IF;
 
 		INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
-		(mydata, (SELECT NOW()), 'Company', new.id, 'corporationName', null, new.corporationName, 'Insert');
-
-		INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
-		(mydata, (SELECT NOW()), 'Company', new.id, 'dateOfIncorporation', null, new.dateOfIncorporation, 'Insert');
+		(mydata, (SELECT NOW()), 'Company', new.id, 'companyName', null, new.companyName, 'Insert');
     END$$
 
 DROP TRIGGER IF EXISTS updateCompany$$
@@ -113,14 +110,9 @@ FOR EACH ROW
 		
 		/* Start conditional Audit insert */
 
-		IF (new.corporationName != OLD.corporationName) THEN
+		IF (new.companyName != OLD.companyName) THEN
 			INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
-			(mydata, (SELECT NOW()), 'Company', new.id, 'corporationName', OLD.corporationName, new.corporationName, 'Update');
-		END IF;
-
-		IF (new.dateOfIncorporation != OLD.dateOfIncorporation) THEN
-			INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
-			(mydata, (SELECT NOW()), 'Company', new.id, 'dateOfIncorporation', OLD.dateOfIncorporation, new.dateOfIncorporation, 'Update');
+			(mydata, (SELECT NOW()), 'Company', new.id, 'companyName', OLD.companyName, new.companyName, 'Update');
 		END IF;
 	END$$
     
@@ -149,6 +141,12 @@ FOR EACH ROW
 
 		INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
 		(mydata, (SELECT NOW()), 'Contractor', new.id, 'company_id', null, new.company_id, 'Insert');
+        
+		INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
+		(mydata, (SELECT NOW()), 'Contractor', new.id, 'corporationName', null, new.corporationName, 'Insert');
+        
+		INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
+		(mydata, (SELECT NOW()), 'Contractor', new.id, 'dateOfIncorporation', null, new.dateOfIncorporation, 'Insert');
 
 		INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
 		(mydata, (SELECT NOW()), 'Contractor', new.id, 'buisnessNumber', null, new.buisnessNumber, 'Insert');
@@ -183,8 +181,18 @@ FOR EACH ROW
 			INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
 			(mydata, (SELECT NOW()), 'Contractor', new.id, 'company_id', OLD.company_id, new.company_id, 'Update');
 		END IF;
+        
+        IF (new.corporationName != OLD.corporationName) THEN
+			INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
+			(mydata, (SELECT NOW()), 'Contractor', new.id, 'corporationName', OLD.corporationName, new.corporationName, 'Update');
+		END IF;
 
-		IF (new.buisnessNumber != OLD.buisnessNumber) THEN
+		IF (new.dateOfIncorporation != OLD.dateOfIncorporation) THEN
+			INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
+			(mydata, (SELECT NOW()), 'Contractor', new.id, 'dateOfIncorporation', OLD.dateOfIncorporation, new.dateOfIncorporation, 'Update');
+		END IF;
+        
+        IF (new.buisnessNumber != OLD.buisnessNumber) THEN
 			INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
 			(mydata, (SELECT NOW()), 'Contractor', new.id, 'buisnessNumber', OLD.buisnessNumber, new.buisnessNumber, 'Update');
 		END IF;
