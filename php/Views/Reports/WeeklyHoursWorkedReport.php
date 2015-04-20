@@ -9,7 +9,7 @@ namespace Reports;
 use Helper\FPDF\FPDF;
 
 // MySql setup
-$db = mysqli_connect("localhost","root","root", "EMS");
+$db = mysqli_connect("localhost","root","Conestoga1", "EMS");
 if (!$db)
   {
   die('Could not connect: ' . mysqli_error($db));
