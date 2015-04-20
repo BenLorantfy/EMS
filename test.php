@@ -367,14 +367,93 @@ class Database{
 		
 		return $contractor_id;
 	}
+
+	public function UpdateEmployee($input, $user_id){
+		$id = $input->id;
+		$firstName = $input->firstName;
+		$lastName = $input->lastName;
+		$dateOfBirth = $input->dateOfBirth;
+		$sin = $input->sin;
+		$company = $input->company;
+		
+		$query = $this->db->prepare('SELECT company_id,person_id FROM employee
+		WHERE id = (SELECT employee_id FROM fulltimeemployee WHERE id = ?) LIMIT 1');
+		if(!$query) throw new Exception($this->db->error);
+		if(!$query->bind_param("i",$id)) throw new Exception($this->db->error);
+		if(!$query->execute()) throw new Exception($this->db->error);
+		if(!$query->store_result()) throw new Exception($this->db->error);
+		if($query->num_rows == 1){		
+			echo "Found a employee<br>";
+			
+			if(!$query->bind_result($company_id, $person_id)) throw new Exception($this->db->error);
+			$query->fetch();
+		}else{
+			throw new Exception("Database error<br>");
+		}
+		
+		$sql = "UPDATE Company SET
+		id = " . $user_id . ", companyName = '" . $company . "'
+		WHERE (id = " . $id . ")";
+		
+		if ($this->db->query($sql) == FALSE){
+			throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
+		}else{
+			echo "	Company updated<br>";
+		}
+		
+		$sql = "UPDATE Person SET
+		id = " . $user_id . ", firstName = '" . $firstName . "', lastName = '" . $lastName . "', SIN = '" . $sin . "', dateOfBirth = '" . $dateOfBirth . "'
+		WHERE (id = " . $id . ")";
+		
+		if ($this->db->query($sql) == FALSE){
+			throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
+		}else{
+			echo "	Person updated<br>";
+		}
+	}
+
+	public function SearchEmployee($name){
+		$sql = "select id, firstName, lastName, dateOfBirth from person where (person.firstName LIKE CONCAT('%','" . $name . "','%')
+		OR person.lastName LIKE CONCAT('%','" . $name . "','%')) order by dateOfBirth";
+		
+		$query = $this->db->prepare($sql);
+		if(!$query) throw new Exception($this->db->error);
+		if(!$query->execute()) throw new Exception($this->db->error);
+		if(!$query->store_result()) throw new Exception($this->db->error);
+
+		$employeeInfo = array();
+		if($query->num_rows > 0){
+			if($query->bind_result($id, $firstName, $lastName, $dateOfBirth)){
+				while($query->fetch()){
+					array_push($employeeInfo, array(
+						 "id" => $id
+						,"firstName" => $firstName
+						,"lastName" => $lastName
+						,"dateOfBirth" => $dateOfBirth
+					));
+				}								
+			}
+		}
+
+		return $employeeInfo;
+	}
 }
 
 abstract class EmployeeModel{
+	protected $id;
 	protected $firstName;
 	protected $lastName;
 	protected $dateOfBirth;
 	protected $sin;
 	protected $company;
+	
+	public function SetId($id){
+		// todo: validation logic
+		// don't set class variable if invalid
+		// return false if invalid
+		$this->id = $id;
+		return true;
+	}
 	
 	public function SetFirstName($firstName){
 		// todo: validation logic
@@ -589,16 +668,16 @@ class ContractEmployeeModel{
 	
 }
 
-$obj = new SeasonalEmployeeModel;
+$obj = new FullTimeEmployeeModel;
 $db = new Database;
 
-$obj->SetFirstName("Sam");
-$obj->SetLastName("One");
+/*obj->SetId(2);
+$obj->SetFirstName("gom");
+$obj->SetLastName("rOne");
 $obj->SetDateOfBirth("1996/01/22");
 $obj->SetSIN("1234567890");
 $obj->SetCompany("MyCompany");
-$obj->SetSeason("fall");
-$obj->SetPiecePay(14.5);
-$obj->SetSeasonYear(2014);
-$db->AddSeasonal($obj, "inactive", 1);
+$db->UpdateEmployee($obj, 2);*/
+
+print_r($db->SearchEmployee("b"));
 ?>
