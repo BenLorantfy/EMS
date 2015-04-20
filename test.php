@@ -680,6 +680,40 @@ class Database{
 
 		return $employeeData;
 	}
+
+	public function GetTimecard($id, $type){
+		$sql = "SELECT monday, tuesday, wednesday, thursday, friday, saturday, sunday FROM timecard, " . $type . "
+		WHERE 
+		(
+		timecard.employee_id = " . $type . ".employee_id AND
+		" . $type . ".id = " . $id . "
+		)
+		ORDER BY date DESC LIMIT 1";
+		
+		$query = $this->db->prepare($sql);
+		if(!$query) throw new Exception($this->db->error);
+		if(!$query->execute()) throw new Exception($this->db->error);
+		if(!$query->store_result()) throw new Exception($this->db->error);
+
+		$timecardData = array();
+		if($query->num_rows > 0){
+			if($query->bind_result($monday, $tuesday, $wednesday, $thursday, $friday, $saturday, $sunday)){
+				while($query->fetch()){
+					array_push($timecardData, array(
+						"monday" => $monday
+						,"tuesday" => $tuesday
+						,"wednesday" => $wednesday
+						,"thursday" => $thursday
+						,"friday" => $friday
+						,"saturday" => $saturday
+						,"sunday" => $sunday
+					));
+				}								
+			}
+		}
+
+		return $timecardData;
+	}
 }
 
 abstract class EmployeeModel{
@@ -917,5 +951,5 @@ $db = new Database;
 /*$obj->SetId(2);
 $obj->SetFirstName("greg");
 $db->UpdateSeasonalEmployee($obj, 2);*/
-print_r($db->GetContract(3))
+print_r($db->GetTimecard(1, "seasonalemployee"))
 ?>

@@ -28,7 +28,7 @@ App.Views.EmployeeView = App.Views.SectionView.extend({
 	
 	stopEdit:function(){
 		
-	}
+	},
 	
 	add: function(){
 		var request = this.model.save();
