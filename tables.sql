@@ -30,8 +30,7 @@ FOREIGN KEY (user_id) REFERENCES User(id)
 CREATE TABLE Company
 (
 id					int NOT NULL AUTO_INCREMENT,
-corporationName		varchar(255),
-dateOfIncorporation	Date,
+companyName			varchar(255),
 PRIMARY KEY (id)
 );
 
@@ -39,6 +38,8 @@ CREATE TABLE Contractor
 (
 id					int NOT NULL AUTO_INCREMENT,
 company_id			int NOT NULL,
+corporationName		varchar(255),
+dateOfIncorporation	Date,
 buisnessNumber		varchar(11),
 contractStartDate	Date,
 contractStopDate	Date,
@@ -119,4 +120,5 @@ PRIMARY KEY (id),
 FOREIGN KEY (employee_id) REFERENCES Employee(id)
 );
 
-insert into user (username, password, securityLevel) VALUES ("user", "$2y$10$DU3uoyhM9VsekGRL9HB0zOwVNQbMHrjD9IL0n/BzwTElQBROY7NBi", 1);
+insert into user (username, password, securityLevel) VALUES ("admin", "$2y$10$DU3uoyhM9VsekGRL9HB0zOwVNQbMHrjD9IL0n/BzwTElQBROY7NBi", 1);
+insert into user (username, password, securityLevel) VALUES ("general", "$2y$10$DU3uoyhM9VsekGRL9HB0zOwVNQbMHrjD9IL0n/BzwTElQBROY7NBi", 0);
