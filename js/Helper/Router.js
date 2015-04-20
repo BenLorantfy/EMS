@@ -7,5 +7,6 @@ App.Router = new (Backbone.Router.extend({
 		,"audit":"audit"
 		,"viewEmployee/:id":"viewEmployee"
 		,"reports":"reports"
+		,"timecard/:id":"timecard"
 	}
 }));

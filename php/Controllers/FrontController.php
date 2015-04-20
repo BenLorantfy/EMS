@@ -54,13 +54,12 @@ class FrontController{
 		//
 		Route::get("/employees/{type}/{id}",array(new EmployeeController(),"getEmployee"));
 		Route::post("/employees/{type}",array(new EmployeeController(),"createEmployee"));
-        
-        Route::get("/timecard/{id}",array(new TimecardController(),"getTunecard"));
-		Route::post("/timecard/{id}",array(new TimecardController(),"saveTimecard"));
-        
+        Route::get("/timecards/{id}",array(new TimecardController(),"getTunecard"));
+		Route::post("/timecards/{id}",array(new TimecardController(),"saveTimecard"));
 		Route::post("/session",array(new SessionController(),"login"));
 		Route::delete("/session",array(new SessionController(),"logout"));
 		
+		// Pages
 		Route::get("/",array(new PageController(),"navigateToLogin"));
 		Route::get("/login",array(new PageController(),"navigateToLogin"));
 		Route::get("/search",array(new PageController(),"navigateToSearch"));
@@ -69,7 +68,9 @@ class FrontController{
 		Route::get("/viewEmployee/{id}",array(new PageController(),"navigateToViewEmployee"));
 		Route::get("/editEmployee/{id}",array(new PageController(),"navigateToEditEmployee"));
 		Route::get("/reports",array(new PageController(),"navigateToReports"));
+		Route::get("/timecard/{id}",array(new PageController(),"navigateToTimecard"));
 
+		// Reports
 		Route::get("/reports/{type}",array(new ReportsController(),"generateReport"));
 		
 	}

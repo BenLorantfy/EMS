@@ -6,6 +6,7 @@ App.Views.SearchView = App.Views.SectionView.extend({
 		,"click .addEmployeeButton":"openAddEmployee"
 		,"click .reportsButton":"openReports"
 		,"click tr":"openViewEmployee"
+		,"click .timecardIcon":"openTimecard"
 	},
 	
 	openAddEmployee:function(){
@@ -20,8 +21,14 @@ App.Views.SearchView = App.Views.SectionView.extend({
 		this.trigger("open.audit");
 	},
 	
-	openViewEmployee:function(){
-		this.trigger("open.viewEmployee", { id:42 });
+	openViewEmployee:function(e){
+		if(!$(e.target).hasClass("timecardIcon")){
+			this.trigger("open.viewEmployee", { id:42 });
+		}
+	},
+	
+	openTimecard:function(){
+		this.trigger("open.timecard");	
 	},
 	
 	initialize: function(){
