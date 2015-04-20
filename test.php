@@ -402,8 +402,12 @@ class Database{
 		}
 		
 		$sql = "UPDATE Person SET
-		id = " . $user_id . ", firstName = '" . $firstName . "', lastName = '" . $lastName . "', SIN = '" . $sin . "', dateOfBirth = '" . $dateOfBirth . "'
-		WHERE (id = " . $id . ")";
+		id = " . $user_id . ", firstName = '" . $firstName . "', lastName = '" . $lastName . "', SIN = '" . $sin . "'"; 
+		
+		if ($dateOfBirth != ""){
+			$sql .= ", dateOfBirth = '" . $dateOfBirth . "'";
+		}
+		$sql .= " WHERE (id = " . $id . ")";
 		
 		if ($this->db->query($sql) == FALSE){
 			throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
@@ -413,7 +417,85 @@ class Database{
 	}
 	
 	public function UpdateFullTimeEmployee($input, $user_id){
+		$this->UpdateEmployee($input, $user_id);
+		$id = $input->id;
+		$dateOfHire = $input->dateOfHire;
+		$dateOfTermination = $input->dateOfTermination;
+		$salary = $input->salary;
+		
+		$sql = "UPDATE FullTimeEmployee SET
+		id = " . $user_id;
+		
+		if ($dateOfHire != ""){
+			$sql .= ", dateOfHire = '" . $dateOfHire . "'";
+		}
+		if ($dateOfTermination != ""){
+			$sql .= ", dateOfTermination = '" . $dateOfTermination . "'";
+		}
+		if ($salary != ""){
+			$sql .= ", salary = '" . $salary . "'";
+		}
+		$sql .= " WHERE (id = " . $id . ")";
+		
+		if ($this->db->query($sql) == FALSE){
+			throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
+		}else{
+			echo "	FullTime Employee updated<br>";
+		}
+	}
 	
+	public function UpdatePartTimeEmployee($input, $user_id){
+		$this->UpdateEmployee($input, $user_id);
+		$id = $input->id;
+		$dateOfHire = $input->dateOfHire;
+		$dateOfTermination = $input->dateOfTermination;
+		$hourlyRate = $input->hourlyRate;
+		
+		$sql = "UPDATE PartTimeEmployee SET
+		id = " . $user_id;
+		
+		if ($dateOfHire != ""){
+			$sql .= ", dateOfHire = '" . $dateOfHire . "'";
+		}
+		if ($dateOfTermination != ""){
+			$sql .= ", dateOfTermination = '" . $dateOfTermination . "'";
+		}
+		if ($hourlyRate != ""){
+			$sql .= ", hourlyRate = '" . $hourlyRate . "'";
+		}
+		$sql .= " WHERE (id = " . $id . ")";
+		
+		if ($this->db->query($sql) == FALSE){
+			throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
+		}else{
+			echo "	PartTime Employee updated<br>";
+		}
+	}
+	
+	public function UpdateSeasonalEmployee($input, $user_id){
+		$this->UpdateEmployee($input, $user_id);
+		$id = $input->id;
+		$season = $input->season;
+		$piecePay = $input->piecePay;
+		$seasonYear = $input->seasonYear;
+		
+		$sql = "UPDATE SeasonalEmployee SET
+		id = " . $user_id;
+		$sql .= ", season = '" . $season . "'";
+		
+		if ($piecePay != ""){
+			$sql .= ", piecePay = '" . $piecePay . "'";
+		}
+		if ($seasonYear != ""){
+			$sql .= ", seasonYear = '" . $seasonYear . "'";
+		}
+		$sql .= " WHERE (id = " . $id . ")";
+		
+		if ($this->db->query($sql) == FALSE){
+			throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
+		}else{
+			echo "	Seasonal Employee updated<br>";
+		}
 	}
 
 	public function SearchEmployee($name){
@@ -672,14 +754,10 @@ class ContractEmployeeModel{
 	
 }
 
-$obj = new FullTimeEmployeeModel;
+$obj = new SeasonalEmployeeModel;
 $db = new Database;
 
-obj->SetId(2);
-$obj->SetFirstName("gom");
-$obj->SetLastName("rOne");
-$obj->SetDateOfBirth("1996/01/22");
-$obj->SetSIN("1234567890");
-$obj->SetCompany("MyCompany");
-$db->UpdateEmployee($obj, 2);
+$obj->SetId(2);
+$obj->SetFirstName("greg");
+$db->UpdateSeasonalEmployee($obj, 2);
 ?>
