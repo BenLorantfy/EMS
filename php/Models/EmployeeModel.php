@@ -5,6 +5,7 @@ abstract class EmployeeModel{
 	protected $lastName;
 	protected $dateOfBirth;
 	protected $sin;
+	protected $companyName;
 	
 	public function SetFirstName($firstName){
 		// todo: validation logic
@@ -35,6 +36,14 @@ abstract class EmployeeModel{
 		// don't set class variable if invalid
 		// return false if invalid
 		$this->sin = $sin;
+		return true;		
+	}
+	
+	public function SetCompanyName($companyName){
+		// todo: validation logic
+		// don't set class variable if invalid
+		// return false if invalid
+		$this->companyName = $companyName;
 		return true;		
 	}
 	
