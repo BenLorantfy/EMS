@@ -5,7 +5,6 @@
 //FIRST VERSION	: 4/04/2015
 //DESCRIPTION	: Weekly Hours Worked Report. generates a report in pdf format using FPDF library 
 //                and Mysql Query calls
-
 namespace Reports;
 use Helper\FPDF\FPDF;
 
@@ -19,6 +18,7 @@ if (!$db)
 mysqli_query($db,"Use EMS" );
 
 // fpdf Setup
+$lineBreak = 5;
 $y_axis_initial = 10;
 $pdf = new FPDF();
 $pdf->Open();
@@ -49,18 +49,16 @@ $pdf->SetX(62);
 $pdf->Cell(38, 5, ' Employee Name', 1, 0, 'L', 0);
 $pdf->Cell(35, 5, ' SIN', 1, 0, 'L', 0);
 $pdf->Cell(25, 5, 'Hours', 1, 0, 'C', 0);
-$y_axis = $y_axis + $row_height;
 
-$row_height = 6;
 
  $result = mysqli_query( $db, "SELECT person.lastName, person.firstName, person.SIN,
                                 (timecard.monday + timecard.tuesday + timecard.wednesday + timecard.thursday 
                                 + timecard.friday + timecard.saturday + timecard.sunday)
                                 FROM person
                                 LEFT JOIN fulltimeemployee
-                                ON person.id=fulltimeemployee.id
+                                ON person.id=fulltimeemployee.employee_id
                                 LEFT JOIN timecard
-                                ON person.id=timecard.id
+                                ON person.id=timecard.employee_id
                                 ORDER BY person.lastName;"); 
 
 while($row = mysqli_fetch_array($result))
@@ -93,7 +91,7 @@ while($row = mysqli_fetch_array($result))
     $pdf->Cell(35, 5, " ".$SIN, 1, 0, 'L', 0);
     $pdf->Cell(25, 5, $hours, 1, 0, 'C', 0);
     $pdf->SetX(62);
-    $y_axis = $y_axis + $row_height;
+
     $i = $i + 1;
 
 }
@@ -110,18 +108,16 @@ $pdf->SetX(62);
 $pdf->Cell(38, 5, ' Employee Name', 1, 0, 'L', 0);
 $pdf->Cell(35, 5, ' SIN', 1, 0, 'L', 0);
 $pdf->Cell(25, 5, 'Hours', 1, 0, 'C', 0);
-$y_axis = $y_axis + $row_height;
 
-$row_height = 6;
 
  $result = mysqli_query( $db, "SELECT person.lastName, person.firstName, person.SIN,
                                 (timecard.monday + timecard.tuesday + timecard.wednesday + timecard.thursday 
                                 + timecard.friday + timecard.saturday + timecard.sunday)
                                 FROM person
                                 LEFT JOIN parttimeemployee
-                                ON person.id=parttimeemployee.id
+                                ON person.id=parttimeemployee.employee_id
                                 LEFT JOIN timecard
-                                ON person.id=timecard.id
+                                ON person.id=timecard.employee_id
                                 ORDER BY person.lastName;"); 
 
 while($row = mysqli_fetch_array($result))
@@ -154,7 +150,7 @@ while($row = mysqli_fetch_array($result))
     $pdf->Cell(35, 5, " ".$SIN, 1, 0, 'L', 0);
     $pdf->Cell(25, 5, $hours, 1, 0, 'C', 0);
     $pdf->SetX(62);
-    $y_axis = $y_axis + $row_height;
+
     $i = $i + 1;
 
 }
@@ -173,18 +169,16 @@ $pdf->SetX(62);
 $pdf->Cell(38, 5, ' Employee Name', 1, 0, 'L', 0);
 $pdf->Cell(35, 5, ' SIN', 1, 0, 'L', 0);
 $pdf->Cell(25, 5, 'Hours', 1, 0, 'C', 0);
-$y_axis = $y_axis + $row_height;
 
-$row_height = 6;
 
  $result = mysqli_query( $db, "SELECT person.lastName, person.firstName, person.SIN,
                                 (timecard.monday + timecard.tuesday + timecard.wednesday + timecard.thursday 
                                 + timecard.friday + timecard.saturday + timecard.sunday)
                                 FROM person
                                 LEFT JOIN seasonalemployee
-                                ON person.id=seasonalemployee.id
+                                ON person.id=seasonalemployee.employee_id
                                 LEFT JOIN timecard
-                                ON person.id=timecard.id
+                                ON person.id=timecard.employee_id
                                 ORDER BY person.lastName;"); 
 
 while($row = mysqli_fetch_array($result))
@@ -217,7 +211,7 @@ while($row = mysqli_fetch_array($result))
     $pdf->Cell(35, 5, " ".$SIN, 1, 0, 'L', 0);
     $pdf->Cell(25, 5, $hours, 1, 0, 'C', 0);
     $pdf->SetX(62);
-    $y_axis = $y_axis + $row_height;
+    
     $i = $i + 1;
 
 }
@@ -227,7 +221,7 @@ while($row = mysqli_fetch_array($result))
 ***                      End                          
 ***                                                         ***
 **************************************************************/
-mysql_close($db);
+mysqli_close($db);
 
 $pdf->Ln($lineBreak);
 $pdf->SetX(25);

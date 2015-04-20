@@ -5,12 +5,11 @@
 //FIRST VERSION	: 4/04/2015
 //DESCRIPTION	: Active Employment Report. generates a report in pdf format using FPDF library 
 //                and Mysql Query calls
-
 namespace Reports;
 use Helper\FPDF\FPDF;
 
 // MySql setup
-$db = mysqli_connect("localhost","root","root", "EMS");
+$db = mysqli_connect("localhost","root","Conestoga1", "EMS");
 if (!$db)
   {
   die('Could not connect: ' . mysqli_error($db));
@@ -19,6 +18,7 @@ if (!$db)
 mysqli_query($db,"Use EMS" );
 
 // fpdf Setup
+$lineBreak = 5;
 $y_axis_initial = 10;
 $pdf = new FPDF();
 $pdf->Open();
@@ -49,9 +49,6 @@ $pdf->SetX(36);
 $pdf->Cell(38, 5, 'Employee Name', 1, 0, 'C', 0);
 $pdf->Cell(35, 5, 'Date of Hire', 1, 0, 'C', 0);
 $pdf->Cell(38, 5, 'Avg. Hours', 1, 0, 'C', 0);
-$y_axis = $y_axis + $row_height;
-
-$row_height = 6;
 
  $result = mysqli_query( $db, "SELECT person.lastName, person.firstName, fulltimeemployee.dateOfHire,
                                 (timecard.monday + timecard.tuesday + timecard.wednesday + timecard.thursday 
@@ -110,9 +107,7 @@ $pdf->SetX(36);
 $pdf->Cell(38, 5, 'Employee Name', 1, 0, 'C', 0);
 $pdf->Cell(35, 5, 'Date of Hire', 1, 0, 'C', 0);
 $pdf->Cell(38, 5, 'Avg. Hours', 1, 0, 'C', 0);
-$y_axis = $y_axis + $row_height;
 
-$row_height = 6;
 
  $result = mysqli_query( $db, "SELECT person.lastName, person.firstName, parttimeemployee.dateOfHire,
                                 (timecard.monday + timecard.tuesday + timecard.wednesday + timecard.thursday 
@@ -154,7 +149,7 @@ while($row = mysqli_fetch_array($result))
     $pdf->Cell(35, 5, " ".$dateOfHire, 1, 0, 'L', 0);
     $pdf->Cell(38, 5, $hours, 1, 0, 'R', 0);
     $pdf->SetX(36);
-    $y_axis = $y_axis + $row_height;
+
     $i = $i + 1;
 
 }
@@ -171,9 +166,7 @@ $pdf->SetX(36);
 $pdf->Cell(38, 5, 'Employee Name', 1, 0, 'C', 0);
 $pdf->Cell(35, 5, 'Date of Hire', 1, 0, 'C', 0);
 $pdf->Cell(38, 5, 'Avg. Hours', 1, 0, 'C', 0);
-$y_axis = $y_axis + $row_height;
 
-$row_height = 6;
 
  $result = mysqli_query( $db, "SELECT person.lastName, person.firstName, seasonalemployee.seasonYear,
                                 (timecard.monday + timecard.tuesday + timecard.wednesday + timecard.thursday 
@@ -215,7 +208,7 @@ while($row = mysqli_fetch_array($result))
     $pdf->Cell(35, 5, " ".$dateOfHire, 1, 0, 'L', 0);
     $pdf->Cell(38, 5, $hours, 1, 0, 'R', 0);
     $pdf->SetX(36);
-    $y_axis = $y_axis + $row_height;
+
     $i = $i + 1;
 
 }
@@ -232,9 +225,6 @@ $pdf->SetX(36);
 $pdf->Cell(38, 5, 'Employee Name', 1, 0, 'C', 0);
 $pdf->Cell(35, 5, 'Date of Hire', 1, 0, 'C', 0);
 $pdf->Cell(38, 5, 'Avg. Hours', 1, 0, 'C', 0);
-$y_axis = $y_axis + $row_height;
-
-$row_height = 6;
 
  $result = mysqli_query( $db, "SELECT person.lastName, person.firstName, Contractor.ContractStartDate
                                 FROM person
@@ -281,7 +271,7 @@ while($row = mysqli_fetch_array($result))
 ***                      End                          
 ***                                                         ***
 **************************************************************/
-mysql_close($db);
+mysqli_close($db);
 
 $pdf->Ln($lineBreak);
 $pdf->SetX(25);
