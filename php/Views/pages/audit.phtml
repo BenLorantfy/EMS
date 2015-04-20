@@ -5,8 +5,8 @@
 		<div class = "sectionTitle">Audit</div>
 		<table class = "auditTable" cellspacing="0" cellpadding="2">
 			<tr class = "titleRow">
-				<td>User ID</td>
-				<td>Change time</td>
+				<td id="userIdCol">User ID</td>
+				<td id="changeTimeCol">Change time</td>
 				<td>Table</td>
 				<td>Record ID</td>
 				<td>Changed field</td>
@@ -15,15 +15,15 @@
 				<td>Extra</td>
 			</tr>
 			<?php foreach ($this->auditInfo as $auditEntry): ?>
-				<tr class = "titleRow">
-					<td><?=$this->auditEntry["user_id"]?></td>
-					<td><?=$this->auditEntry["changeTime"]?></td>
-					<td><?=$this->auditEntry["changedTable"]?></td>
-					<td><?=$this->auditEntry["recordId"]?></td>
-					<td><?=$this->auditEntry["changedField"]?></td>
-					<td><?=$this->auditEntry["oldValue"]?></td>
-					<td><?=$this->auditEntry["newValue"]?></td>
-					<td><?=$this->auditEntry["extra"]?></td>
+				<tr>
+					<td><?=$auditEntry["user_id"]?></td>
+					<td><?=$auditEntry["changeTime"]?></td>
+					<td><?=$auditEntry["changedTable"]?></td>
+					<td><?=$auditEntry["recordId"]?></td>
+					<td><?=$auditEntry["changedField"]?></td>
+					<td><?=$auditEntry["oldValue"]?></td>
+					<td><?=$auditEntry["newValue"]?></td>
+					<td><?=$auditEntry["extra"]?></td>
 				</tr>						
 			<?php endforeach ?>
 		</table>
