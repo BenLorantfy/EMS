@@ -45,7 +45,7 @@ class PageController{
 		$this->renderSearch(true,true);
 		$this->renderCover(true);
 		$this->renderAddEmployee(true);
-		$this->renderViewEmployee(true);
+		$this->renderViewEmployee(false);
 		$this->renderAudit(false);
 		$this->renderReports(false);
 		$this->renderEnd();		

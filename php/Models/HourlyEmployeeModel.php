@@ -19,8 +19,4 @@ abstract class HourlyEmployeeModel extends EmployeeModel{
 		$this->dateOfTermination = $dateOfTermination;
 		return true;
 	}
-	
-	public function GetAttributes(){
-		return get_object_vars($this);
-	}
 }
