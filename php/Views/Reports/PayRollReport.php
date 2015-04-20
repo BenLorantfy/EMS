@@ -246,11 +246,11 @@ $pdf->Cell(25, 5, 'Gross', 1, 0, 'C', 0);
 $pdf->Cell(55, 5, 'Notes', 1, 0, 'C', 0);
 
 
-$result = mysqli_query( $db, "SELECT company.corporationName, contractor.contractStartDate, contractor.contractStopDate
+$result = mysqli_query( $db, "SELECT company.companyName, contractor.contractStartDate, contractor.contractStopDate
                                 FROM company
                                 LEFT JOIN contractor
                                 ON company.id=contractor.company_id
-                                ORDER BY company.corporationName;"); 
+                                ORDER BY company.companyName;"); 
 
 while($row = mysqli_fetch_array($result))
 {

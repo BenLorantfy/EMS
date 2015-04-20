@@ -51,11 +51,13 @@ $pdf->Cell(25, 5, 'Type', 1, 0, 'C', 0);
 $pdf->Cell(52, 5, 'Reason for leaving', 1, 0, 'C', 0);
 
 
- $result = mysqli_query( $db, "SELECT person.lastName, person.firstName, fulltimeemployee.dateOfHire,
-                                fulltimeemployee.dateOfTermination
+$result = mysqli_query( $db, "SELECT person.lastName, person.firstName, fulltimeemployee.dateOfHire, fulltimeemployee.dateOfTermination,
+                                employee.reasonForLeaving
                                 FROM person
                                 LEFT JOIN fulltimeemployee
                                 ON person.id=fulltimeemployee.employee_id
+                                LEFT JOIN employee
+                                ON person.id=employee.person_id
                                 ORDER BY person.lastName;"); 
 
 while($row = mysqli_fetch_array($result))
@@ -77,14 +79,112 @@ while($row = mysqli_fetch_array($result))
     $name = $row['lastName'] .", ".  $row['firstName'];
     $dateOfHire = $row['dateOfHire'];
     $dateOfTerm = $row['dateOfTermination'];
-
+    $reasonForLeaving = $row['reasonForLeaving'];
+    
     $pdf->Ln($lineBreak);                
     $pdf->SetX(30);
     $pdf->Cell(38, 5, " ".$name, 1, 0, 'L', 0);
     $pdf->Cell(30, 5, " ".$dateOfHire, 1, 0, 'L', 0);
     $pdf->Cell(30, 5, " ".$dateOfTerm, 1, 0, 'L', 0);
     $pdf->Cell(25, 5, 'FullTime', 1, 0, 'R', 0);
-    $pdf->Cell(52, 5, '', 1, 0, 'R', 0);
+    $pdf->Cell(52, 5, $reasonForLeaving, 1, 0, 'R', 0);
+    $pdf->SetX(30);
+
+    $i = $i + 1;
+
+}
+
+/**************************************************************
+ ***                                                         ***
+ ***                      Part Time                        
+ ***                                                         ***
+ **************************************************************/
+
+$result = mysqli_query( $db, "SELECT person.lastName, person.firstName, parttimeemployee.dateOfHire, parttimeemployee.dateOfTermination,
+                                employee.reasonForLeaving
+                                FROM person
+                                LEFT JOIN parttimeemployee
+                                ON person.id=parttimeemployee.employee_id
+                                LEFT JOIN employee
+                                ON person.id=employee.person_id
+                                ORDER BY person.lastName;"); 
+
+while($row = mysqli_fetch_array($result))
+{
+    
+    
+    if ($i == $max)
+    {
+        $pdf->AddPage(); 
+        $pdf->SetX(30);
+        $pdf->Cell(38, 5, 'Employee Name', 1, 0, 'C', 0);
+        $pdf->Cell(30, 5, 'Hired', 1, 0, 'C', 0);
+        $pdf->Cell(30, 5, 'Terminated', 1, 0, 'C', 0);
+        $pdf->Cell(25, 5, 'Type', 1, 0, 'C', 0);
+        $pdf->Cell(52, 5, 'Reason for leaving', 1, 0, 'C', 0);
+        $i = 0;
+    }
+    
+    $name = $row['lastName'] .", ".  $row['firstName'];
+    $dateOfHire = $row['dateOfHire'];
+    $dateOfTerm = $row['dateOfTermination'];
+    $reasonForLeaving = $row['reasonForLeaving'];
+    
+    $pdf->Ln($lineBreak);                
+    $pdf->SetX(30);
+    $pdf->Cell(38, 5, " ".$name, 1, 0, 'L', 0);
+    $pdf->Cell(30, 5, " ".$dateOfHire, 1, 0, 'L', 0);
+    $pdf->Cell(30, 5, " ".$dateOfTerm, 1, 0, 'L', 0);
+    $pdf->Cell(25, 5, 'PartTime', 1, 0, 'R', 0);
+    $pdf->Cell(52, 5, $reasonForLeaving, 1, 0, 'R', 0);
+    $pdf->SetX(30);
+
+    $i = $i + 1;
+
+}
+
+/**************************************************************
+ ***                                                         ***
+ ***                      Contract                        
+ ***                                                         ***
+ **************************************************************/
+
+$result = mysqli_query( $db, "SELECT company.companyName, contractor.contractStartDate, contractor.contractStopDate,
+                                employee.reasonForLeaving
+                                FROM company
+                                LEFT JOIN contractor
+                                ON company.id=contractor.company_id
+                                LEFT JOIN employee
+                                ON company.id=employee.company_id;"); 
+
+while($row = mysqli_fetch_array($result))
+{
+    
+    
+    if ($i == $max)
+    {
+        $pdf->AddPage(); 
+        $pdf->SetX(30);
+        $pdf->Cell(38, 5, 'Employee Name', 1, 0, 'C', 0);
+        $pdf->Cell(30, 5, 'Hired', 1, 0, 'C', 0);
+        $pdf->Cell(30, 5, 'Terminated', 1, 0, 'C', 0);
+        $pdf->Cell(25, 5, 'Type', 1, 0, 'C', 0);
+        $pdf->Cell(52, 5, 'Reason for leaving', 1, 0, 'C', 0);
+        $i = 0;
+    }
+    
+    $name = $row['companyName'];
+    $dateOfHire = $row['contractStartDate'];
+    $dateOfTerm = $row['contractStopDate'];
+    $reasonForLeaving = $row['reasonForLeaving'];
+    
+    $pdf->Ln($lineBreak);                
+    $pdf->SetX(30);
+    $pdf->Cell(38, 5, " ".$name, 1, 0, 'L', 0);
+    $pdf->Cell(30, 5, " ".$dateOfHire, 1, 0, 'L', 0);
+    $pdf->Cell(30, 5, " ".$dateOfTerm, 1, 0, 'L', 0);
+    $pdf->Cell(25, 5, 'Contract', 1, 0, 'R', 0);
+    $pdf->Cell(52, 5, $reasonForLeaving, 1, 0, 'R', 0);
     $pdf->SetX(30);
 
     $i = $i + 1;
