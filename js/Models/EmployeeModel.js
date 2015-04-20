@@ -227,19 +227,23 @@
 		dateOfBirth:{
 			required:false
 			, fn: function (value) {
-				value.trim();
-				var result = checkDateFormat(value);
-				if(typeof result !== "undefined")
-				{
-					return result;
-				}
-				var futureDay = checkFutureDate(value);
-				if(typeof futureDay !== "undefined")
-				{
-					return futureDay;
+				if(typeof value !== "undefined")
+				{	
+					value.trim();
+					var result = checkDateFormat(value);
+					if(typeof result !== "undefined")
+					{
+						return result;
+					}
+					var futureDay = checkFutureDate(value);
+					if(typeof futureDay !== "undefined")
+					{
+						return futureDay;
+					}
 				}
 			}
-		}	
+		},
+		companyName:alphabetical
     }
     
     //
@@ -455,8 +459,8 @@
 		    , required: false
         }
 		,companyName:{
-			fn:alphabetical
-			, required: false
+			required: false
+			,fn:alphabetical
 		}
 		,dateOfIncorporation:{
 				fn: function (value) {
