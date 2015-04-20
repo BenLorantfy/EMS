@@ -494,7 +494,10 @@ class DatabaseModel{
 		return $auditInfo;
 	}
 
-	public function SearchEmployee($name){
+	public function SearchEmployee($options){
+		$keywords = $options->keywords;
+		$type = $options->type;
+		
 		$sql = "SELECT firstName, lastName, dateOfBirth FROM (SELECT firstName, lastName, dateOfBirth FROM fulltimeemployee, person WHERE
 				(person.id = (SELECT employee.person_id FROM employee WHERE(employee.id = fulltimeemployee.employee_id)))
 				UNION ALL
@@ -506,7 +509,8 @@ class DatabaseModel{
 				UNION ALL
 				SELECT companyName, corporationName, dateOfIncorporation FROM contractor, company WHERE
 				(company.id = contractor.company_id)) AS A
-				WHERE (firstName LIKE CONCAT('%','" . $name . "','%') OR lastName LIKE CONCAT('%','" . $name . "','%'))";
+				WHERE (firstName LIKE CONCAT('%','" . $keywords . "','%') OR lastName LIKE CONCAT('%','" . $keywords . "','%')) order by dateOfBirth";
+
 		
 		$query = $this->db->prepare($sql);
 		if(!$query) throw new Exception($this->db->error);
