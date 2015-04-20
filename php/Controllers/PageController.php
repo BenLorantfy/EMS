@@ -2,6 +2,7 @@
 namespace Controllers;
 use Controllers\EmployeeController;
 use Controllers\SessionController;
+use Controllers\AuditController;
 use Views\SectionView;
 
 class PageController{
@@ -162,9 +163,11 @@ class PageController{
 	}
 	
 	private function renderAudit($show = true){
-		$search = new SectionView("audit");
-		$search->show = $show;
-		$search->render();			
+		$auditController = new AuditController();
+		$audit = new SectionView("audit");
+		$audit->show = $show;
+		$audit->auditInfo = $auditController->getAuditInfo();
+		$audit->render();			
 	}
 
 	private function renderReports($show = true){

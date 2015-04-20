@@ -1,6 +1,8 @@
 <?php
 namespace Models;
-class Database{
+use Helper\Connection;
+
+class DatabaseModel{
 	private $db;
 	
 	public function __construct()
@@ -373,32 +375,25 @@ class Database{
 		if(!$query->execute()) throw new Exception($this->db->error);
 		if(!$query->store_result()) throw new Exception($this->db->error);
 
-		$table = "";
+		$auditInfo = array();
 		if($query->num_rows > 0){
 			if($query->bind_result($user_id, $changeTime, $changedTable, $recordId, $changedField, $oldValue, $newValue, $extra)){
 				$success = true;
 				while($query->fetch()){
-					$table .= "<tr>";
-					$table .= "<td>$user_id</td>";
-					$table .= "<td>$changeTime</td>";
-					$table .= "<td>$changedTable</td>";
-					$table .= "<td>$recordId</td>";
-					$table .= "<td>$changedField</td>";
-					$table .= "<td>$oldValue</td>";
-					$table .= "<td>$newValue</td>";
-					$table .= "<td>$extra</td>";
-					$table .= "</tr>"; 					
+					array_push($auditInfo, array(
+						 "user_id" => $user_id
+						,"changeTime" => $changeTime
+						,"changedTable" => $changedTable
+						,"recordId" => $recordId
+						,"changedField" => $changedField
+						,"oldValue" => $oldValue
+						,"newValue" => $newValue
+						,"extra" => $extra
+					));
 				}								
 			}
-		}else{
-			$success = true;
-			$table = "
-				<tr id = 'noResults'>
-					<td colspan='4'>No Results</td>
-				</tr>
-			";				
 		}
 
-		return $table;
+		return $auditInfo;
 	}
 }

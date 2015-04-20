@@ -14,11 +14,18 @@
 				<td>New Value</td>
 				<td>Extra</td>
 			</tr>
-			<?php
-				$database = new Database();
-				$table = $database->GetAudit();
-				echo $table;
-			?>
+			<?php foreach ($this->auditInfo as $auditEntry): ?>
+				<tr class = "titleRow">
+					<td><?=$this->auditEntry["user_id"]?></td>
+					<td><?=$this->auditEntry["changeTime"]?></td>
+					<td><?=$this->auditEntry["changedTable"]?></td>
+					<td><?=$this->auditEntry["recordId"]?></td>
+					<td><?=$this->auditEntry["changedField"]?></td>
+					<td><?=$this->auditEntry["oldValue"]?></td>
+					<td><?=$this->auditEntry["newValue"]?></td>
+					<td><?=$this->auditEntry["extra"]?></td>
+				</tr>						
+			<?php endforeach ?>
 		</table>
 		<div class = "buttonContainer">
 			<input type="button" class = "confirmButton bottomButton doneButton" value = "Done"/>
