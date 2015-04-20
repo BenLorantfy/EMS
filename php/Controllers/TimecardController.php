@@ -6,7 +6,7 @@ use Models\DatabaseModel;
 
 class TimecardController{
 	public function getTimecard($request){
-        //return $database->GetTimecard($request->id);
+        return $database->GetTimecard($request->id, "fulltimeemployee");
 	}
 	
     public function saveTimecard($request){
@@ -23,7 +23,7 @@ class TimecardController{
         $timecard->SetSunday($request->id);
         
         $database = new DatabaseModel();
-       // $database->SaveTimecard($timecard);
+		//$database->SaveTimecard($timecard);
 	}
     
 }
