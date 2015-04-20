@@ -11,7 +11,24 @@ use Helper\Connection;
 
 class EmployeeController{
 	public function getEmployee($request){
+		$type = strtolower($request->type);
+		$id = $request->id;
 		$databae = new DatabaseModel();
+		switch($type){
+			case "fulltime":
+				return $databae->GetFullTime($id);
+			break;
+			case "parttime":
+				return $databae->GetPartTime($id);
+			break;
+			case "seasonal":
+				return $databae->GetSeasonal($id);
+			break;
+			case "contract":
+				return $databae->GetContract($id);
+			break;
+		}
+		
 	}
 	
 	public function searchEmployees($options = array("keywords" => "","type" => "fulltime")){

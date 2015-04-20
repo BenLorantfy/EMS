@@ -5,7 +5,8 @@ App.Views.EmployeeView = App.Views.SectionView.extend({
 		,"change .employeeType":"switchType"
 		,"click .doneButton":"done"
 		,"click .editButton":"edit"
-		,"click .stopEditButton":"stopEdit"
+		,"click .saveButton":"save"
+		,"click .cancelButton":"cancel"
 	},
 	
 	checkErrors: function(e){
@@ -20,15 +21,23 @@ App.Views.EmployeeView = App.Views.SectionView.extend({
 			input.show();
 			div.hide();
 		});
-		var button = $(".editButton");
-		button.removeClass(".editButton");
-		button.addClass(".stopEditButton");
+		this.$el.find(".editButton").hide();
+		this.$el.find(".saveButton").show();
+		this.$el.find(".cancelButton").show();
 		
 	},
 	
-	stopEdit:function(){
-		
-	}
+	cancel:function(){
+		this.$el.find(".field").each(function(){
+			var input = $(this).find("input");
+			var div = $(this).find("div");
+			div.show();
+			input.hide();
+		});
+		this.$el.find(".editButton").show();
+		this.$el.find(".saveButton").hide();
+		this.$el.find(".cancelButton").hide();
+	},
 	
 	add: function(){
 		var request = this.model.save();
@@ -48,12 +57,39 @@ App.Views.EmployeeView = App.Views.SectionView.extend({
 	},
 	
 	done: function(){
+		if(this.$el.find(".editButton").length != 0){
+			this.cancel();
+		}
 		this.trigger("done");
 	},
 	
-	switchType: function(){
+	switchType: function(override,id){
 		var $el = this.$el;
-		var type = $el.find(".employeeType").val();
+		if(override){
+			var type = override.toLowerCase();
+			
+			$.ajax({
+			    url: '/employees/' + type + "/" + id,
+			    type: 'GET',
+			    dataType:"json",
+			    success: function(data){
+			    	console.log(data);
+			       	for(var key in data){
+			       		var td = $el.find("." + key);
+			       		console.log(td[0]);
+			       		td.find("div").html(data[key]);
+			       		td.find("input").val(data[key]);
+			       	}
+			    }
+			    ,error:function(data){
+				    console.log(data);
+			    }
+			});
+			
+			
+		}else{
+			var type = $el.find(".employeeType").val().toLowerCase();
+		}
 		var view = this;
 		$el.find(".unselectedField").removeClass("unselectedField");
 		$el.find(".field:not(." + type + "Field)").addClass("unselectedField");
@@ -62,10 +98,10 @@ App.Views.EmployeeView = App.Views.SectionView.extend({
 		// Update model type
 		//
 		switch(type){
-			case "fullTime":
+			case "fulltime":
 				view.model = new App.Models.FullTimeEmployeeModel();
 				break;
-			case "partTime":
+			case "parttime":
 				view.model = new App.Models.PartTimeEmployeeModel();
 				break;
 			case "seasonal":

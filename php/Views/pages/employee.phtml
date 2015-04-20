@@ -10,9 +10,9 @@
 		
 			return "<td>$label:</td><td><input class = '$field' type='text'/></td><td class = 'fieldError'></td>";
 		
-		}else if($this->view){
+		}else{
 		
-			return "<td>" . $label . "</td><td><div>" . /* $this->employee->$field */"hi" . "</div><input type = 'text' style = 'display:none' value = '" . /* $this->employee->$field */"hi" . "'></input></td><td class = 'fieldError'></td>";
+			return "<td>" . $label . "</td><td class = '" . $field . "'><div>" . /* $this->employee->$field */"hi" . "</div><input type = 'text' style = 'display:none' value = '" . /* $this->employee->$field */"hi" . "'></input></td><td class = 'fieldError'></td>";
 		
 		}
 		
@@ -23,13 +23,9 @@
 	//
 	if($this->add){
 		// If user is adding employee, set appropiate UI text
-		$this->buttonText = "Add";
 		$this->title = "Add Employee";
-		$this->buttonClass = "addButton";
 	}else{
-		$this->buttonText = "Edit";
-		$this->title = $this->employee->firstName . " " . $this->employee->lastName;
-		$this->buttonClass = "editButton";
+		$this->title = "Edit Employee";
 	}		
 ?>
 <section id = "<?=($this->add)?"addEmployee":"employee"?>" style="<?=($this->show)?"":"display:none;"?>">
@@ -52,15 +48,15 @@
 				</td>
 				<td <?=($this->view) ? "" : 'style="display:none;"'?>>whoa</td>
 			</tr>
-			<tr class = "field fullTimeField partTimeField seasonalField"><?=$this->createField("First Name","firstName");?></tr>
-			<tr class = "field fullTimeField partTimeField seasonalField"><?=$this->createField("Last Name","lastName");?></tr>
-			<tr class = "field fullTimeField partTimeField seasonalField"><?=$this->createField("Company Name","companyName");?></tr>
-			<tr class = "field fullTimeField partTimeField seasonalField"><?=$this->createField("Date of Birth","dateOfBirth");?></tr>
-			<tr class = "field fullTimeField partTimeField seasonalField"><?=$this->createField("Social Insurance Number","sin");?></tr>
-			<tr class = "field adminControl fullTimeField partTimeField"><?=$this->createField("Date Hired","dateOfHire");?></tr>
-			<tr class = "field adminControl fullTimeField partTimeField"><?=$this->createField("Date Terminated","dateOfTermination");?></tr>
-			<tr class = "field adminControl fullTimeField"><?=$this->createField("Salary","salary");?></tr>
-			<tr class = "field adminControl partTimeField unselectedField"><?=$this->createField("Hourly Wage","hourlyRate");?></tr>
+			<tr class = "field fulltimeField parttimeField seasonalField"><?=$this->createField("First Name","firstName");?></tr>
+			<tr class = "field fulltimeField parttimeField seasonalField"><?=$this->createField("Last Name","lastName");?></tr>
+			<tr class = "field fulltimeField parttimeField seasonalField"><?=$this->createField("Company Name","companyName");?></tr>
+			<tr class = "field fulltimeField parttimeField seasonalField"><?=$this->createField("Date of Birth","dateOfBirth");?></tr>
+			<tr class = "field fulltimeField parttimeField seasonalField"><?=$this->createField("Social Insurance Number","sin");?></tr>
+			<tr class = "field adminControl fulltimeField parttimeField"><?=$this->createField("Date Hired","dateOfHire");?></tr>
+			<tr class = "field adminControl fulltimeField parttimeField"><?=$this->createField("Date Terminated","dateOfTermination");?></tr>
+			<tr class = "field adminControl fulltimeField"><?=$this->createField("Salary","salary");?></tr>
+			<tr class = "field adminControl parttimeField unselectedField"><?=$this->createField("Hourly Wage","hourlyRate");?></tr>
 			<tr class = "field seasonalField unselectedField"><?=$this->createField("Season","season");?></tr>
 			<tr class = "field seasonalField unselectedField"><?=$this->createField("Season Year","seasonYear");?></tr>
 			<tr class = "field adminControl seasonalField unselectedField"><?=$this->createField("Piece Pay","piecePay");?></tr>
@@ -70,11 +66,18 @@
 			<tr class = "field adminControl contractField unselectedField"><?=$this->createField("Contract Start Date","startDate");?></tr>
 			<tr class = "field adminControl contractField unselectedField"><?=$this->createField("Contract Stop Date","endDate");?></tr>
 			<tr class = "field adminControl contractField unselectedField"><?=$this->createField("Contract Amount","fixedAmount");?></tr>
-			<tr class = "field fullTimeField partTimeField contractField seasonalField" id="reasonOfLeavingTr" style="display:none;"><?=$this->createField("Reason for Leaving","reasonOfLeaving");?></tr>
+			<tr class = "field fulltimeField parttimeField contractField seasonalField" id="reasonOfLeavingTr" style="display:none;"><?=$this->createField("Reason for Leaving","reasonOfLeaving");?></tr>
 		</table>
 		<div class = "buttonContainer">
 			<input type="button" class = "confirmButton bottomButton doneButton" value = "Done"/>
-			<input type="button" class = "confirmButton bottomButton <?=$this->buttonClass?>" value = "<?=$this->buttonText?>"/>
+			<?php if($this->add){ ?>
+				<input type="button" class = "confirmButton bottomButton addButton" value = "Add"/>
+			<?php }else{ ?>
+				<input type="button" class = "confirmButton bottomButton editButton" value = "Edit"/>
+				<input type="button" class = "confirmButton bottomButton saveButton" style = "display:none;" value = "Save"/>
+				<input type="button" class = "confirmButton bottomButton cancelButton" style = "display:none;" value = "Cancel"/>
+			<?php } ?>
+			
 		</div>
 	</div>
 </section>
