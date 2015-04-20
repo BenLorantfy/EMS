@@ -11,7 +11,7 @@ use Helper\Connection;
 
 class EmployeeController{
 	public function getEmployee($request){
-	
+		$databae = new DatabaseModel();
 	}
 	
 	public function searchEmployees($options = array("keywords" => "","type" => "fulltime")){

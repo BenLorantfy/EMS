@@ -336,6 +336,136 @@ class DatabaseModel{
 		return $contractor_id;*/
 	}
 	
+	private function UpdateEmployee($input, $user_id){
+		$id = $input->id;
+		$firstName = $input->firstName;
+		$lastName = $input->lastName;
+		$dateOfBirth = $input->dateOfBirth;
+		$sin = $input->sin;
+		$company = $input->company;
+		
+		$query = $this->db->prepare('SELECT company_id,person_id FROM employee
+		WHERE id = (SELECT employee_id FROM fulltimeemployee WHERE id = ?) LIMIT 1');
+		if(!$query) throw new Exception($this->db->error);
+		if(!$query->bind_param("i",$id)) throw new Exception($this->db->error);
+		if(!$query->execute()) throw new Exception($this->db->error);
+		if(!$query->store_result()) throw new Exception($this->db->error);
+		if($query->num_rows == 1){		
+			echo "Found a employee<br>";
+			
+			if(!$query->bind_result($company_id, $person_id)) throw new Exception($this->db->error);
+			$query->fetch();
+		}else{
+			throw new Exception("Database error<br>");
+		}
+		
+		$sql = "UPDATE Company SET
+		id = " . $user_id . ", companyName = '" . $company . "'
+		WHERE (id = " . $id . ")";
+		
+		if ($this->db->query($sql) == FALSE){
+			throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
+		}else{
+			echo "	Company updated<br>";
+		}
+		
+		$sql = "UPDATE Person SET
+		id = " . $user_id . ", firstName = '" . $firstName . "', lastName = '" . $lastName . "', SIN = '" . $sin . "'"; 
+		
+		if ($dateOfBirth != ""){
+			$sql .= ", dateOfBirth = '" . $dateOfBirth . "'";
+		}
+		$sql .= " WHERE (id = " . $id . ")";
+		
+		if ($this->db->query($sql) == FALSE){
+			throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
+		}else{
+			echo "	Person updated<br>";
+		}
+	}
+	
+	public function UpdateFullTimeEmployee($input, $user_id){
+		$this->UpdateEmployee($input, $user_id);
+		$id = $input->id;
+		$dateOfHire = $input->dateOfHire;
+		$dateOfTermination = $input->dateOfTermination;
+		$salary = $input->salary;
+		
+		$sql = "UPDATE FullTimeEmployee SET
+		id = " . $user_id;
+		
+		if ($dateOfHire != ""){
+			$sql .= ", dateOfHire = '" . $dateOfHire . "'";
+		}
+		if ($dateOfTermination != ""){
+			$sql .= ", dateOfTermination = '" . $dateOfTermination . "'";
+		}
+		if ($salary != ""){
+			$sql .= ", salary = '" . $salary . "'";
+		}
+		$sql .= " WHERE (id = " . $id . ")";
+		
+		if ($this->db->query($sql) == FALSE){
+			throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
+		}else{
+			echo "	FullTime Employee updated<br>";
+		}
+	}
+	
+	public function UpdatePartTimeEmployee($input, $user_id){
+		$this->UpdateEmployee($input, $user_id);
+		$id = $input->id;
+		$dateOfHire = $input->dateOfHire;
+		$dateOfTermination = $input->dateOfTermination;
+		$hourlyRate = $input->hourlyRate;
+		
+		$sql = "UPDATE PartTimeEmployee SET
+		id = " . $user_id;
+		
+		if ($dateOfHire != ""){
+			$sql .= ", dateOfHire = '" . $dateOfHire . "'";
+		}
+		if ($dateOfTermination != ""){
+			$sql .= ", dateOfTermination = '" . $dateOfTermination . "'";
+		}
+		if ($hourlyRate != ""){
+			$sql .= ", hourlyRate = '" . $hourlyRate . "'";
+		}
+		$sql .= " WHERE (id = " . $id . ")";
+		
+		if ($this->db->query($sql) == FALSE){
+			throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
+		}else{
+			echo "	PartTime Employee updated<br>";
+		}
+	}
+	
+	public function UpdateSeasonalEmployee($input, $user_id){
+		$this->UpdateEmployee($input, $user_id);
+		$id = $input->id;
+		$season = $input->season;
+		$piecePay = $input->piecePay;
+		$seasonYear = $input->seasonYear;
+		
+		$sql = "UPDATE SeasonalEmployee SET
+		id = " . $user_id;
+		$sql .= ", season = '" . $season . "'";
+		
+		if ($piecePay != ""){
+			$sql .= ", piecePay = '" . $piecePay . "'";
+		}
+		if ($seasonYear != ""){
+			$sql .= ", seasonYear = '" . $seasonYear . "'";
+		}
+		$sql .= " WHERE (id = " . $id . ")";
+		
+		if ($this->db->query($sql) == FALSE){
+			throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
+		}else{
+			echo "	Seasonal Employee updated<br>";
+		}
+	}
+	
 	public function GetAudit(){
 		$query = $this->db->prepare('SELECT user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra FROM audit');
 		if(!$query) throw new Exception($this->db->error);
