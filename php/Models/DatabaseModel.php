@@ -498,16 +498,16 @@ class DatabaseModel{
 		$keywords = $options->keywords;
 		$type = $options->type;
 		
-		$sql = "SELECT firstName, lastName, dateOfBirth FROM (SELECT firstName, lastName, dateOfBirth FROM fulltimeemployee, person WHERE
+		$sql = "SELECT firstName, lastName, dateOfBirth FROM (SELECT 'FullTime' AS type, fulltimeemployee.id, firstName, lastName, dateOfBirth FROM fulltimeemployee, person WHERE
 				(person.id = (SELECT employee.person_id FROM employee WHERE(employee.id = fulltimeemployee.employee_id)))
 				UNION ALL
-				SELECT firstName, lastName, dateOfBirth FROM parttimeemployee, person WHERE
+				SELECT 'PartTime' AS type, parttimeemployee.id, firstName, lastName, dateOfBirth FROM parttimeemployee, person WHERE
 				(person.id = (SELECT employee.person_id FROM employee WHERE(employee.id = parttimeemployee.employee_id)))
 				UNION ALL
-				SELECT firstName, lastName, dateOfBirth FROM seasonalemployee, person WHERE
+				SELECT 'Seasonal' AS type, seasonalemployee.id, firstName, lastName, dateOfBirth FROM seasonalemployee, person WHERE
 				(person.id = (SELECT employee.person_id FROM employee WHERE(employee.id = seasonalemployee.employee_id)))
 				UNION ALL
-				SELECT companyName, corporationName, dateOfIncorporation FROM contractor, company WHERE
+				SELECT 'Contract' AS type, contractor.id, companyName AS firstName, corporationName, dateOfIncorporation FROM contractor, company WHERE
 				(company.id = contractor.company_id)) AS A
 				WHERE (firstName LIKE CONCAT('%','" . $keywords . "','%') OR lastName LIKE CONCAT('%','" . $keywords . "','%')) order by dateOfBirth";
 
