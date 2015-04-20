@@ -18,6 +18,7 @@ class PageController{
 		$this->renderAudit(false);	
 		$this->renderViewEmployee(false);
 		$this->renderReports(false);
+		$this->renderTimecard(false);
 		$this->renderEnd();
 	}
 	
@@ -32,7 +33,8 @@ class PageController{
 		$this->renderAddEmployee(false);		
 		$this->renderViewEmployee(false);		
 		$this->renderAudit(false);
-		$this->renderReports(false);	
+		$this->renderReports(false);
+		$this->renderTimecard(false);	
 		$this->renderEnd();		
 	}
 	
@@ -48,6 +50,7 @@ class PageController{
 		$this->renderViewEmployee(false);
 		$this->renderAudit(false);
 		$this->renderReports(false);
+		$this->renderTimecard(false);
 		$this->renderEnd();		
 	}
 	
@@ -62,6 +65,7 @@ class PageController{
 		$this->renderViewEmployee(false);		
 		$this->renderAudit(true);		
 		$this->renderReports(false);
+		$this->renderTimecard(false);
 		$this->renderEnd();		
 	}
 	
@@ -76,7 +80,8 @@ class PageController{
 		$this->renderAddEmployee(false);		
 		$this->renderViewEmployee(true);	
 		$this->renderAudit(false);
-		$this->renderReports(false);	
+		$this->renderReports(false);
+		$this->renderTimecard(false);	
 		$this->renderEnd();		
 	}
 	
@@ -92,6 +97,7 @@ class PageController{
 		$this->renderEditEmployee(true);
 		$this->renderAudit(false);	
 		$this->renderReports(false);
+		$this->renderTimecard(false);
 		$this->renderEnd();		
 	}
 	
@@ -107,7 +113,24 @@ class PageController{
 		$this->renderEditEmployee(false);
 		$this->renderAudit(false);	
 		$this->renderReports(true);
+		$this->renderTimecard(false);
 		$this->renderEnd();		
+	}
+	
+	public function navigateToTimecard(){
+		// Contains information about session
+		$session = new SessionController();
+		
+		$this->renderStart(true,$session->userType());
+		$this->renderLogin();
+		$this->renderSearch(true,true);
+		$this->renderCover(true);
+		$this->renderAddEmployee(false);		
+		$this->renderEditEmployee(false);
+		$this->renderAudit(false);	
+		$this->renderReports(false);
+		$this->renderTimecard(true);
+		$this->renderEnd();			
 	}
 	
 	private function renderStart($isLogged,$userType){
@@ -143,28 +166,28 @@ class PageController{
 		$search->render();		
 	}
 	
-	private function renderAddEmployee($show = true){
+	private function renderAddEmployee($show = false){
 		$employeeView = new SectionView("employee");
 		$employeeView->show = $show;
 		$employeeView->add = true;
 		$employeeView->render();			
 	}
 	
-	private function renderViewEmployee($show = true){
+	private function renderViewEmployee($show = false){
 		$employeeView = new SectionView("employee");
 		$employeeView->show = $show;
 		$employeeView->view = true;
 		$employeeView->render();			
 	}
 	
-	private function renderEditEmployee($show = true){
+	private function renderEditEmployee($show = false){
 		$employeeView = new SectionView("employee");
 		$employeeView->show = $show;
 		$employeeView->edit = true;
 		$employeeView->render();			
 	}
 	
-	private function renderAudit($show = true){
+	private function renderAudit($show = false){
 		$auditController = new AuditController();
 		$audit = new SectionView("audit");
 		$audit->show = $show;
@@ -172,7 +195,7 @@ class PageController{
 		$audit->render();			
 	}
 
-	private function renderReports($show = true){
+	private function renderReports($show = false){
 		$search = new SectionView("reports");
 		$search->show = $show;
 		$search->render();			
@@ -182,5 +205,11 @@ class PageController{
 		$cover = new SectionView("cover");
 		$cover->show = $show;
 		$cover->render();
+	}
+	
+	private function renderTimecard($show = false){
+		$timecard = new SectionView("timecard");
+		$timecard->show = $show;
+		$timecard->render();		
 	}
 }

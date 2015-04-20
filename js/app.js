@@ -23,6 +23,7 @@ var App = {
 		var addEmployeeView = new App.Views.EmployeeView({ el:"#addEmployee", model:new App.Models.FullTimeEmployeeModel() });
 		var viewEmployeeView = new App.Views.EmployeeView({ el:"#employee", model:new App.Models.FullTimeEmployeeModel() });
 		var reportsView = new App.Views.ReportsView({ el:"#reports" });
+		var timecardView = new App.Views.ReportsView({ el:"#timecard" });
 		
 		//
 		// Create view routes
@@ -52,6 +53,9 @@ var App = {
 			}else if(reportsView.visible()){
 				searchView.focus();
 				reportsView.dialogyHide();
+			}else if(timecardView.visible()){
+				searchView.focus();
+				timecardView.dialogyHide();
 			}
 		});
 
@@ -80,6 +84,13 @@ var App = {
 			if(!reportsView.visible()){
 				searchView.blur();
 				reportsView.dialogyShow();				
+			}
+		});
+		
+		App.Router.on("route:timecard",function(){
+			if(!timecardView.visible()){
+				searchView.blur();
+				timecardView.dialogyShow();				
 			}
 		});
 		
@@ -117,6 +128,10 @@ var App = {
 		searchView.on("open.reports",function(){
 			App.Router.navigate("reports",{ trigger: true });
 		});
+		
+		searchView.on("open.timecard",function(){
+			App.Router.navigate("timecard/42",{ trigger: true });
+		});
 				
 		addEmployeeView.on("done",function(){
 			App.Router.navigate("search",{ trigger: true });
@@ -131,6 +146,10 @@ var App = {
 		});
 		
 		reportsView.on("done",function(){
+			App.Router.navigate("search", { trigger: true });
+		});
+		
+		timecardView.on("done",function(){
 			App.Router.navigate("search", { trigger: true })
 		});
 		
