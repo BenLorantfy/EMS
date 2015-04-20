@@ -2,6 +2,7 @@
 namespace Controllers;
 use Controllers\EmployeeController;
 use Controllers\PageController;
+use Controllers\ReportsController;
 use Helper\Route;
 
 //
@@ -63,6 +64,7 @@ class FrontController{
 		Route::get("/audit",array(new PageController(),"navigateToAudit"));
 		Route::get("/viewEmployee/{id}",array(new PageController(),"navigateToViewEmployee"));
 		Route::get("/editEmployee/{id}",array(new PageController(),"navigateToEditEmployee"));
+		Route::get("/reports",array(new PageController(),"navigateToReports"));
 
 		Route::get("/reports/{type}",array(new ReportsController(),"generateReport"));
 		
