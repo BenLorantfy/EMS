@@ -570,4 +570,110 @@ class DatabaseModel{
 
 		return $employeeData;
 	}
+	
+	public function GetPartTime($id){
+		$sql = "SELECT firstName, lastName, dateOfBirth, sin, companyName, workStatus, reasonForLeaving, dateOfHire, dateOfTermination, hourlyRate FROM parttimeemployee, employee, person, company WHERE
+				(
+				person.id = (SELECT employee.person_id FROM employee WHERE(employee.id = parttimeemployee.employee_id)) AND
+				company.id = (SELECT employee.company_id FROM employee WHERE(employee.id = parttimeemployee.employee_id)) AND
+				employee.id = parttimeemployee.employee_id AND
+				parttimeemployee.id = " . $id . "
+				)";
+		
+		$query = $this->db->prepare($sql);
+		if(!$query) throw new Exception($this->db->error);
+		if(!$query->execute()) throw new Exception($this->db->error);
+		if(!$query->store_result()) throw new Exception($this->db->error);
+
+		$employeeData = array();
+		if($query->num_rows > 0){
+			if($query->bind_result($firstName, $lastName, $dateOfBirth, $sin, $companyName, $workStatus, $reasonForLeaving, $dateOfHire, $dateOfTermination, $hourlyRate)){
+				while($query->fetch()){
+					array_push($employeeData, array(
+						"firstName" => $firstName
+						,"lastName" => $lastName
+						,"dateOfBirth" => $dateOfBirth
+						,"sin" => $sin
+						,"companyName" => $companyName
+						,"workStatus" => $workStatus
+						,"reasonForLeaving" => $reasonForLeaving
+						,"dateOfHire" => $dateOfHire
+						,"dateOfTermination" => $dateOfTermination
+						,"hourlyRate" => $hourlyRate
+					));
+				}								
+			}
+		}
+
+		return $employeeData;
+	}
+	
+	public function GetSeasonal($id){
+		$sql = "SELECT firstName, lastName, dateOfBirth, sin, companyName, workStatus, reasonForLeaving, season, piecePay, seasonYear FROM seasonalemployee, employee, person, company WHERE
+				(
+				person.id = (SELECT employee.person_id FROM employee WHERE(employee.id = seasonalemployee.employee_id)) AND
+				company.id = (SELECT employee.company_id FROM employee WHERE(employee.id = seasonalemployee.employee_id)) AND
+				employee.id = seasonalemployee.employee_id AND
+				seasonalemployee.id = " . $id . "
+				)";
+		
+		$query = $this->db->prepare($sql);
+		if(!$query) throw new Exception($this->db->error);
+		if(!$query->execute()) throw new Exception($this->db->error);
+		if(!$query->store_result()) throw new Exception($this->db->error);
+
+		$employeeData = array();
+		if($query->num_rows > 0){
+			if($query->bind_result($firstName, $lastName, $dateOfBirth, $sin, $companyName, $workStatus, $reasonForLeaving, $season, $piecePay, $seasonYear)){
+				while($query->fetch()){
+					array_push($employeeData, array(
+						"firstName" => $firstName
+						,"lastName" => $lastName
+						,"dateOfBirth" => $dateOfBirth
+						,"sin" => $sin
+						,"companyName" => $companyName
+						,"workStatus" => $workStatus
+						,"reasonForLeaving" => $reasonForLeaving
+						,"season" => $season
+						,"piecePay" => $piecePay
+						,"seasonYear" => $seasonYear
+					));
+				}								
+			}
+		}
+
+		return $employeeData;
+	}
+	
+	public function GetContract($id){
+		$sql = "SELECT companyName, corporationName, dateOfIncorporation, buisnessNumber, contractStartDate, contractStopDate, fixedContractAmount FROM contractor, company WHERE
+				(
+				company.id = contractor.company_id AND
+				contractor.id = " . $id . "
+				)";
+		
+		$query = $this->db->prepare($sql);
+		if(!$query) throw new Exception($this->db->error);
+		if(!$query->execute()) throw new Exception($this->db->error);
+		if(!$query->store_result()) throw new Exception($this->db->error);
+
+		$employeeData = array();
+		if($query->num_rows > 0){
+			if($query->bind_result($companyName, $corporationName, $dateOfIncorporation, $buisnessNumber, $contractStartDate, $contractStopDate, $fixedContractAmount)){
+				while($query->fetch()){
+					array_push($employeeData, array(
+						"companyName" => $companyName
+						,"corporationName" => $corporationName
+						,"dateOfIncorporation" => $dateOfIncorporation
+						,"buisnessNumber" => $buisnessNumber
+						,"contractStartDate" => $contractStartDate
+						,"contractStopDate" => $contractStopDate
+						,"fixedContractAmount" => $fixedContractAmount
+					));
+				}								
+			}
+		}
+
+		return $employeeData;
+	}
 }
