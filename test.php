@@ -227,7 +227,7 @@ class Database{
 			throw new Exception("Database error");
 		}
 		
-		return $$parttimeemployee_id;
+		return $parttimeemployee_id;
 	}
 	
 	public function AddSeasonal($input, $status, $user_id){
@@ -275,6 +275,97 @@ class Database{
 		}
 		
 		return $seasonalemployee_id;
+	}
+	
+	public function AddContract($input, $status, $user_id){
+		$companyName = $input->companyName;
+		$dateOfIncorporation = $input->dateOfIncorporation;
+		$corporationName = $input->corporationName;
+		$businessNumber = $input->businessNumber;
+		$startDate = $input->startDate;
+		$endDate = $input->endDate;
+		$fixedAmount = $input->fixedAmount;
+				
+		//
+		//	Look for Companies
+		//
+		$query = $this->db->prepare('SELECT id FROM company WHERE
+		companyName = ?	LIMIT 1');
+		if(!$query) throw new Exception($this->db->error);
+		if(!$query->bind_param("s",$companyName)) throw new Exception($this->db->error);
+		if(!$query->execute()) throw new Exception($this->db->error);
+		if(!$query->store_result()) throw new Exception($this->db->error);
+	
+		if($query->num_rows == 0){		
+			echo "Company is not there<br>";
+			
+			$sql = "INSERT INTO Company (id, companyName)
+			VALUES (" . $user_id . ",'" . $companyName . "')";
+			
+			if ($this->db->query($sql) == FALSE){
+				throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
+			}else{
+				echo "	Company added<br>";
+			}
+		}
+		
+		$query = $this->db->prepare('SELECT id FROM company WHERE
+		companyName = ?	LIMIT 1');
+		if(!$query) throw new Exception($this->db->error);
+		if(!$query->bind_param("s",$companyName)) throw new Exception($this->db->error);
+		if(!$query->execute()) throw new Exception($this->db->error);
+		if(!$query->store_result()) throw new Exception($this->db->error);
+		if($query->num_rows == 1){		
+			echo "Found a company<br>";
+			
+			if(!$query->bind_result($company_id)) throw new Exception($this->db->error);
+			$query->fetch();
+		}else{
+			throw new Exception("Database error<br>");
+		}
+		
+		//
+		//	Look for Contract Employee
+		//
+		$query = $this->db->prepare('SELECT id FROM contractor WHERE
+		company_id = ? AND corporationName = ? AND dateOfIncorporation = ? AND buisnessNumber = ? AND
+		contractStartDate = ? AND contractStopDate = ? AND fixedContractAmount = ? LIMIT 1');
+		if(!$query) throw new Exception($this->db->error);
+		if(!$query->bind_param("isssssd",$company_id, $corporationName, $dateOfIncorporation, $businessNumber, $startDate, $endDate, $fixedAmount)) throw new Exception($this->db->error);
+		if(!$query->execute()) throw new Exception($this->db->error);
+		if(!$query->store_result()) throw new Exception($this->db->error);
+	
+		if($query->num_rows == 0){		
+			echo "Contractor is not there<br>";
+			
+			$sql = "INSERT INTO Contractor(id, company_id, corporationName, dateOfIncorporation, buisnessNumber, contractStartDate, contractStopDate, fixedContractAmount)
+			VALUES (" . $user_id . "," . $company_id . ",'" . $corporationName . "','" . $dateOfIncorporation . "','" . $businessNumber . "','"
+			. $startDate . "','" . $endDate . "'," . $fixedAmount . ")";
+			
+			if ($this->db->query($sql) == FALSE){
+				throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
+			}else{
+				echo "	Contractor added<br>";
+			}
+		}
+		
+		$query = $this->db->prepare('SELECT id FROM contractor WHERE
+		company_id = ? AND corporationName = ? AND dateOfIncorporation = ? AND buisnessNumber = ? AND
+		contractStartDate = ? AND contractStopDate = ? AND fixedContractAmount = ? LIMIT 1');
+		if(!$query) throw new Exception($this->db->error);
+		if(!$query->bind_param("isssssd",$company_id, $corporationName, $dateOfIncorporation, $businessNumber, $startDate, $endDate, $fixedAmount)) throw new Exception($this->db->error);
+		if(!$query->execute()) throw new Exception($this->db->error);
+		if(!$query->store_result()) throw new Exception($this->db->error);
+		if($query->num_rows == 1){		
+			echo "Found a Contractor<br>";
+			
+			if(!$query->bind_result($contractor_id)) throw new Exception($this->db->error);
+			$query->fetch();
+		}else{
+			throw new Exception("Database error<br>");
+		}
+		
+		return $contractor_id;
 	}
 }
 
@@ -427,16 +518,87 @@ class SeasonalEmployeeModel extends EmployeeModel{
 	}
 }
 
-$obj = new FullTimeEmployeeModel;
+class ContractEmployeeModel{
+	private $corporationName;
+	private $dateOfIncorporation;
+	private $companyName;
+	private $businessNumber;
+	private $startDate;
+	private $endDate;
+	private $fixedAmount;
+	
+	public function SetCorporationName($corporationName){
+		// todo: validation logic
+		// don't set class variable if invalid
+		// return false if invalid
+		$this->corporationName = $corporationName;
+		return true;
+	}
+	
+	public function SetDateOfIncorporation($dateOfIncorporation){
+		// todo: validation logic
+		// don't set class variable if invalid
+		// return false if invalid
+		$this->dateOfIncorporation = $dateOfIncorporation;
+		return true;
+	}
+	
+	public function SetCompanyName($companyName){
+		// todo: validation logic
+		// don't set class variable if invalid
+		// return false if invalid
+		$this->companyName = $companyName;
+		return true;
+	}
+	
+	public function SetBusinessNumber($businessNumber){
+		// todo: validation logic
+		// don't set class variable if invalid
+		// return false if invalid
+		$this->businessNumber = $businessNumber;
+		return true;		
+	}
+	
+	public function SetStartDate($startDate){
+		// todo: validation logic
+		// don't set class variable if invalid
+		// return false if invalid
+		$this->startDate = $startDate;
+		return true;		
+	}
+	
+	public function SetEndDate($endDate){
+		// todo: validation logic
+		// don't set class variable if invalid
+		// return false if invalid
+		$this->endDate = $endDate;
+		return true;		
+	}
+	
+	public function SetFixedAmount($fixedAmount){
+		// todo: validation logic
+		// don't set class variable if invalid
+		// return false if invalid
+		$this->fixedAmount = $fixedAmount;
+		return true;		
+	}
+	
+	public function __get($key){
+		return $this->$key;
+	}
+	
+}
+
+$obj = new SeasonalEmployeeModel;
 $db = new Database;
 
-$obj->SetFirstName("Grogg");
-$obj->SetLastName("Koz");
-$obj->SetSIN("1234567890");
+$obj->SetFirstName("Sam");
+$obj->SetLastName("One");
 $obj->SetDateOfBirth("1996/01/22");
-$obj->SetCompany("Google");
-$obj->SetDateOfHire("2015/5/1");
-$obj->SetDateOfTermination("2015/8/31");
-$obj->SetSalary(10000);
-$db->AddFullTime($obj, "inactive", 1);
+$obj->SetSIN("1234567890");
+$obj->SetCompany("MyCompany");
+$obj->SetSeason("fall");
+$obj->SetPiecePay(14.5);
+$obj->SetSeasonYear(2014);
+$db->AddSeasonal($obj, "inactive", 1);
 ?>

@@ -1,26 +1,35 @@
 <?php
 namespace Models;
 class ContractEmployeeModel{
-	private $dateOfIncorporation;
 	private $companyName;
+	private $corporationName;
+	private $dateOfIncorporation;
 	private $businessNumber;
 	private $startDate;
 	private $endDate;
 	private $fixedAmount;
-	
-	public function SetDateOfIncorporation($dateOfIncorporation){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
-		$this->dateOfIncorporation = $dateOfIncorporation;
-		return true;
-	}
 	
 	public function SetCompanyName($companyName){
 		// todo: validation logic
 		// don't set class variable if invalid
 		// return false if invalid
 		$this->companyName = $companyName;
+		return true;
+	}
+	
+	public function SetCorporationName($corporationName){
+		// todo: validation logic
+		// don't set class variable if invalid
+		// return false if invalid
+		$this->corporationName = $corporationName;
+		return true;
+	}
+	
+	public function SetDateOfIncorporation($dateOfIncorporation){
+		// todo: validation logic
+		// don't set class variable if invalid
+		// return false if invalid
+		$this->dateOfIncorporation = $dateOfIncorporation;
 		return true;
 	}
 	
