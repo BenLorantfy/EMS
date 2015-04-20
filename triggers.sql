@@ -598,6 +598,9 @@ FOR EACH ROW
 
 		INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
 		(mydata, (SELECT NOW()), 'Timecard', new.id, 'info_title', null, new.info_title, 'Insert');
+        
+		INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
+		(mydata, (SELECT NOW()), 'Timecard', new.id, 'date', null, new.date, 'Insert');
 
 		INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
 		(mydata, (SELECT NOW()), 'Timecard', new.id, 'monday', null, new.monday, 'Insert');
@@ -645,6 +648,11 @@ FOR EACH ROW
 		IF (new.info_title != OLD.info_title) THEN
 			INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
 			(mydata, (SELECT NOW()), 'Timecard', new.id, 'info_title', OLD.info_title, new.info_title, 'Update');
+		END IF;
+        
+		IF (new.date != OLD.date) THEN
+			INSERT INTO Audit (user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra) VALUES 
+			(mydata, (SELECT NOW()), 'Timecard', new.id, 'date', OLD.date, new.date, 'Update');
 		END IF;
 
 		IF (new.monday != OLD.monday) THEN
