@@ -243,7 +243,10 @@
 				}
 			}
 		},
-		companyName:alphabetical
+		companyName:{
+			required:false
+			,fn:alphabetical
+		}
     }
     
     //
