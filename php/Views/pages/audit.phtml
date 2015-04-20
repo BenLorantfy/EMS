@@ -7,12 +7,12 @@
 			<tr class = "titleRow">
 				<td id="userIdCol">User ID</td>
 				<td id="changeTimeCol">Change time</td>
-				<td>Table</td>
-				<td>Record ID</td>
-				<td>Changed field</td>
-				<td>Old Value</td>
-				<td>New Value</td>
-				<td>Extra</td>
+				<td id="tableCol">Table</td>
+				<td id="recordIdCol">Record ID</td>
+				<td id="changedFieldCol">Changed field</td>
+				<td id="oldValCol">Old Value</td>
+				<td id="newValCol">New Value</td>
+				<td id="typeCol">Type</td>
 			</tr>
 			<?php foreach ($this->auditInfo as $auditEntry): ?>
 				<tr>
@@ -27,8 +27,8 @@
 				</tr>						
 			<?php endforeach ?>
 		</table>
-		<div class = "buttonContainer">
-			<input type="button" class = "confirmButton bottomButton doneButton" value = "Done"/>
-		</div>
+	</div>
+	<div class = "buttonContainer">
+		<input type="button" class = "confirmButton bottomButton doneButton" value = "Done"/>
 	</div>
 </section>

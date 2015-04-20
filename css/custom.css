@@ -395,7 +395,7 @@ tr:nth-child(2n){
  */
 #audit .box{
 	width: 95%;
-	height: 60%;	
+	height: 80%;	
 	position: relative;
 	padding: 10px;
 }
@@ -408,24 +408,49 @@ tr:nth-child(2n){
 
 #audit .auditTable{
 	text-align: center;
-	border: 0px;
 	table-layout:fixed;
     width:100%;
 	height: 80%;
 	box-shadow: 0px 0px 10px 5px rgba(238,238,238,1);
 }
 
-#userIdCol > td{
-	width = 20px;
+#userIdCol{
+	width:100px;
+}
+
+#changeTimeCol{
+	width:150px;
+}
+
+#tableCol{
+	width:120px;
+}
+
+#recordIdCol{
+	width:100px;
+}
+
+#changedFieldCol{
+	width: 200px;
+}
+
+#typeCol{
+	width: 100px;
 }
 
 #audit .titleRow{
 	background-color: #54d154;
 }
 
+#audit .titleRow td{
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
 #audit tr > td{
 	padding-top: 40px;
 	padding-bottom: 40px;
+	word-wrap: break-word;
 }
 
 #audit .titleRow:hover{
@@ -454,7 +479,7 @@ tr:nth-child(2n){
 }
 
 #audit .buttonContainer{
-	padding-bottom: 10px;
+	padding-bottom: 5%;
 	bottom: 0;
 	position: absolute;
 	left: -65px;
