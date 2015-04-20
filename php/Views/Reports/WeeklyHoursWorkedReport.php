@@ -7,9 +7,12 @@
 //                and Mysql Query calls
 namespace Reports;
 use Helper\FPDF\FPDF;
+use Helper\Connection;
+
+
 
 // MySql setup
-$db = mysqli_connect("localhost","root","Conestoga1", "EMS");
+$db = Connection::connect();
 if (!$db)
   {
   die('Could not connect: ' . mysqli_error($db));
