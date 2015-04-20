@@ -15,7 +15,8 @@ class EmployeeController{
 	}
 	
 	public function searchEmployees($options){
-		
+		$database = new DatabaseModel();
+		return $database->SearchEmployee($options);
 	}
 	
 	public function createEmployee($request){
