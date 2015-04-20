@@ -18,19 +18,8 @@ class DatabaseModel{
 		$sin = $input->sin;
 		$dateOfBirth = $input->dateOfBirth;
 		$company = $input->companyName;
-		
-		//
-		//	Look for Companies
-		//
-		/*$query = $this->db->prepare('SELECT id FROM company WHERE
-		companyName = ?	LIMIT 1');
-		if(!$query) throw new Exception($this->db->error);
-		if(!$query->bind_param("s",$company)) throw new Exception($this->db->error);
-		if(!$query->execute()) throw new Exception($this->db->error);
-		if(!$query->store_result()) throw new Exception($this->db->error);
-	
-		if($query->num_rows == 0){*/		
-			$sql = "INSERT INTO Company (id, companyName)
+				
+		$sql = "INSERT INTO Company (id, companyName)
 			VALUES (" . $user_id . ",'" . $company . "')";
 			
 			if ($this->db->query($sql) == FALSE){
@@ -40,69 +29,25 @@ class DatabaseModel{
 		
 		$company_id = $this->db->insert_id;
 		
-/*
-		$query = $this->db->prepare('SELECT id FROM company WHERE
-		companyName = ?	LIMIT 1');
-		if(!$query) throw new Exception($this->db->error);
-		if(!$query->bind_param("s",$company)) throw new Exception($this->db->error);
-		if(!$query->execute()) throw new Exception($this->db->error);
-		if(!$query->store_result()) throw new Exception($this->db->error);
-		if($query->num_rows == 1){		
-			if(!$query->bind_result($company_id)) throw new Exception($this->db->error);
-			$query->fetch();
-		}else{
-			throw new Exception("Database error<br>");
-		}
-*/
-	
-		//
-		//	Look for Persons
-		//
-		/*$query = $this->db->prepare('SELECT id FROM person WHERE
-		firstName = ? AND lastName = ? AND SIN = ? AND dateOfBirth = ? 
-		LIMIT 1');
-		if(!$query) throw new Exception($this->db->error);
-		if(!$query->bind_param("ssss",$firstName,$lastName,$sin,$dateOfBirth)) throw new Exception($this->db->error);
-		if(!$query->execute()) throw new Exception($this->db->error);
-		if(!$query->store_result()) throw new Exception($this->db->error);*/
-		
-		/* if($query->num_rows == 0){	 */	
-			$sql = "INSERT INTO Person (id, firstName, lastName, SIN, dateOfBirth)
-			VALUES (" . $user_id . ",'" . $firstName . "','" . $lastName . "','" . $sin . "','" . $dateOfBirth . "')";
+		$sql = "INSERT INTO Person (id, firstName, lastName, SIN, dateOfBirth)
+			VALUES (" . $user_id . ",'" . $firstName . "','" . $lastName . "','" . $sin . "'";
 			
-			if ($this->db->query($sql) == FALSE){
-				throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
-			}
+		if ($dateOfBirth != ""){
+			$sql .= ", dateOfBirth = '" . $dateOfBirth . "'";
+		}else{
+			$sql .= ", dateOfBirth = null";
+		}
+			
+		$sql .= ")";
+			
+		if ($this->db->query($sql) == FALSE){
+			throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
+		}
 		
 		
 		$person_id = $this->db->insert_id;
-		
-		/*$query = $this->db->prepare('SELECT id FROM person WHERE
-		firstName = ? AND lastName = ? AND SIN = ? AND dateOfBirth = ? 
-		LIMIT 1');
-		if(!$query) throw new Exception($this->db->error);
-		if(!$query->bind_param("ssss",$firstName,$lastName,$sin,$dateOfBirth)) throw new Exception($this->db->error);
-		if(!$query->execute()) throw new Exception($this->db->error);
-		if(!$query->store_result()) throw new Exception($this->db->error);
-		if($query->num_rows == 1){		
-			if(!$query->bind_result($person_id)) throw new Exception($this->db->error);
-			$query->fetch();
-		}else{
-			throw new Exception("Database error");
-		}*/
-		
-		//
-		//	Look for Employee
-		//
-		/*$query = $this->db->prepare('SELECT id FROM employee WHERE
-		company_id = ? AND person_id = ? LIMIT 1');
-		if(!$query) throw new Exception($this->db->error);
-		if(!$query->bind_param("ii",$company_id, $person_id)) throw new Exception($this->db->error);
-		if(!$query->execute()) throw new Exception($this->db->error);
-		if(!$query->store_result()) throw new Exception($this->db->error);*/
-		
-		/* if($query->num_rows == 0){	 */	
-			$sql = "INSERT INTO Employee (id, company_id, person_id, workStatus, reasonForLeaving)
+
+		$sql = "INSERT INTO Employee (id, company_id, person_id, workStatus, reasonForLeaving)
 			VALUES (" . $user_id . "," . $company_id . "," . $person_id . ",'" . $status . "','" . "" . "')";
 			
 			if ($this->db->query($sql) == FALSE){
@@ -111,19 +56,6 @@ class DatabaseModel{
 		
 		
 		$employee_id = $this->db->insert_id;
-		
-		/*$query = $this->db->prepare('SELECT id FROM employee WHERE
-		company_id = ? AND person_id = ? LIMIT 1');
-		if(!$query) throw new Exception($this->db->error);
-		if(!$query->bind_param("ii",$company_id, $person_id)) throw new Exception($this->db->error);
-		if(!$query->execute()) throw new Exception($this->db->error);
-		if(!$query->store_result()) throw new Exception($this->db->error);
-		if($query->num_rows == 1){		
-			if(!$query->bind_result($employee_id)) throw new Exception($this->db->error);
-			$query->fetch();
-		}else{
-			throw new Exception("Database error");
-		}*/
 		
 		return $employee_id;
 	}
@@ -134,43 +66,30 @@ class DatabaseModel{
 		$dateOfTermination = $input->dateOfTermination;
 		$salary = $input->salary;
 		
-		//
-		//	Look for Full Time Employee
-		//
-/*
-		$query = $this->db->prepare('SELECT id FROM fulltimeemployee WHERE
-		employee_id = ? AND dateOfHire = ? AND dateOfTermination = ? AND salary = ? LIMIT 1');
-		if(!$query) throw new Exception($this->db->error);
-		if(!$query->bind_param("issd",$employee_id, $dateOfHire, $dateOfTermination, $salary)) throw new Exception($this->db->error);
-		if(!$query->execute()) throw new Exception($this->db->error);
-		if(!$query->store_result()) throw new Exception($this->db->error);
-		
-*/
-/* 		if($query->num_rows == 0){		 */
-			$sql = "INSERT INTO FullTimeEmployee (id, employee_id, dateOfHire, dateOfTermination, salary)
-			VALUES (" . $user_id . "," . $employee_id . ",'" . $dateOfHire . "','" . $dateOfTermination . "','" . $salary . "')";
+		$sql = "INSERT INTO FullTimeEmployee (id, employee_id, dateOfHire, dateOfTermination, salary)
+			VALUES (" . $user_id . "," . $employee_id;
+			
+		if ($dateOfHire != ""){
+			$sql .= ", dateOfHire = '" . $dateOfHire . "'";
+		}else{
+			$sql .= ", dateOfHire = null";
+		}
+		if ($dateOfTermination != ""){
+			$sql .= ", dateOfTermination = '" . $dateOfTermination . "'";
+		}else{
+			$sql .= ", dateOfTermination = null";
+		}
+		if ($salary != ""){
+			$sql .= ", salary = '" . $salary . "'";
+		}else{
+			$sql .= ", salary = null";
+		}
+			 
+	    $sql .= ")";
 			
 			if ($this->db->query($sql) == FALSE){
 				throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
 			}
-/* 		} */
-		
-/*
-		$query = $this->db->prepare('SELECT id FROM fulltimeemployee WHERE
-		employee_id = ? AND dateOfHire = ? AND dateOfTermination = ? AND salary = ? LIMIT 1');
-		if(!$query) throw new Exception($this->db->error);
-		if(!$query->bind_param("issd",$employee_id, $dateOfHire, $dateOfTermination, $salary)) throw new Exception($this->db->error);
-		if(!$query->execute()) throw new Exception($this->db->error);
-		if(!$query->store_result()) throw new Exception($this->db->error);
-		if($query->num_rows == 1){		
-			if(!$query->bind_result($fulltimeemployee_id)) throw new Exception($this->db->error);
-			$query->fetch();
-		}else{
-			throw new Exception("Database error");
-		}
-
-		
- 		return $fulltimeemployee_id; */
 	}
 	
 	public function AddPartTime($input, $status, $user_id){
@@ -178,40 +97,31 @@ class DatabaseModel{
 		$dateOfHire = $input->dateOfHire;
 		$dateOfTermination = $input->dateOfTermination;
 		$hourlyRate = $input->hourlyRate;
-		
-		//
-		//	Look for Part Time Employee
-		//
-		/*$query = $this->db->prepare('SELECT id FROM parttimeemployee WHERE
-		employee_id = ? AND dateOfHire = ? AND dateOfTermination = ? AND hourlyRate = ? LIMIT 1');
-		if(!$query) throw new Exception($this->db->error);
-		if(!$query->bind_param("issd",$employee_id, $dateOfHire, $dateOfTermination, $hourlyRate)) throw new Exception($this->db->error);
-		if(!$query->execute()) throw new Exception($this->db->error);
-		if(!$query->store_result()) throw new Exception($this->db->error);*/
-		
-		/* if($query->num_rows == 0){	 */	
-			$sql = "INSERT INTO PartTimeEmployee (id, employee_id, dateOfHire, dateOfTermination, hourlyRate)
-			VALUES (" . $user_id . "," . $employee_id . ",'" . $dateOfHire . "','" . $dateOfTermination . "','" . $hourlyRate . "')";
+
+		$sql = "INSERT INTO FullTimeEmployee (id, employee_id, dateOfHire, dateOfTermination, hourlyRate)
+			VALUES (" . $user_id . "," . $employee_id;
 			
+		if ($dateOfHire != ""){
+			$sql .= ", dateOfHire = '" . $dateOfHire . "'";
+		}else{
+			$sql .= ", dateOfHire = null";
+		}
+		if ($dateOfTermination != ""){
+			$sql .= ", dateOfTermination = '" . $dateOfTermination . "'";
+		}else{
+			$sql .= ", dateOfTermination = null";
+		}
+		if ($hourlyRate != ""){
+			$sql .= ", hourlyRate = '" . $hourlyRate . "'";
+		}else{
+			$sql .= ", hourlyRate = null";
+		}
+			 
+	    $sql .= ")";
+		
 			if ($this->db->query($sql) == FALSE){
 				throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
 			}
-		
-		
-		/*$query = $this->db->prepare('SELECT id FROM parttimeemployee WHERE
-		employee_id = ? AND dateOfHire = ? AND dateOfTermination = ? AND hourlyRate = ? LIMIT 1');
-		if(!$query) throw new Exception($this->db->error);
-		if(!$query->bind_param("issd",$employee_id, $dateOfHire, $dateOfTermination, $hourlyRate)) throw new Exception($this->db->error);
-		if(!$query->execute()) throw new Exception($this->db->error);
-		if(!$query->store_result()) throw new Exception($this->db->error);
-		if($query->num_rows == 1){		
-			if(!$query->bind_result($parttimeemployee_id)) throw new Exception($this->db->error);
-			$query->fetch();
-		}else{
-			throw new Exception("Database error");
-		}
-		
-		return $parttimeemployee_id;*/
 	}
 	
 	public function AddSeasonal($input, $status, $user_id){
@@ -220,39 +130,20 @@ class DatabaseModel{
 		$season = $input->season;
 		$seasonYear = $input->seasonYear;
 		
-		//
-		//	Look for Seasonal Employee
-		//
-		/*$query = $this->db->prepare('SELECT id FROM seasonalemployee WHERE
-		employee_id = ? AND piecePay = ? AND season = ? AND seasonYear = ? LIMIT 1');
-		if(!$query) throw new Exception($this->db->error);
-		if(!$query->bind_param("idsi",$employee_id, $piecePay, $season, $seasonYear)) throw new Exception($this->db->error);
-		if(!$query->execute()) throw new Exception($this->db->error);
-		if(!$query->store_result()) throw new Exception($this->db->error);*/
-		
-		/* if($query->num_rows == 0){	 */	
-			$sql = "INSERT INTO SeasonalEmployee (id, employee_id, piecePay, season, seasonYear)
-			VALUES ('" . $user_id . "','" . $employee_id . "','" . $piecePay . "','" . $season . "','" . $seasonYear . "')";
+		$sql = "INSERT INTO SeasonalEmployee (id, employee_id, piecePay, season, seasonYear)
+			VALUES (" . $user_id . "," . $employee_id;
 			
+		if ($piecePay != ""){
+			$sql .= ", piecePay = '" . $piecePay . "'";
+		}else{
+			$sql .= ", piecePay = null";
+		}
+ 
+	    $sql .= ",'" . $season . "','" . $seasonYear . "')";
+		
 			if ($this->db->query($sql) == FALSE){
 				throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
 			}
-		
-		
-		/*$query = $this->db->prepare('SELECT id FROM seasonalemployee WHERE
-		employee_id = ? AND piecePay = ? AND season = ? AND seasonYear = ? LIMIT 1');
-		if(!$query) throw new Exception($this->db->error);
-		if(!$query->bind_param("idsi",$employee_id, $piecePay, $season, $seasonYear)) throw new Exception($this->db->error);
-		if(!$query->execute()) throw new Exception($this->db->error);
-		if(!$query->store_result()) throw new Exception($this->db->error);
-		if($query->num_rows == 1){		
-			if(!$query->bind_result($seasonalemployee_id)) throw new Exception($this->db->error);
-			$query->fetch();
-		}else{
-			throw new Exception("Database error");
-		}
-		
-		return $seasonalemployee_id;*/
 	}
 	
 	public function AddContract($input, $status, $user_id){
@@ -264,18 +155,7 @@ class DatabaseModel{
 		$endDate = $input->endDate;
 		$fixedAmount = $input->fixedAmount;
 				
-		//
-		//	Look for Companies
-		//
-		/*$query = $this->db->prepare('SELECT id FROM company WHERE
-		companyName = ?	LIMIT 1');
-		if(!$query) throw new Exception($this->db->error);
-		if(!$query->bind_param("s",$companyName)) throw new Exception($this->db->error);
-		if(!$query->execute()) throw new Exception($this->db->error);
-		if(!$query->store_result()) throw new Exception($this->db->error);*/
-	
-		/* if($query->num_rows == 0){	 */	
-			$sql = "INSERT INTO Company (id, companyName)
+		$sql = "INSERT INTO Company (id, companyName)
 			VALUES (" . $user_id . ",'" . $companyName . "')";
 			
 			if ($this->db->query($sql) == FALSE){
@@ -285,55 +165,37 @@ class DatabaseModel{
 		
 		$company_id = $this->db->insert_id;
 		
-		/*$query = $this->db->prepare('SELECT id FROM company WHERE
-		companyName = ?	LIMIT 1');
-		if(!$query) throw new Exception($this->db->error);
-		if(!$query->bind_param("s",$companyName)) throw new Exception($this->db->error);
-		if(!$query->execute()) throw new Exception($this->db->error);
-		if(!$query->store_result()) throw new Exception($this->db->error);
-		if($query->num_rows == 1){		
-			if(!$query->bind_result($company_id)) throw new Exception($this->db->error);
-			$query->fetch();
-		}else{
-			throw new Exception("Database error<br>");
-		}*/
-		
-		//
-		//	Look for Contract Employee
-		//
-		/*$query = $this->db->prepare('SELECT id FROM contractor WHERE
-		company_id = ? AND corporationName = ? AND dateOfIncorporation = ? AND buisnessNumber = ? AND
-		contractStartDate = ? AND contractStopDate = ? AND fixedContractAmount = ? LIMIT 1');
-		if(!$query) throw new Exception($this->db->error);
-		if(!$query->bind_param("isssssd",$company_id, $corporationName, $dateOfIncorporation, $businessNumber, $startDate, $endDate, $fixedAmount)) throw new Exception($this->db->error);
-		if(!$query->execute()) throw new Exception($this->db->error);
-		if(!$query->store_result()) throw new Exception($this->db->error);*/
-	
-		/* if($query->num_rows == 0){	 */	
-			$sql = "INSERT INTO Contractor(id, company_id, corporationName, dateOfIncorporation, buisnessNumber, contractStartDate, contractStopDate, fixedContractAmount)
+		$sql = "INSERT INTO Contractor(id, company_id, corporationName, dateOfIncorporation, buisnessNumber, contractStartDate, contractStopDate, fixedContractAmount)
 			VALUES ('" . $user_id . "','" . $company_id . "','" . $corporationName . "','" . $dateOfIncorporation . "','" . $businessNumber . "','"
 			. $startDate . "','" . $endDate . "','" . $fixedAmount . "')";
+		
+		$sql = "INSERT INTO Contractor(id, company_id, corporationName, dateOfIncorporation, buisnessNumber, contractStartDate, contractStopDate, fixedContractAmount)
+			VALUES ('" . $user_id . "','" . $company_id . "','" . $corporationName;
 			
+		if ($dateOfIncorporation != ""){
+			$sql .= ", dateOfIncorporation = '" . $dateOfIncorporation . "'";
+		}else{
+			$sql .= ", dateOfIncorporation = null";
+		}
+		
+		$sql .= ",'" . $businessNumber . "'";
+		
+		if ($contractStartDate != ""){
+			$sql .= ", contractStartDate = '" . $contractStartDate . "'";
+		}else{
+			$sql .= ", contractStartDate = null";
+		}
+		if ($fixedContractAmount != ""){
+			$sql .= ", fixedContractAmount = '" . $fixedContractAmount . "'";
+		}else{
+			$sql .= ", fixedContractAmount = null";
+		}
+			 
+	    $sql .= ")";
+		
 			if ($this->db->query($sql) == FALSE){
 				throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
 			}
-		
-		
-		/*$query = $this->db->prepare('SELECT id FROM contractor WHERE
-		company_id = ? AND corporationName = ? AND dateOfIncorporation = ? AND buisnessNumber = ? AND
-		contractStartDate = ? AND contractStopDate = ? AND fixedContractAmount = ? LIMIT 1');
-		if(!$query) throw new Exception($this->db->error);
-		if(!$query->bind_param("isssssd",$company_id, $corporationName, $dateOfIncorporation, $businessNumber, $startDate, $endDate, $fixedAmount)) throw new Exception($this->db->error);
-		if(!$query->execute()) throw new Exception($this->db->error);
-		if(!$query->store_result()) throw new Exception($this->db->error);
-		if($query->num_rows == 1){		
-			if(!$query->bind_result($contractor_id)) throw new Exception($this->db->error);
-			$query->fetch();
-		}else{
-			throw new Exception("Database error<br>");
-		}
-		
-		return $contractor_id;*/
 	}
 	
 	private function UpdateEmployee($input, $user_id){
