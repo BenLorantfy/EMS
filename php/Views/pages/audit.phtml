@@ -14,36 +14,11 @@
 				<td>New Value</td>
 				<td>Extra</td>
 			</tr>
-			<tr>
-				<td>User ID</td>
-				<td>Change time</td>
-				<td>Table</td>
-				<td>Record ID</td>
-				<td>Changed field</td>
-				<td>Old Value</td>
-				<td>New Value</td>
-				<td>Extra</td>
-			</tr>
-			<tr>
-				<td>User ID</td>
-				<td>Change time</td>
-				<td>Table</td>
-				<td>Record ID</td>
-				<td>Changed field</td>
-				<td>Old Value</td>
-				<td>New Value</td>
-				<td>Extra</td>
-			</tr>
-			<tr>
-				<td>User ID</td>
-				<td>Change time</td>
-				<td>Table</td>
-				<td>Record ID</td>
-				<td>Changed field</td>
-				<td>Old Value</td>
-				<td>New Value</td>
-				<td>Extra</td>
-			</tr>
+			<?php
+				$database = new Database();
+				$table = $database->GetAudit();
+				echo $table;
+			?>
 		</table>
 		<div class = "buttonContainer">
 			<input type="button" class = "confirmButton bottomButton doneButton" value = "Done"/>
