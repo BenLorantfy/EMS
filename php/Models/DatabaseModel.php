@@ -495,8 +495,18 @@ class DatabaseModel{
 	}
 
 	public function SearchEmployee($name){
-		$sql = "select id, firstName, lastName, dateOfBirth from person where (person.firstName LIKE CONCAT('%','" . $name . "','%')
-		OR person.lastName LIKE CONCAT('%','" . $name . "','%')) order by dateOfBirth";
+		$sql = "SELECT firstName, lastName, dateOfBirth FROM (SELECT firstName, lastName, dateOfBirth FROM fulltimeemployee, person WHERE
+				(person.id = (SELECT employee.person_id FROM employee WHERE(employee.id = fulltimeemployee.employee_id)))
+				UNION ALL
+				SELECT firstName, lastName, dateOfBirth FROM parttimeemployee, person WHERE
+				(person.id = (SELECT employee.person_id FROM employee WHERE(employee.id = parttimeemployee.employee_id)))
+				UNION ALL
+				SELECT firstName, lastName, dateOfBirth FROM seasonalemployee, person WHERE
+				(person.id = (SELECT employee.person_id FROM employee WHERE(employee.id = seasonalemployee.employee_id)))
+				UNION ALL
+				SELECT companyName, corporationName, dateOfIncorporation FROM contractor, company WHERE
+				(company.id = contractor.company_id)) AS A
+				WHERE (firstName LIKE CONCAT('%','" . $name . "','%') OR lastName LIKE CONCAT('%','" . $name . "','%'))";
 		
 		$query = $this->db->prepare($sql);
 		if(!$query) throw new Exception($this->db->error);
