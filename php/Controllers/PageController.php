@@ -134,10 +134,12 @@ class PageController{
 	}
 	
 	private function renderSearch($show = true,$blurred = false){
+		$employeeController = new EmployeeController();
 		$search = new SectionView("search");
 		$search->show = $show;
 		$search->blurred = $blurred;
-		$search->employees = array(array("firstName" => "Ben", "lastName" => "Lorantfy", "dateOfBirth" => "1995/11/10"),array("firstName" => "Ben", "lastName" => "Lorantfy", "dateOfBirth" => "1995/11/10"));
+		$search->employees = $employeeController->searchEmployees("");
+		//$search->employees = array(array("firstName" => "Ben", "lastName" => "Lorantfy", "dateOfBirth" => "1995/11/10"),array("firstName" => "Ben", "lastName" => "Lorantfy", "dateOfBirth" => "1995/11/10"));
 		$search->render();		
 	}
 	

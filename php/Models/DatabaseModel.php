@@ -363,4 +363,30 @@ class DatabaseModel{
 
 		return $auditInfo;
 	}
+
+	public function SearchEmployee($name){
+		$sql = "select id, firstName, lastName, dateOfBirth from person where (person.firstName LIKE CONCAT('%','" . $name . "','%')
+		OR person.lastName LIKE CONCAT('%','" . $name . "','%')) order by dateOfBirth";
+		
+		$query = $this->db->prepare($sql);
+		if(!$query) throw new Exception($this->db->error);
+		if(!$query->execute()) throw new Exception($this->db->error);
+		if(!$query->store_result()) throw new Exception($this->db->error);
+
+		$employeeInfo = array();
+		if($query->num_rows > 0){
+			if($query->bind_result($id, $firstName, $lastName, $dateOfBirth)){
+				while($query->fetch()){
+					array_push($employeeInfo, array(
+						 "id" => $id
+						,"firstName" => $firstName
+						,"lastName" => $lastName
+						,"dateOfBirth" => $dateOfBirth
+					));
+				}								
+			}
+		}
+
+		return $employeeInfo;
+	}
 }

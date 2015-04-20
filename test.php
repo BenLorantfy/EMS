@@ -368,7 +368,7 @@ class Database{
 		return $contractor_id;
 	}
 
-	public function UpdateEmployee($input, $user_id){
+	private function UpdateEmployee($input, $user_id){
 		$id = $input->id;
 		$firstName = $input->firstName;
 		$lastName = $input->lastName;
@@ -410,6 +410,10 @@ class Database{
 		}else{
 			echo "	Person updated<br>";
 		}
+	}
+	
+	public function UpdateFullTimeEmployee($input, $user_id){
+	
 	}
 
 	public function SearchEmployee($name){
@@ -671,13 +675,11 @@ class ContractEmployeeModel{
 $obj = new FullTimeEmployeeModel;
 $db = new Database;
 
-/*obj->SetId(2);
+obj->SetId(2);
 $obj->SetFirstName("gom");
 $obj->SetLastName("rOne");
 $obj->SetDateOfBirth("1996/01/22");
 $obj->SetSIN("1234567890");
 $obj->SetCompany("MyCompany");
-$db->UpdateEmployee($obj, 2);*/
-
-print_r($db->SearchEmployee("b"));
+$db->UpdateEmployee($obj, 2);
 ?>
