@@ -131,9 +131,12 @@ var App = {
 		});
 		
 		reportsView.on("done",function(){
-			console.log("lolz");
 			App.Router.navigate("search", { trigger: true })
 		});
+		
+		reportsView.on("generate",function(report){
+			window.open("/reports/" + report.type);
+		});		
 		
 		//
 		// Initilize navigation
