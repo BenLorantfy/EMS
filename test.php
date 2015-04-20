@@ -367,14 +367,63 @@ class Database{
 		
 		return $contractor_id;
 	}
+
+	public function UpdateEmployee($input, $employee_id, $user_id){
+		$firstName = $input->firstName;
+		$lastName = $input->lastName;
+		$sin = $input->sin;
+		$dateOfBirth = $input->dateOfBirth;
+		$company = $input->company;
+		
+		$query = $this->db->prepare('SELECT company_id, person_id FROM employee WHERE
+		employee.id = ?	LIMIT 1');
+		if(!$query) throw new Exception($this->db->error);
+		if(!$query->bind_param("s",$employee_id)) throw new Exception($this->db->error);
+		if(!$query->execute()) throw new Exception($this->db->error);
+		if(!$query->store_result()) throw new Exception($this->db->error);
+		if($query->num_rows == 1){		
+			echo "Found a employee<br>";
+			
+			if(!$query->bind_result($company_id, $person_id)) throw new Exception($this->db->error);
+			$query->fetch();
+		}else{
+			throw new Exception("Database error<br>");
+		}
+		
+		$sql = "UPDATE Company SET
+		id = " . $user_id . ", companyName = '" . $company . 
+		"' WHERE (id = " . $company_id . ");";
+		if ($this->db->query($sql) == FALSE){
+			throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
+		}else{
+			echo "	Company updated<br>";
+		}
+			
+		$sql = "UPDATE Person SET id = " . $user_id . ", firstName = " . $firstName . ", lastName = " . $lastName . ", SIN = " . $sin . ", dateOfBirth =" . $dateOfBirth . 
+		"' WHERE (id = " . $person_id . ");";
+		if ($this->db->query($sql) == FALSE){
+			throw new Exception("Error: " . $sql . "<br>" . mysqli_error($this->db));
+		}else{
+			echo "	Person updated<br>";
+		}
+	}
 }
 
 abstract class EmployeeModel{
+	protected $id;
 	protected $firstName;
 	protected $lastName;
 	protected $dateOfBirth;
 	protected $sin;
 	protected $company;
+	
+		public function SetId($id){
+		// todo: validation logic
+		// don't set class variable if invalid
+		// return false if invalid
+		$this->id = $id;
+		return true;
+	}
 	
 	public function SetFirstName($firstName){
 		// todo: validation logic
