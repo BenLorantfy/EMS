@@ -14,7 +14,9 @@ class EmployeeController{
 	
 	}
 	
-	public function searchEmployees($options){
+	public function searchEmployees($options = array("keywords" => "","type" => "fulltime")){
+		$options = (object)$options;
+		
 		$database = new DatabaseModel();
 		return $database->SearchEmployee($options);
 	}
