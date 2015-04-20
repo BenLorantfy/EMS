@@ -107,6 +107,7 @@ CREATE TABLE Timecard
 id					int	NOT NULL AUTO_INCREMENT,
 employee_id			int NOT NULL,
 info_title			varchar(31),
+date				date,
 monday				int,
 tuesday				int,
 wednesday			int,
