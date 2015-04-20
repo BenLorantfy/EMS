@@ -122,6 +122,7 @@ var App = {
 		});
 		
 		searchView.on("open.viewEmployee",function(employee){
+			viewEmployeeView.switchType(employee.type.toLowerCase(),employee.id);
 			App.Router.navigate("viewEmployee/" + employee.type + "/" + employee.id,{ trigger: true });
 		});
 		

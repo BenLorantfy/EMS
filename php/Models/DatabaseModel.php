@@ -553,7 +553,7 @@ class DatabaseModel{
 		if($query->num_rows > 0){
 			if($query->bind_result($firstName, $lastName, $dateOfBirth, $sin, $companyName, $workStatus, $reasonForLeaving, $dateOfHire, $dateOfTermination, $salary)){
 				while($query->fetch()){
-					array_push($employeeData, array(
+					$employeeData = array(
 						"firstName" => $firstName
 						,"lastName" => $lastName
 						,"dateOfBirth" => $dateOfBirth
@@ -564,7 +564,7 @@ class DatabaseModel{
 						,"dateOfHire" => $dateOfHire
 						,"dateOfTermination" => $dateOfTermination
 						,"salary" => $salary
-					));
+					);
 				}								
 			}
 		}
@@ -590,7 +590,7 @@ class DatabaseModel{
 		if($query->num_rows > 0){
 			if($query->bind_result($firstName, $lastName, $dateOfBirth, $sin, $companyName, $workStatus, $reasonForLeaving, $dateOfHire, $dateOfTermination, $hourlyRate)){
 				while($query->fetch()){
-					array_push($employeeData, array(
+					$employeeData = array(
 						"firstName" => $firstName
 						,"lastName" => $lastName
 						,"dateOfBirth" => $dateOfBirth
@@ -601,7 +601,7 @@ class DatabaseModel{
 						,"dateOfHire" => $dateOfHire
 						,"dateOfTermination" => $dateOfTermination
 						,"hourlyRate" => $hourlyRate
-					));
+					);
 				}								
 			}
 		}
@@ -627,7 +627,7 @@ class DatabaseModel{
 		if($query->num_rows > 0){
 			if($query->bind_result($firstName, $lastName, $dateOfBirth, $sin, $companyName, $workStatus, $reasonForLeaving, $season, $piecePay, $seasonYear)){
 				while($query->fetch()){
-					array_push($employeeData, array(
+					$employeeData = array(
 						"firstName" => $firstName
 						,"lastName" => $lastName
 						,"dateOfBirth" => $dateOfBirth
@@ -638,7 +638,7 @@ class DatabaseModel{
 						,"season" => $season
 						,"piecePay" => $piecePay
 						,"seasonYear" => $seasonYear
-					));
+					);
 				}								
 			}
 		}
@@ -662,7 +662,7 @@ class DatabaseModel{
 		if($query->num_rows > 0){
 			if($query->bind_result($companyName, $corporationName, $dateOfIncorporation, $buisnessNumber, $contractStartDate, $contractStopDate, $fixedContractAmount)){
 				while($query->fetch()){
-					array_push($employeeData, array(
+					$employeeData = array(
 						"companyName" => $companyName
 						,"corporationName" => $corporationName
 						,"dateOfIncorporation" => $dateOfIncorporation
@@ -670,7 +670,7 @@ class DatabaseModel{
 						,"contractStartDate" => $contractStartDate
 						,"contractStopDate" => $contractStopDate
 						,"fixedContractAmount" => $fixedContractAmount
-					));
+					);
 				}								
 			}
 		}
