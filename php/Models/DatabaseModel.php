@@ -11,6 +11,7 @@ use \Exception;
 
 class DatabaseModel{
 	private $db;
+	
 	//
 	// FUNCTION    : __construct
 	// DESCRIPTION : constructor
@@ -23,6 +24,12 @@ class DatabaseModel{
 		$this->db = Connection::connect();
 	}
 	
+	//
+	// FUNCTION    : AddEmployee
+	// DESCRIPTION : add valid employye info to database
+	// PARAMETERS  : $input, $status, $user_id
+	// RETURNS     : $employee_id
+	//
 	private function AddEmployee($input, $status, $user_id){
 		$firstName = $input->firstName;
 		$lastName = $input->lastName;
@@ -71,6 +78,12 @@ class DatabaseModel{
 		return $employee_id;
 	}
 	
+	//
+	// FUNCTION    : AddFullTime
+	// DESCRIPTION : add valid employye info to database
+	// PARAMETERS  : contractCompanyName
+	// RETURNS     : bool : the result of asign
+	//
 	public function AddFullTime($input, $status, $user_id){
 		$employee_id = $this->AddEmployee($input, $status, $user_id);
 		$dateOfHire = $input->dateOfHire;
@@ -103,6 +116,12 @@ class DatabaseModel{
 			}
 	}
 	
+	//
+	// FUNCTION    : AddPartTime
+	// DESCRIPTION : add valid employye info to database
+	// PARAMETERS  : contractCompanyName
+	// RETURNS     : bool : the result of asign
+	//
 	public function AddPartTime($input, $status, $user_id){
 		$employee_id = $this->AddEmployee($input, $status, $user_id);
 		$dateOfHire = $input->dateOfHire;
@@ -135,6 +154,12 @@ class DatabaseModel{
 			}
 	}
 	
+	//
+	// FUNCTION    : AddSeasonal
+	// DESCRIPTION : add valid employye info to database
+	// PARAMETERS  : contractCompanyName
+	// RETURNS     : bool : the result of asign
+	//
 	public function AddSeasonal($input, $status, $user_id){
 		$employee_id = $this->AddEmployee($input, $status, $user_id);
 		$piecePay = $input->piecePay;
@@ -157,6 +182,12 @@ class DatabaseModel{
 			}
 	}
 	
+	//
+	// FUNCTION    : AddContract
+	// DESCRIPTION : add valid employye info to database
+	// PARAMETERS  : contractCompanyName
+	// RETURNS     : bool : the result of asign
+	//
 	public function AddContract($input, $status, $user_id){
 		$companyName = $input->contractCompanyName;
 		$dateOfIncorporation = $input->dateOfIncorporation;
@@ -209,6 +240,12 @@ class DatabaseModel{
 			}
 	}
 	
+	//
+	// FUNCTION    : UpdateEmployee
+	// DESCRIPTION : update employye info to database
+	// PARAMETERS  : contractCompanyName
+	// RETURNS     : bool : the result of asign
+	//
 	private function UpdateEmployee($input, $user_id){
 		$id = $input->id;
 		$firstName = $input->firstName;
@@ -257,6 +294,12 @@ class DatabaseModel{
 		}
 	}
 	
+	//
+	// FUNCTION    : UpdateFullTimeEmployee
+	// DESCRIPTION : update employye info to database
+	// PARAMETERS  : contractCompanyName
+	// RETURNS     : bool : the result of asign
+	//
 	public function UpdateFullTimeEmployee($input, $user_id){
 		$this->UpdateEmployee($input, $user_id);
 		$id = $input->id;
@@ -285,6 +328,12 @@ class DatabaseModel{
 		}
 	}
 	
+	//
+	// FUNCTION    : UpdatePartTimeEmployee
+	// DESCRIPTION : update employye info to database
+	// PARAMETERS  : contractCompanyName
+	// RETURNS     : bool : the result of asign
+	//
 	public function UpdatePartTimeEmployee($input, $user_id){
 		$this->UpdateEmployee($input, $user_id);
 		$id = $input->id;
@@ -313,6 +362,12 @@ class DatabaseModel{
 		}
 	}
 	
+	//
+	// FUNCTION    : UpdateSeasonalEmployee
+	// DESCRIPTION : update employye info to database
+	// PARAMETERS  : contractCompanyName
+	// RETURNS     : bool : the result of asign
+	//
 	public function UpdateSeasonalEmployee($input, $user_id){
 		$this->UpdateEmployee($input, $user_id);
 		$id = $input->id;
@@ -339,6 +394,12 @@ class DatabaseModel{
 		}
 	}
 	
+	//
+	// FUNCTION    : GetAudit
+	// DESCRIPTION : get audit table from database
+	// PARAMETERS  : 
+	// RETURNS     : array : $auditInfo
+	//
 	public function GetAudit(){
 		$query = $this->db->prepare('SELECT user_id, changeTime, changedTable, recordId, changedField, oldValue, newValue, extra FROM audit');
 		if(!$query) throw new Exception($this->db->error);
@@ -366,7 +427,13 @@ class DatabaseModel{
 
 		return $auditInfo;
 	}
-
+	
+	//
+	// FUNCTION    : SearchEmployee
+	// DESCRIPTION : search for employee 
+	// PARAMETERS  : $options
+	// RETURNS     : bool : the result of asign
+	//
 	public function SearchEmployee($options){
 		$keywords = $options->keywords;
 		$type = $options->type;
@@ -408,6 +475,12 @@ class DatabaseModel{
 		return $employeeInfo;
 	}
 	
+	//
+	// FUNCTION    : GetFullTime
+	// DESCRIPTION : get all full time employee info
+	// PARAMETERS  : $id
+	// RETURNS     : bool : the result of asign
+	//
 	public function GetFullTime($id){
 		$sql = "SELECT firstName, lastName, dateOfBirth, sin, companyName, workStatus, reasonForLeaving, dateOfHire, dateOfTermination, salary FROM fulltimeemployee, employee, person, company WHERE
 				(
@@ -445,6 +518,12 @@ class DatabaseModel{
 		return $employeeData;
 	}
 	
+	//
+	// FUNCTION    : GetPartTime
+	// DESCRIPTION : get all part time employee info
+	// PARAMETERS  : contractCompanyName
+	// RETURNS     : bool : the result of asign
+	//
 	public function GetPartTime($id){
 		$sql = "SELECT firstName, lastName, dateOfBirth, sin, companyName, workStatus, reasonForLeaving, dateOfHire, dateOfTermination, hourlyRate FROM parttimeemployee, employee, person, company WHERE
 				(
@@ -482,6 +561,12 @@ class DatabaseModel{
 		return $employeeData;
 	}
 	
+	//
+	// FUNCTION    : GetSeasonal
+	// DESCRIPTION : get all seasonal employee info
+	// PARAMETERS  : contractCompanyName
+	// RETURNS     : bool : the result of asign
+	//
 	public function GetSeasonal($id){
 		$sql = "SELECT firstName, lastName, dateOfBirth, sin, companyName, workStatus, reasonForLeaving, season, piecePay, seasonYear FROM seasonalemployee, employee, person, company WHERE
 				(
@@ -519,6 +604,12 @@ class DatabaseModel{
 		return $employeeData;
 	}
 	
+	//
+	// FUNCTION    : GetContract
+	// DESCRIPTION : get all contract  employee info
+	// PARAMETERS  : contractCompanyName
+	// RETURNS     : bool : the result of asign
+	//
 	public function GetContract($id){
 		$sql = "SELECT companyName, corporationName, dateOfIncorporation, buisnessNumber, contractStartDate, contractStopDate, fixedContractAmount FROM contractor, company WHERE
 				(
@@ -551,6 +642,12 @@ class DatabaseModel{
 		return $employeeData;
 	}
 
+	//
+	// FUNCTION    : GetTimecard
+	// DESCRIPTION : get all time card info for a employee
+	// PARAMETERS  : $id, $type
+	// RETURNS     : bool : the result of asign
+	//
 	public function GetTimecard($id, $type){
 		$sql = "SELECT monday, tuesday, wednesday, thursday, friday, saturday, sunday FROM timecard, " . $type . "
 		WHERE 
