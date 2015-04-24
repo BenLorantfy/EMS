@@ -14,42 +14,57 @@ abstract class EmployeeModel{
 	protected $sin;
 	protected $companyName;
 	
+	//
+	// FUNCTION    : SetFirstName
+	// DESCRIPTION : set first name of employee
+	// PARAMETERS  : $firstName
+	// RETURNS     : bool : the result of asign
+	//
 	public function SetFirstName($firstName){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->firstName = $firstName;
 		return true;
 	}
 	
+	//
+	// FUNCTION    : SetLastName
+	// DESCRIPTION : set last name of employee
+	// PARAMETERS  : $lastName
+	// RETURNS     : bool : the result of asign
+	//
 	public function SetLastName($lastName){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->lastName = $lastName;
 		return true;
 	}
 	
+	//
+	// FUNCTION    : SetDateOfBirth
+	// DESCRIPTION : set dateOfBirth
+	// PARAMETERS  : $dateOfBirth
+	// RETURNS     : bool : the result of asign
+	//
 	public function SetDateOfBirth($dateOfBirth){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->dateOfBirth = $dateOfBirth;
 		return true;		
 	}
 	
+	//
+	// FUNCTION    : SetSIN
+	// DESCRIPTION : set sin of employee
+	// PARAMETERS  : $sin
+	// RETURNS     : bool : the result of asign
+	//
 	public function SetSIN($sin){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->sin = $sin;
 		return true;		
 	}
 	
+	//
+	// FUNCTION    : SetCompanyName
+	// DESCRIPTION : set companyName name of employee
+	// PARAMETERS  : $companyName
+	// RETURNS     : bool : the result of asign
+	//
 	public function SetCompanyName($companyName){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->companyName = $companyName;
 		return true;		
 	}
