@@ -13,30 +13,45 @@ class SeasonalEmployeeModel extends EmployeeModel{
 	private $season;
 	private $seasonYear;
 
+	//
+	// FUNCTION    : SetHourlyRate
+	// DESCRIPTION : set hourlyRate of employee
+	// PARAMETERS  : $hourlyRate
+	// RETURNS     : bool : the result of asign
+	//
 	public function SetPiecePay($piecePay){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->piecePay = $piecePay;
 		return true;
 	}
-		
+	
+	//
+	// FUNCTION    : SetSeason
+	// DESCRIPTION : set hourlyRate of employee
+	// PARAMETERS  : $season
+	// RETURNS     : bool : the result of asign
+	//	
 	public function SetSeason($season){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->season = $season;
 		return true;
 	}
 	
+	//
+	// FUNCTION    : SetSeasonYear
+	// DESCRIPTION : set hourlyRate of employee
+	// PARAMETERS  : $seasonYear
+	// RETURNS     : bool : the result of asign
+	//
 	public function SetSeasonYear($seasonYear){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->seasonYear = $seasonYear;
 		return true;
 	}
 	
+	//
+	// FUNCTION    : __get
+	// DESCRIPTION : set hourlyRate of employee
+	// PARAMETERS  : $key
+	// RETURNS     : bool : the result of asign
+	//
 	public function __get($key){
 		return $this->$key;
 	}
