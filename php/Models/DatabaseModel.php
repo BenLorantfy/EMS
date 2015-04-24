@@ -11,7 +11,12 @@ use \Exception;
 
 class DatabaseModel{
 	private $db;
-	
+	//
+	// FUNCTION    : __construct
+	// DESCRIPTION : constructor
+	// PARAMETERS  : contractCompanyName
+	// RETURNS     : bool : the result of asign
+	//
 	public function __construct()
 	{
 		//Connect will be here
