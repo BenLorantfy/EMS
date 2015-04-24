@@ -10,10 +10,13 @@ namespace Models;
 class FullTimeEmployeeModel extends HourlyEmployeeModel{
 	private $salary;
 	
+	//
+	// FUNCTION    : SetSalary
+	// DESCRIPTION : set salary of employee
+	// PARAMETERS  : $salary
+	// RETURNS     : bool : the result of asign
+	//
 	public function SetSalary($salary){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		if($this->ValidNumber($salary)){
 			$this->salary = $salary;
 			return true;
@@ -23,11 +26,22 @@ class FullTimeEmployeeModel extends HourlyEmployeeModel{
 		}
 	}
 	
-	// maybe move this to employee.class.php
+	//
+	// FUNCTION    : ValidNumber
+	// DESCRIPTION : set first name of employee
+	// PARAMETERS  : $number
+	// RETURNS     : bool : the result of asign
+	//
 	private function ValidNumber($number){
 		return $number >= 0;
 	}
 	
+	//
+	// FUNCTION    : __get
+	// DESCRIPTION : set first name of employee
+	// PARAMETERS  : $key
+	// RETURNS     : bool : the result of asign
+	//
 	public function __get($key){
 		return $this->$key;
 	}
