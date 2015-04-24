@@ -1,3 +1,9 @@
+//FILE			: DatabaseModel.php
+//PROJECT		: INFO2030-15W - Software Quality II - Final Project EMS
+//PROGRAMMER	: Dev Til Death: Grigoriy Kozyrev, Ben Lorantfy, Michael L. Da Silva, Kevin Li
+//FIRST VERSION	: 4/04/2015
+//DESCRIPTION	: This file contains the code that access the database. It can create, insert and updatas the databse.
+//		  The data will be sent to view to display to user.
 <?php
 namespace Models;
 use Helper\Connection;
