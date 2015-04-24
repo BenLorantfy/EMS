@@ -1,3 +1,10 @@
+//FILE			: TimecardModel.php
+//PROJECT		: INFO2030-15W - Software Quality II - Final Project EMS
+//PROGRAMMER	: Dev Til Death: Grigoriy Kozyrev, Ben Lorantfy, Michael L. Da Silva, Kevin Li
+//FIRST VERSION	: 4/04/2015
+//DESCRIPTION	: This file contains the server side validation before the data goes into database, and sign the 
+//		  values for time card. 
+
 <?php
 namespace Models;
 class TimecardModel{
