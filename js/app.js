@@ -1,3 +1,10 @@
+//
+// FILE       : app.js
+// PROJECT    : EMS
+// PROGRAMMER : Ben Lorantfy, Grigory Kozyrev, Kevin Li, Michael Dasilva
+// DATE       : April 19, 2015
+//
+
 var App = {
 	 Models:{}
 	,Views:{}	

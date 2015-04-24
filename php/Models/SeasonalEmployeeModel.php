@@ -1,3 +1,4 @@
+<?php
 //FILE			: SeasonalEmployeeModel.php
 //PROJECT		: INFO2030-15W - Software Quality II - Final Project EMS
 //PROGRAMMER	: Dev Til Death: Grigoriy Kozyrev, Ben Lorantfy, Michael L. Da Silva, Kevin Li
@@ -5,8 +6,6 @@
 //DESCRIPTION	: This file contains the server side validation before the data goes into database, and sign the 
 //		  values for seasonal employee. 
 
-
-<?php
 namespace Models;
 class SeasonalEmployeeModel extends EmployeeModel{
 	private $piecePay;

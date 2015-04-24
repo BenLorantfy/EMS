@@ -1,3 +1,4 @@
+<?php
 //FILE			: PartTimeEmployeeModel.php
 //PROJECT		: INFO2030-15W - Software Quality II - Final Project EMS
 //PROGRAMMER	: Dev Til Death: Grigoriy Kozyrev, Ben Lorantfy, Michael L. Da Silva, Kevin Li
@@ -6,7 +7,6 @@
 //		  values for partime employee. 
 
 
-<?php
 namespace Models;
 class PartTimeEmployeeModel extends HourlyEmployeeModel{
 	private $hourlyRate;

@@ -1,10 +1,19 @@
 //
-// Use a self-executing function to protect the global scope
+// FILE       : EmployeeModel.js
+// PROJECT    : EMS
+// PROGRAMMER : Ben Lorantfy, Grigory Kozyrev, Kevin Li, Michael Dasilva
+// DATE       : April 19, 2015
 //
+
+// Use a self-executing function to protect the global scope
 (function(){
+
+	//
+	// Validation functions
+	//
 	
 	//
-	//check for invalid character for name
+	// check for invalid character for name
 	//
 	function alphabetical(value){
 		if(typeof value !== "undefined")
@@ -18,7 +27,7 @@
 	}
 	
 	//
-	//check for numerical (sin)
+	// check for numerical (sin)
 	//
 	function checkSin(value) {   
 		if(typeof value !== "undefined")
@@ -92,7 +101,7 @@
 	}
 	
     //
-    //check for numerical (bn)
+    // check for numerical (bn)
     //
 	function checkBn(value) {
 		if(typeof value !== "undefined")
@@ -110,7 +119,7 @@
 	}
 
     //
-    //check for date format (birthday, dateOfHire)
+    // check for date format (birthday, dateOfHire)
     //
 	function checkDateFormat(value) {
 		if(typeof value !== "undefined")
@@ -124,7 +133,7 @@
 	}
 
 	//
-    //check for date in the future (birthday, dateOfHire)
+    // check for date in the future (birthday, dateOfHire)
     //
 	function checkFutureDate(value) {
 		if(typeof value !== "undefined")
@@ -140,7 +149,7 @@
 	}
 	
     //
-    //check for date format (DateOftermination)
+    // check for date format (DateOftermination)
     //
 	function checkTDateFormat(value) {
 		if(typeof value !== "undefined")
@@ -162,7 +171,7 @@
 	}
 
 	//
-    //check for date format (DateOfHire)
+    // check for date format (DateOfHire)
     //
 	function checkHDateFormat(value) {
 		if(typeof value !== "undefined")
@@ -193,7 +202,7 @@
 	}
 	
 	//
-	//change the visibility of the leaving reason 
+	// change the visibility of the leaving reason 
 	//
 	function visibilityOfLeavingReason(value) {
 		if(/\S/.test(value))

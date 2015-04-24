@@ -1,7 +1,17 @@
 <?php
+//
+// FILE       : Router.php
+// PROJECT    : EMS
+// PROGRAMMER : Ben Lorantfy, Grigory Kozyrev, Kevin Li, Michael Dasilva
+// DATE       : April 19, 2015
+//
 namespace Helper;
 use \stdClass;
 
+//
+// NAME    : Router
+// PURPOSE : The Route class provides several helper methods for processing requests based on RESTful URLS
+//
 class Route{
 	static private function route($type="",$matchURI = "*",$callback = null){
 		if($type == "ANY" || $type == $_SERVER['REQUEST_METHOD']){
