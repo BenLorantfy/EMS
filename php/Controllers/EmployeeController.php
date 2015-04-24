@@ -1,4 +1,10 @@
 <?php
+//
+// FILE       : EmployeeController.php
+// PROJECT    : EMS
+// PROGRAMMER : Ben Lorantfy, Grigory Kozyrev, Kevin Li, Michael Dasilva
+// DATE       : April 19, 2015
+//
 namespace Controllers;
 use Controllers\SessionController;
 use Models\FullTimeEmployeeModel;
@@ -9,7 +15,17 @@ use Models\DatabaseModel;
 use Views\View;
 use Helper\Connection;
 
+//
+// NAME    : EmployeeController
+// PURPOSE : The employee controller class takes requests to manage employees
+//
 class EmployeeController{
+	//
+	// FUNCTION    : getEmployee
+	// DESCRIPTION : Get's an employee's information given an id
+	// PARAMETERS  : $request - request object containing id
+	// RETURNS     : array : the employee information
+	//
 	public function getEmployee($request){
 		$type = strtolower($request->type);
 		$id = $request->id;
@@ -30,14 +46,26 @@ class EmployeeController{
 		}
 		
 	}
-	
+
+	//
+	// FUNCTION    : searchEmployees
+	// DESCRIPTION : searches employees
+	// PARAMETERS  : $options - request object containing search options
+	// RETURNS     : array : the employees
+	//	
 	public function searchEmployees($options = array("keywords" => "","type" => "fulltime")){
 		$options = (object)$options;
 		
 		$database = new DatabaseModel();
 		return $database->SearchEmployee($options);
 	}
-	
+
+	//
+	// FUNCTION    : createEmployee
+	// DESCRIPTION : Creates an employee
+	// PARAMETERS  : $request - request object create employee information
+	// RETURNS     : string : created employee type
+	//		
 	public function createEmployee($request){
 		switch($request->type){
 			case "fulltime":

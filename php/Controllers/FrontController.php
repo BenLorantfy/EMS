@@ -1,4 +1,10 @@
 <?php
+//
+// FILE       : FrontController.php
+// PROJECT    : EMS
+// PROGRAMMER : Ben Lorantfy, Grigory Kozyrev, Kevin Li, Michael Dasilva
+// DATE       : April 19, 2015
+//
 namespace Controllers;
 use Controllers\EmployeeController;
 use Controllers\ReportsController;
@@ -7,13 +13,12 @@ use Controllers\TimecardController;
 use Helper\Route;
 
 //
-// FrontController
-// ===============
-// The front controller class serves as the entry point of the application
-// All non-file requests are redirected to index.php by htaccess and the only job 
-// index.php has is to include this file and instantiate a FrontController
-// At that point, code in __construct() gets called to setup the application and
-// process requests
+// NAME    : FrontController
+// PURPOSE : The front controller class serves as the entry point of the application
+//           All non-file requests are redirected to index.php by htaccess and the only job 
+//           index.php has is to include this file and instantiate a FrontController
+//           At that point, code in __construct() gets called to setup the application and
+//           process requests
 //
 class FrontController{
 	public function __construct(){
@@ -54,6 +59,7 @@ class FrontController{
 		//
 		Route::post("/employeelist",array(new EmployeeController(),"searchEmployees"));
 		Route::get("/employees/{type}/{id}",array(new EmployeeController(),"getEmployee"));
+		Route::get("/saveEmployee/{type}/{id}",array(new EmployeeController(),"saveEmployee"));
 		Route::post("/employees/{type}",array(new EmployeeController(),"createEmployee"));
         Route::get("/timecards/{id}",array(new TimecardController(),"getTunecard"));
 		Route::post("/timecards/{id}",array(new TimecardController(),"saveTimecard"));

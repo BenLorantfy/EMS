@@ -1,20 +1,38 @@
 <?php
+//
+// FILE       : SessionController.php
+// PROJECT    : EMS
+// PROGRAMMER : Ben Lorantfy, Grigory Kozyrev, Kevin Li, Michael Dasilva
+// DATE       : April 19, 2015
+//
 namespace Controllers;
 use Helper\Connection;
 
 //
-// SessionController
-// =================
-// The session controller class takes requests to manipulate sessions
-// For example, it can login a new user, check that the user is logged in,
-// logout the user, etc.
+// NAME    : SessionController
+// PURPOSE : The session controller class takes requests to manipulate sessions
+//           For example, it can login a new user, check that the user is logged in,
+//           logout the user, etc.
 //
 class SessionController{
 	private $db;
+
+	//
+	// FUNCTION    : __construct
+	// DESCRIPTION : connects to database and sets the class db variable
+	// PARAMETERS  : none
+	// RETURNS     : none
+	//
 	public function __construct(){
 		$this->db = Connection::connect();
 	}
 	
+	//
+	// FUNCTION    : login
+	// DESCRIPTION : logs in user
+	// PARAMETERS  : object : $request - username and password
+	// RETURNS     : bool : wether login succeded or not
+	//
 	public function login($request){
 		$success = false;
 		
@@ -51,7 +69,13 @@ class SessionController{
 		
 		return array("valid" => $success, "type" => $this->userType());
 	}
-	
+
+	//
+	// FUNCTION    : userType
+	// DESCRIPTION : gets user type
+	// PARAMETERS  : none
+	// RETURNS     : string : the type of user logged in
+	//	
 	public function userType(){
 		if(isset($_SESSION["securityLevel"])){
 			return $_SESSION["securityLevel"] == 1 ? "admin" : "general";
@@ -59,11 +83,23 @@ class SessionController{
 			return "none";
 		}
 	}
-	
+
+	//
+	// FUNCTION    : isLogged
+	// DESCRIPTION : checks if user is logged in
+	// PARAMETERS  : none
+	// RETURNS     : bool : true if logged
+	//	
 	public function isLogged(){
 		return isset($_SESSION["id"]) && isset($_SESSION["username"]) && isset($_SESSION["password"]) && isset($_SESSION["securityLevel"]);
 	}
-	
+
+	//
+	// FUNCTION    : logout
+	// DESCRIPTION : logs out user
+	// PARAMETERS  : none
+	// RETURNS     : bool : wether logout succeded or not
+	//	
 	public function logout(){
 		return true;
 	}

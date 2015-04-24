@@ -44,7 +44,6 @@ App.Views.EmployeeView = App.Views.SectionView.extend({
 		
 		if(request){
 			request.done(function(data){
-				console.log(data);
 				$.msgBox.success("Employee added sucessfully");
 			});
 			
@@ -56,6 +55,11 @@ App.Views.EmployeeView = App.Views.SectionView.extend({
 		}
 	},
 	
+	save: function(){
+		console.log(this.model.attributes);
+		this.model.save();	
+	},
+	
 	done: function(){
 		if(this.$el.find(".editButton").length != 0){
 			this.cancel();
@@ -64,6 +68,7 @@ App.Views.EmployeeView = App.Views.SectionView.extend({
 	},
 	
 	switchType: function(override,id){
+		var view = this;
 		var $el = this.$el;
 		if(override){
 			var type = override.toLowerCase();
@@ -73,10 +78,8 @@ App.Views.EmployeeView = App.Views.SectionView.extend({
 			    type: 'GET',
 			    dataType:"json",
 			    success: function(data){
-			    	console.log(data);
 			       	for(var key in data){
-			       		var td = $el.find("." + key);
-			       		console.log(td[0]);
+			       		var input = $el.find("." + key);
 			       		td.find("div").html(data[key]);
 			       		td.find("input").val(data[key]);
 			       	}
@@ -148,15 +151,13 @@ App.Views.EmployeeView = App.Views.SectionView.extend({
 		// Clear all current errors
 		//
 		view.$el.find(".fieldError").each(function(){
-			// Don't clear errors of unselected fields
-			if(!$(this).parent().hasClass("unselectedField")){
-				$(this).empty();
-			}
+			$(this).empty();
 		})
 
 		//
 		// Add all new errors
 		//
+		
 		for(var field in errors){
 			var error = errors[field];
 			view.$el.find("." + field).closest("tr").find(".fieldError").text(error);
