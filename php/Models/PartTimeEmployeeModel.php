@@ -18,9 +18,6 @@ class PartTimeEmployeeModel extends HourlyEmployeeModel{
 	// RETURNS     : bool : the result of asign
 	//
 	public function SetHourlyRate($hourlyRate){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->hourlyRate = $hourlyRate;
 		return true;
 	}
