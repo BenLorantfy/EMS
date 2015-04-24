@@ -1,0 +1,4 @@
+This solution must be run on Apache because it uses .htaccess to
+create RESTful URLs.  Apache also needs the mod_rewrite module enabled
+and the website files must be in the root folder of the server (or a virtual
+host)
