@@ -2,8 +2,8 @@
 //PROJECT		: INFO2030-15W - Software Quality II - Final Project EMS
 //PROGRAMMER	: Dev Til Death: Grigoriy Kozyrev, Ben Lorantfy, Michael L. Da Silva, Kevin Li
 //FIRST VERSION	: 4/04/2015
-//DESCRIPTION	: This file contains the code that access the database. It can create, insert and updatas the databse.
-//		  The data will be sent to view to display to user.
+//DESCRIPTION	: This file contains the server side validation before the data goes into database, and asign the 
+//		  values for three different type employee. 
 
 <?php
 namespace Models;
