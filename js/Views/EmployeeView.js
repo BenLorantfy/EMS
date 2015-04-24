@@ -1,3 +1,9 @@
+//
+// FILE       : EmployeeView.js
+// PROJECT    : EMS
+// PROGRAMMER : Ben Lorantfy, Grigory Kozyrev, Kevin Li, Michael Dasilva
+// DATE       : April 19, 2015
+//
 App.Views.EmployeeView = App.Views.SectionView.extend({
 	events: {
 		 "change .field":"checkErrors"
@@ -56,7 +62,6 @@ App.Views.EmployeeView = App.Views.SectionView.extend({
 	},
 	
 	save: function(){
-		console.log(this.model.attributes);
 		this.model.save();	
 	},
 	

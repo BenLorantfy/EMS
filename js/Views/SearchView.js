@@ -1,3 +1,9 @@
+//
+// FILE       : SearchView.js
+// PROJECT    : EMS
+// PROGRAMMER : Ben Lorantfy, Grigory Kozyrev, Kevin Li, Michael Dasilva
+// DATE       : April 19, 2015
+//
 App.Views.SearchView = App.Views.SectionView.extend({
 	
 	events: {

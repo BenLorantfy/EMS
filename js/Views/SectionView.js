@@ -1,3 +1,16 @@
+//
+// FILE       : SectionView.js
+// PROJECT    : EMS
+// PROGRAMMER : Ben Lorantfy, Grigory Kozyrev, Kevin Li, Michael Dasilva
+// DATE       : April 19, 2015
+//
+
+//
+// All views extend off of App.Views.SectionView
+// This view provides several methods for showing and
+// hiding the view, aswell as focusing and bluring in
+// different animated ways
+//
 App.Views.SectionView = Backbone.View.extend({
 	animate: function(show,back,howMuch,time,fade){
 		var $el = $(this.$el);
