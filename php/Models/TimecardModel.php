@@ -19,81 +19,123 @@ class TimecardModel{
     private $saturday;
     private $sunday;
     
+    	//
+	// FUNCTION    : SetEmployee_id
+	// DESCRIPTION : set employee_id of employee
+	// PARAMETERS  : $employee_id
+	// RETURNS     : bool : the result of asign
+	//
     public function SetEmployee_id($employee_id){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->employee_id = $employee_id;
+	
 		return true;
 	}
-    
+	
+    	//
+	// FUNCTION    : SetInfo_title
+	// DESCRIPTION : set hourlyRate of employee
+	// PARAMETERS  : $info_title
+	// RETURNS     : bool : the result of asign
+	//
     public function SetInfo_title($info_title){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->info_title = $info_title;
 		return true;
 	}
     
+    	//
+	// FUNCTION    : SetDate
+	// DESCRIPTION : set data of employee's tiem card
+	// PARAMETERS  : $date
+	// RETURNS     : bool : the result of asign
+	//
 	public function SetDate($date){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->date = $date;
 		return true;
 	}
-		
+	
+	//
+	// FUNCTION    : SetMonday
+	// DESCRIPTION : set data of employee's tiem card
+	// PARAMETERS  : $monday
+	// RETURNS     : bool : the result of asign
+	//	
 	public function SetMonday($monday){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->monday = $monday;
 		return true;
 	}
 	
+	//
+	// FUNCTION    : SetTuesday
+	// DESCRIPTION : set data of employee's tiem card
+	// PARAMETERS  : $tuesday
+	// RETURNS     : bool : the result of asign
+	//
 	public function SetTuesday($tuesday){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->tuesday = $tuesday;
 		return true;
 	}
+	
+	//
+	// FUNCTION    : SetWednesday
+	// DESCRIPTION : set data of employee's tiem card
+	// PARAMETERS  : $wednesday
+	// RETURNS     : bool : the result of asign
+	//
     public function SetWednesday($wednesday){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->wednesday = $wednesday;
 		return true;
 	}
+	
+	//
+	// FUNCTION    : SetThursday
+	// DESCRIPTION : set data of employee's tiem card
+	// PARAMETERS  : $thursday
+	// RETURNS     : bool : the result of asign
+	//
     public function SetThursday($thursday){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->thursday = $thursday;
 		return true;
 	}
+	
+	//
+	// FUNCTION    : SetFriday
+	// DESCRIPTION : set data of employee's tiem card
+	// PARAMETERS  : $friday
+	// RETURNS     : bool : the result of asign
+	//
     public function SetFriday($friday){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->friday = $friday;
 		return true;
 	}
+	
+	//
+	// FUNCTION    : SetSaturday
+	// DESCRIPTION : set data of employee's tiem card
+	// PARAMETERS  : $saturday
+	// RETURNS     : bool : the result of asign
+	//
     public function SetSaturday($saturday){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->saturday = $saturday;
 		return true;
 	}
+	
+	//
+	// FUNCTION    : SetSunday
+	// DESCRIPTION : set data of employee's tiem card
+	// PARAMETERS  : $sunday
+	// RETURNS     : bool : the result of asign
+	//
     public function SetSunday($sunday){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->sunday = $sunday;
 		return true;
 	}
 	
+	//
+	// FUNCTION    : __get
+	// DESCRIPTION : 
+	// PARAMETERS  : $key
+	// RETURNS     : bool : the result of asign
+	//
 	public function __get($key){
 		return $this->$key;
 	}
