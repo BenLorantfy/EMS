@@ -1,3 +1,10 @@
+//FILE			: ContractEmployeeModel.php
+//PROJECT		: INFO2030-15W - Software Quality II - Final Project EMS
+//PROGRAMMER	: Dev Til Death: Grigoriy Kozyrev, Ben Lorantfy, Michael L. Da Silva, Kevin Li
+//FIRST VERSION	: 4/04/2015
+//DESCRIPTION	: This file contains the server side validation before the data goes into database, and sign the 
+//		  values for contract employee. 
+
 <?php
 namespace Models;
 class ContractEmployeeModel{
@@ -10,57 +17,36 @@ class ContractEmployeeModel{
 	private $fixedAmount;
 	
 	public function SetCompanyName($contractCompanyName){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->contractCompanyName = $contractCompanyName;
 		return true;
 	}
 	
 	public function SetCorporationName($corporationName){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->corporationName = $corporationName;
 		return true;
 	}
 	
 	public function SetDateOfIncorporation($dateOfIncorporation){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->dateOfIncorporation = $dateOfIncorporation;
 		return true;
 	}
 	
 	public function SetBusinessNumber($businessNumber){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->businessNumber = $businessNumber;
 		return true;		
 	}
 	
 	public function SetStartDate($startDate){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->startDate = $startDate;
 		return true;		
 	}
 	
 	public function SetEndDate($endDate){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->endDate = $endDate;
 		return true;		
 	}
 	
 	public function SetFixedAmount($fixedAmount){
-		// todo: validation logic
-		// don't set class variable if invalid
-		// return false if invalid
 		$this->fixedAmount = $fixedAmount;
 		return true;		
 	}
