@@ -11,6 +11,12 @@ abstract class HourlyEmployeeModel extends EmployeeModel{
 	protected $dateOfHire;
 	protected $dateOfTermination;
 	
+	//
+	// FUNCTION    : SetDateOfHire
+	// DESCRIPTION : set dateOfHire of employee
+	// PARAMETERS  : $dateOfHire
+	// RETURNS     : bool : the result of asign
+	//
 	public function SetDateOfHire($dateOfHire){
 		// todo: validation logic
 		// don't set class variable if invalid
@@ -19,6 +25,12 @@ abstract class HourlyEmployeeModel extends EmployeeModel{
 		return true;
 	}
 	
+	//
+	// FUNCTION    : SetDateOfTermination
+	// DESCRIPTION : set dateOfTermination of employee
+	// PARAMETERS  : $dateOfTermination
+	// RETURNS     : bool : the result of asign
+	//
 	public function SetDateOfTermination($dateOfTermination){
 		// todo: validation logic
 		// don't set class variable if invalid
